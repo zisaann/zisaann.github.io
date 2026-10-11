@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Lokma | Dijital Menü</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="#">
+      <span class="brand-icon">L</span>
+      lokma<span class="dot">.</span>
+    </a>
+    <a href="#menu" class="nav-link">Menüyü keşfet ↘</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <span class="eyebrow">TAZE • ÖZENLE HAZIRLANDI</span>
+      <h1>Bugün ne<br><em>yesek?</em></h1>
+      <p>Menümüzü keşfet, sana uygun lezzetleri kolayca bul.</p>
+      <div class="hero-note">✳ Günlük hazırlık · Özenle seçilmiş malzemeler</div>
+    </section>
+
+    <section class="allergen-box">
+      <div class="section-top">
+        <div>
+          <span class="eyebrow">SANA ÖZEL</span>
+          <h2>Alerjen filtreleri</h2>
+          <p>Kaçınmak istediğin alerjenleri seç. Seçtiklerinden herhangi birini içeren ürünler gizlenir.</p>
+        </div>
+        <button id="clearFilters" class="clear-btn" type="button">Temizle ↺</button>
+      </div>
+
+      <div id="allergenList" class="allergen-list"></div>
+
+      <div class="filter-status">
+        <span>✓</span>
+        <p id="filterMessage" aria-live="polite">Henüz alerjen seçilmedi.</p>
+      </div>
+
+      <p class="warning">
+        Alerjen bilgilerini sipariş öncesinde işletmeyle doğrulayın.
+        Çapraz bulaşma riski olabilir; bu filtreleme güvenlik garantisi vermez.
+      </p>
+    </section>
+
+    <section id="menu" class="menu-section">
+      <div class="menu-title">
+        <div>
+          <span class="eyebrow">MENÜMÜZ</span>
+          <h2>Lezzetler</h2>
+        </div>
+        <span id="resultCount" class="result-count"></span>
+      </div>
+
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="⌕  Menüde ara..."
+        aria-label="Menüde ara"
+      >
+
+      <div id="categoryList" class="category-list"></div>
+
+      <div id="productList" class="product-grid"></div>
+
+      <div id="emptyMessage" class="empty-message" hidden>
+        <h3>Uygun ürün bulamadık.</h3>
+        <p>Filtrelerini temizleyebilir veya başka bir ürün arayabilirsin.</p>
+        <button id="emptyClear" class="primary-btn" type="button">
+          Filtreleri temizle
+        </button>
+      </div>
+    </section>
+
+    <section class="qr-section">
+      <div>
+        <span class="eyebrow">DİJİTAL MENÜN</span>
+        <h2>Menüyü paylaş.</h2>
+        <p>Menünü internette yayınla ve bağlantına özel QR kodunu indir.</p>
+      </div>
+      <div class="qr-card">
+        <div id="qrcode"></div>
+        <button id="downloadQR" class="clear-btn" type="button">
+          QR kodu indir ↓
+        </button>
+        <small id="qrMessage"></small>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand" href="#"><span class="brand-icon">L</span>lokma<span class="dot">.</span></a>
+    <span>Güzel yemek, iyi hissettirir.</span>
+  </footer>
+</body>
+</html>
