@@ -13,10 +13,10 @@
 
 const ALLERGENS = [
   { id: "gluten", label: "Gluten" },
-  { id: "milk", label: "Süt ürünleri" },
+  { id: "milk", label: "Süt ve ürünleri" },
   { id: "egg", label: "Yumurta" },
   { id: "peanut", label: "Yer fıstığı" },
-  { id: "treeNuts", label: "Sert kabuklu yemişler" },
+  { id: "treeNuts", label: "Kuruyemiş" },
   { id: "soy", label: "Soya" },
   { id: "sesame", label: "Susam" },
   { id: "fish", label: "Balık" },
@@ -25,7 +25,7 @@ const ALLERGENS = [
   { id: "celery", label: "Kereviz" },
   { id: "lupin", label: "Acı bakla" },
   { id: "sulphites", label: "Sülfitler" },
-  { id: "molluscs", label: "Yumuşakçalar" }
+  { id: "molluscs", label: "Midye / Kalamar" }
 ];
 
 const CATEGORIES = [
