@@ -452,3 +452,29 @@ footer {
     margin-right: 6px;
   }
 }
+
+/* Kategori butonlarının seçili görünümü */
+:root {
+  --green: #5B9BD5;
+}
+
+.category-btn,
+.category-button,
+.categories button {
+  color: #315A82;
+  background: #FFFFFF;
+  border: 1px solid #DCE5EF;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.category-btn:hover,
+.category-button:hover,
+.categories button:hover,
+.category-btn.active,
+.category-button.active,
+.categories button.active {
+  color: #FFFFFF;
+  background: #315A82;
+  border-color: #315A82;
+  opacity: 1;
+}
