@@ -133,7 +133,7 @@ const PRODUCTS = [
     badge: "",
     allergens: ["gluten", "milk", "egg", "soy"],
     allergensVerified: true,
-   otherAllergens: ["mısır", "hardal tohumu"],
+    otherAllergens: ["mısır", "hardal tohumu"]
   },
   {
     id: 7,
