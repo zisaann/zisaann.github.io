@@ -1,5 +1,5 @@
 /*
-  LOKMA DİJİTAL MENÜ
+ AKSARAY ÜNİVERSİTESİ DİJİTAL MENÜ
 
   Ürünleri PRODUCTS listesinden düzenle.
   Fiyatı sayı olarak gir.
@@ -437,12 +437,6 @@ searchInput.addEventListener("input", event => {
   renderProducts();
 });
 
-// Sayfanın altındaki yılı güncelle
-document.querySelector("footer").insertAdjacentHTML(
-  "beforeend",
-  `<span>© ${new Date().getFullYear()} Lokma</span>`
-);
-
 // QR kodu oluştur
 function createQRCode() {
   const qrElement = document.getElementById("qrcode");
@@ -501,7 +495,7 @@ document.getElementById("downloadQR")
     }
 
     const link = document.createElement("a");
-    link.download = "lokma-menu-qr.png";
+    link.download = "aksarayuni-menu-qr.png";
     link.href = dataUrl;
     link.click();
   });
