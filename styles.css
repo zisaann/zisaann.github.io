@@ -79,8 +79,8 @@ a {
   justify-content: center;
   color: white;
   background:
-    radial-gradient(circle at 85% 30%, #66805b 0, transparent 30%),
-    linear-gradient(120deg, #173b2b, #315941);
+  radial-gradient(circle at 85% 30%, #8FC5F0 0, transparent 30%),
+  linear-gradient(120deg, #315A82, #5B9BD5);
   border-radius: 28px;
   box-shadow: 0 18px 45px #1c38251a;
 }
