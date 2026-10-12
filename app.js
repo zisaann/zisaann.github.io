@@ -213,6 +213,8 @@ const selectedAllergens = new Set();
 
 let activeCategory = "Tümü";
 let searchTerm = "";
+let otherAllergenSelected = false;
+let otherAllergenSearch = "";
 
 const allergenList = document.getElementById("allergenList");
 const categoryList = document.getElementById("categoryList");
@@ -223,30 +225,80 @@ const emptyMessage = document.getElementById("emptyMessage");
 const searchInput = document.getElementById("searchInput");
 
 // Alerjen filtrelerini oluştur
+
 function renderAllergens() {
   allergenList.innerHTML = ALLERGENS.map(item => `
     <label class="allergen-option">
       <input
         type="checkbox"
         value="${item.id}"
+        data-allergen-id="${item.id}"
         aria-label="${item.label}"
       >
       <span>${item.label}</span>
     </label>
-  `).join("");
+  `).join("") + `
+    <label class="allergen-option">
+      <input
+        type="checkbox"
+        id="otherAllergenCheckbox"
+        ${otherAllergenSelected ? "checked" : ""}
+      >
+      <span>Diğer</span>
+    </label>
 
-  allergenList.querySelectorAll("input").forEach(input => {
-    input.addEventListener("change", () => {
-      if (input.checked) {
-        selectedAllergens.add(input.value);
-      } else {
-        selectedAllergens.delete(input.value);
-      }
+    <div id="otherAllergenSearchBox"
+         ${otherAllergenSelected ? "" : "hidden"}>
+      <input
+        type="text"
+        id="otherAllergenInput"
+        placeholder="Alerjen yazın (örn. mısır, hardal tohumu)"
+        value="${escapeHTML(otherAllergenSearch)}"
+        aria-label="Diğer alerjenleri yazın"
+      >
+      <small>Birden fazla alerjen için virgül kullanın.</small>
+    </div>
+  `;
 
-      renderProducts();
+  allergenList
+    .querySelectorAll("input[data-allergen-id]")
+    .forEach(input => {
+      input.addEventListener("change", () => {
+        if (input.checked) {
+          selectedAllergens.add(input.value);
+        } else {
+          selectedAllergens.delete(input.value);
+        }
+
+        renderProducts();
+      });
     });
+
+  const otherCheckbox =
+    document.getElementById("otherAllergenCheckbox");
+
+  const otherSearchBox =
+    document.getElementById("otherAllergenSearchBox");
+
+  const otherInput =
+    document.getElementById("otherAllergenInput");
+
+  otherCheckbox.addEventListener("change", () => {
+    otherAllergenSelected = otherCheckbox.checked;
+    otherSearchBox.hidden = !otherAllergenSelected;
+    renderProducts();
+
+    if (otherAllergenSelected) {
+      otherInput.focus();
+    }
+  });
+
+  otherInput.addEventListener("input", () => {
+    otherAllergenSearch = otherInput.value;
+    renderProducts();
   });
 }
+
 
 // Kategori düğmelerini oluştur
 function renderCategories() {
@@ -292,9 +344,73 @@ function escapeHTML(value) {
 
 // Seçimlere uygun ürünleri belirle
 function getVisibleProducts() {
+  const otherQueries = otherAllergenSelected
+    ? otherAllergenSearch
+        .split(",")
+        .map(item => item.trim().toLocaleLowerCase("tr-TR"))
+        .filter(Boolean)
+    : [];
+
+  const hasActiveAllergenFilter =
+    selectedAllergens.size > 0 || otherQueries.length > 0;
+
   return PRODUCTS.filter(product => {
     const allergens = product.allergens || [];
 
+    // Alerjen filtresi kullanılıyorsa doğrulanmamış ürünleri gösterme
+    if (
+      hasActiveAllergenFilter &&
+      product.allergensVerified !== true
+    ) {
+      return false;
+    }
+
+    // Hazır alerjen filtreleri
+    const hasSelectedAllergen = [...selectedAllergens].some(
+      allergen => allergens.includes(allergen)
+    );
+
+    if (hasSelectedAllergen) {
+      return false;
+    }
+
+    // Kullanıcının yazdığı diğer alerjenleri kontrol et
+    const productOtherAllergens = (
+      product.otherAllergens || []
+    ).map(item => item.toLocaleLowerCase("tr-TR"));
+
+    const hasOtherAllergen = otherQueries.some(query =>
+      productOtherAllergens.some(allergen =>
+        allergen.includes(query)
+      )
+    );
+
+    if (hasOtherAllergen) {
+      return false;
+    }
+
+    // Kategori filtresi
+    const matchesCategory =
+      activeCategory === "Tümü" ||
+      product.category === activeCategory;
+
+    // Menü araması
+    const query = searchTerm
+      .trim()
+      .toLocaleLowerCase("tr-TR");
+
+    const searchableText = [
+      product.name,
+      product.description,
+      product.category
+    ].join(" ").toLocaleLowerCase("tr-TR");
+
+    const matchesSearch =
+      !query || searchableText.includes(query);
+
+    return matchesCategory && matchesSearch;
+  });
+}
     // Alerjen seçilmişse doğrulanmamış ürünleri gösterme
     if (selectedAllergens.size > 0 &&
         product.allergensVerified !== true) {
@@ -411,14 +527,33 @@ function renderProducts() {
 }
 
 // Filtreleri sıfırla
+
+ // Filtreleri sıfırla
 function clearFilters() {
   selectedAllergens.clear();
   searchTerm = "";
   activeCategory = "Tümü";
+  otherAllergenSelected = false;
+  otherAllergenSearch = "";
 
-  allergenList.querySelectorAll("input").forEach(input => {
-    input.checked = false;
-  });
+  allergenList.querySelectorAll("input[type='checkbox']")
+    .forEach(input => {
+      input.checked = false;
+    });
+
+  const otherSearchBox =
+    document.getElementById("otherAllergenSearchBox");
+
+  if (otherSearchBox) {
+    otherSearchBox.hidden = true;
+  }
+
+  const otherInput =
+    document.getElementById("otherAllergenInput");
+
+  if (otherInput) {
+    otherInput.value = "";
+  }
 
   searchInput.value = "";
 
