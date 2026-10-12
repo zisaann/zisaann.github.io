@@ -72,7 +72,7 @@ const PRODUCTS = [
     color: "#e7e0d0",
     badge: "Çok sevilen",
     allergens: ["gluten", "milk"],
-    allergensVerified: true
+    allergensVerified: true,
   },
   {
     id: 2,
@@ -273,8 +273,6 @@ function renderAllergens() {
 
         renderProducts();
       });
-    });
-
   const otherCheckbox =
     document.getElementById("otherAllergenCheckbox");
 
