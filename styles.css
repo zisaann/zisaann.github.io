@@ -427,9 +427,9 @@ footer {
 
 .site-footer .brand-icon {
   display: block;
-  width: 42px;
-  height: 42px;
-  margin-right: 10px;
+  width: 26px;
+  height: 26px;
+  margin-right: 8px;
   object-fit: contain;
   flex-shrink: 0;
   background: transparent;
@@ -447,8 +447,8 @@ footer {
 
 @media (max-width: 600px) {
   .site-footer .brand-icon {
-    width: 34px;
-    height: 34px;
-    margin-right: 8px;
+    width: 23px;
+    height: 23px;
+    margin-right: 6px;
   }
 }
