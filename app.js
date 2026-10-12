@@ -132,7 +132,7 @@ const PRODUCTS = [
     color: "#e4d4cc",
     badge: "",
     allergens: ["gluten", "milk", "egg", "soy"],
-    allergensVerified: true
+    allergensVerified: true,
    otherAllergens: ["mısır", "hardal tohumu"],
   },
   {
