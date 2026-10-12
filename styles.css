@@ -421,3 +421,6 @@ footer {
     height: 190px;
   }
 }
+.hero {
+  background: linear-gradient(120deg, #315A82, #5B9BD5) !important;
+}
