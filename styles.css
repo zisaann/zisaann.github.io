@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
-  --green: ##5B9BD5;
+  --green: #5B9BD5;
   --green-dark: #315A82;
   --cream: #F7FAFC;
   --white: #FFFFFF;
@@ -70,24 +70,24 @@ a {
 .hero {
   position: relative;
   overflow: hidden;
-  margin: 28px auto 35px;
-  padding: 70px 7%;
   width: 90%;
-  min-height: 340px;
+  min-height: 300px;
+  margin: 28px auto 35px;
+  padding: 60px 7%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: white;
-  background:
-  radial-gradient(circle at 85% 30%, #8FC5F0 0, transparent 30%),
-  linear-gradient(120deg, #315A82, #5B9BD5);
+  color: #FFFFFF;
+  background: linear-gradient(120deg, #315A82, #5B9BD5);
+  border: none;
   border-radius: 28px;
-  box-shadow: 0 18px 45px #1c38251a;
+  box-shadow: 0 18px 45px rgba(49, 90, 130, 0.15);
 }
 
 .hero h1 {
   max-width: 650px;
   margin: 12px 0;
+  color: #FFFFFF;
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(42px, 6vw, 72px);
   line-height: 1.08;
@@ -96,26 +96,26 @@ a {
 
 .hero p {
   max-width: 460px;
-  color: #e0e7dc;
+  color: #EAF3FC;
   font-size: 16px;
 }
 
-.hero button,
-.primary-btn {
-  width: fit-content;
-  padding: 12px 22px;
-  color: white;
-  background: var(--orange);
-  border: 0;
-  border-radius: 999px;
-  font-weight: 700;
-  transition: .2s;
-}
+@media (max-width: 600px) {
+  .hero {
+    width: 92%;
+    min-height: 270px;
+    margin: 18px auto 25px;
+    padding: 35px 25px;
+    border-radius: 22px;
+  }
 
-.hero button:hover,
-.primary-btn:hover {
-  background: #ae633c;
-  transform: translateY(-2px);
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
 }
 
 /* İçerik alanı */
@@ -477,55 +477,4 @@ footer {
   background: #315A82;
   border-color: #315A82;
   opacity: 1;
-}
-
-/* Bugün ne yesek? alanını düzelt */
-.hero {
-  position: relative;
-  overflow: hidden;
-  width: 90%;
-  min-height: 300px;
-  margin: 28px auto 35px;
-  padding: 60px 7%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #FFFFFF;
-  background: linear-gradient(120deg, #315A82, #5B9BD5) !important;
-  border: 0;
-  border-radius: 28px;
-  box-shadow: 0 18px 45px rgba(49, 90, 130, 0.15);
-}
-
-.hero h1 {
-  max-width: 650px;
-  margin: 12px 0;
-  color: #FFFFFF;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(42px, 6vw, 72px);
-  line-height: 1.08;
-}
-
-.hero p {
-  max-width: 460px;
-  color: #EAF3FC;
-  font-size: 16px;
-}
-
-@media (max-width: 600px) {
-  .hero {
-    width: 92%;
-    min-height: 270px;
-    margin: 18px auto 25px;
-    padding: 35px 25px;
-    border-radius: 22px;
-  }
-
-  .hero h1 {
-    font-size: 43px;
-  }
-
-  .hero p {
-    font-size: 14px;
-  }
 }
