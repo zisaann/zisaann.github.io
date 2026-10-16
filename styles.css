@@ -777,3 +777,23 @@ footer, .site-footer {
 .product-art.image-failed .product-emoji {
   display: block;
 }
+.product-art {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f7f6f2;
+  border-radius: 12px;
+}
+
+.product-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.product-emoji {
+  display: none;
+}
