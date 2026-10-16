@@ -424,7 +424,17 @@ function renderProductCard(product) {
   return `
     <article class="product-card">
       <div class="product-art">
-        <span class="product-emoji" aria-hidden="true">${escapeHTML(product.emoji)}</span>
+        <span class="product-emoji" aria-hidden="true">
+          ${escapeHTML(product.emoji)}
+        </span>
+
+        <img
+          class="product-photo"
+          src="${escapeHTML(product.image)}"
+          alt="${escapeHTML(product.name)}"
+          loading="lazy"
+          onerror="this.style.display='none';"
+        >
       </div>
 
       <div class="product-content">
@@ -433,10 +443,14 @@ function renderProductCard(product) {
           <span class="product-price">Fiyat bilgisi yok</span>
         </div>
 
-        <p class="product-description">Ürün açıklaması henüz eklenmedi.</p>
+        <p class="product-description">
+          Ürün açıklaması henüz eklenmedi.
+        </p>
 
         <div class="product-tags">
-          <span class="product-tag">Alerjen bilgisi doğrulanmadı</span>
+          <span class="product-tag">
+            Alerjen bilgisi doğrulanmadı
+          </span>
         </div>
       </div>
     </article>
