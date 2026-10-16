@@ -296,6 +296,20 @@ image: ({
   "Tavuklu Penne": "images/tavuklupenne.jpg",
   "Tavuklu Fettuccine": "images/tavuklufettucine.jpg",
 
+  // Beyaz etler
+  "Barbekü Soslu Tavuk": "images/barbekutavuk.jpg",
+  "Tavuklu Çökertme Kebabı": "images/cokertmekebabi.jpg",
+  "Mantarlı Soslu Tavuk": "images/mantarsoslutavuk.jpg",
+  "Izgara Tavuk Şiş": "images/tavuksis.jpg",
+  "Beğendi Yatağında Piliç Külbastı": "images/pilickulbasti.jpg",
+  "Tavuklu Fajita": "images/etlifajita.jpg",
+
+  // Kırmızı etler
+  "Etli Çökertme Kebabı": "images/etlicokertmekebabi.jpg",
+  "Izgara Lokum Bonfile": "images/izgaralokumbonfile.jpg",
+  "Izgara Köfte": "images/izgaraköfte.jpg",
+  "Karışık Izgara": "images/karisikizgara.jpg",
+
 
 })[name] || `images/${slugify(name)}.jpg`,
 
