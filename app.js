@@ -261,7 +261,8 @@ const PRODUCTS = MENU_DATA.flatMap(group =>
       category: group.category,
       subcategory: subcategory.name,
       emoji: subcategory.emoji,
-      image: ({
+    
+image: ({
   // Pizzalar
   "Margarita Pizza": "images/margaritapizza.webp",
   "Karışık Pizza": "images/karisikpizza.webp",
@@ -273,13 +274,14 @@ const PRODUCTS = MENU_DATA.flatMap(group =>
   "Cheeseburger": "images/cheeseburger.jpg",
   "Smash Burger": "images/smashburger.jpg",
   "Cafe de Pars Burger": "images/cafedeparisburger.jpg",
-  "Chicken Burger": "images/chickenburger.jpg"
+  "Chicken Burger": "images/chickenburger.jpg",
 
-        // Dürümler
-"Etli Dürüm": "images/etlidurum.jpg",
-"Çıtır Tavuklu Dürüm": "images/citirtavukludurum.jpg",
-"Tavuklu Dürüm": "images/tavukludurum.jpg"
+  // Dürümler
+  "Etli Dürüm": "images/etlidurum.jpg",
+  "Çıtır Tavuk Dürüm": "images/citirtavukludurum.jpg",
+  "Tavuklu Dürüm": "images/tavukludurum.jpg"
 })[name] || `images/${slugify(name)}.jpg`,
+
       price: null,
       description: "",
       allergens: [],
