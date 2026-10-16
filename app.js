@@ -201,6 +201,7 @@ const MENU_DATA = [
         products: [
           "Su",
           "Soda",
+          "Meyveli Soda",
           "Churchill",
           "Ayran",
           "Cola",
@@ -289,7 +290,6 @@ image: ({
   "Somon Bowl": "images/somonbowl.jpg",
   "Izgara Tavuk Bowl": "images/cıtırtavukbowl.jpg",
 
-  
   // Makarnalar
   "Mac and Cheese": "images/macnadcheese.jpg",
   "Körili Tavuklu Makarna": "images/körilitavuklupenne.jpg",
@@ -337,6 +337,31 @@ image: ({
   "Supangle": "images/supangle.jpg",
   "Tiramisu": "images/tiramisu.jpg",
   "Waffle": "images/waffle.jpg",
+
+  // Soğuk içecekler
+  "Cool Lime": "images/coollime.jpg",
+  "Cola": "images/cola.jpg",
+  "Fuse Tea": "images/fusetea.jpg",
+  "Fanta": "images/fanta.jpg",
+  "Meyveli Soda": "images/meyvelisoda.jpg",
+  "Soda": "images/soda.jpg",
+  "Red Bull": "images/redbull.jpg",
+  "Sprite": "images/sprite.jpg",
+  "Su": "images/su.jpg",
+  "Şalgam": "images/şalgam.jpg"
+
+  // Sıcak içecekler
+  "Americano": "images/americano.jpg",
+  "Cappuccino": "images/cappucino.jpg",
+  "Bitki Çayı": "images/bitkicayı.jpg",
+  "Çay": "images/cay.jpg",
+  "Salep": "images/salep.jpg",
+  "Espresso": "images/espresso.jpg",
+  "Dibek Kahvesi": "images/dibek.jpg",
+  "Filtre Kahve": "images/filtrekahve.jpg",
+  "Latte": "images/latte.jpg",
+  "Menengiç Kahvesi": "images/menengic.jpg",
+  "Türk Kahvesi": "images/turkkahvesi.jpg"
 
 
 })[name] || `images/${slugify(name)}.jpg`,
