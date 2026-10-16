@@ -325,6 +325,19 @@ image: ({
   "Patates Kızartması": "images/patatestabagi.jpg",
   "Soğan Halkası": "images/soganhalkasi.jpg",
 
+  // Tatlılar
+  "Brownie Cup": "images/browniecup.jpg",
+  "Crème Brûlée": "images/cremebrule.jpg",
+  "Fıstıklı San Sebastian": "images/fistiklisansebastian.jpg",
+  "Frambuazlı Cheesecake": "images/frambuazlıcheesacake.jpg",
+  "Kızarmış Dondurma": "images/kizarmisdondurma.jpg",
+  "Lotuslu Krep Roll": "images/kreproll.jpg",
+  "Magnolia": "images/magnolya.jpg",
+  "Profiterol": "images/profiterol.jpg",
+  "Supangle": "images/supangle.jpg",
+  "Tiramisu": "images/tiramisu.jpg",
+  "Waffle": "images/waffle.jpg",
+
 
 })[name] || `images/${slugify(name)}.jpg`,
 
