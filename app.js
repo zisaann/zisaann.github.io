@@ -30,7 +30,9 @@ const ALLERGENS = [
 
 const CATEGORIES = [
   "Tümü",
+  "Kahvaltı",
   "Başlangıçlar",
+  "Atıştırmalıklar",
   "Ana yemekler",
   "Salatalar",
   "Tatlılar",
