@@ -274,6 +274,11 @@ const PRODUCTS = MENU_DATA.flatMap(group =>
   "Smash Burger": "images/smashburger.jpg",
   "Cafe de Pars Burger": "images/cafedeparisburger.jpg",
   "Chicken Burger": "images/chickenburger.jpg"
+
+        // Dürümler
+"Etli Dürüm": "images/etlidurum.jpg",
+"Çıtır Tavuklu Dürüm": "images/citirtavukludurum.jpg",
+"Tavuklu Dürüm": "images/tavukludurum.jpg"
 })[name] || `images/${slugify(name)}.jpg`,
       price: null,
       description: "",
