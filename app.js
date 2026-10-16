@@ -393,6 +393,11 @@ image: ({
   "Omlet": "images/omlet.jpg",
   "Beyaz Peynirli Yumurta": "images/beyazpeyniromlet.jpg",
   "Kaşar Peynirli Yumurta": "images/kaşarlıomlet.jpg",
+    // Tostlar
+  "Kaşarlı Tost": "images/kasarlıtost.jpg",
+  "Karışık Tost": "images/karısıktost.jpg",
+  "Ayvalık Tostu": "images/ayvalikktost.jpg",
+  "Akdeniz Tostu": "images/akdenizztostt.jpg",
 
 })[name] || `images/${slugify(name)}.jpg`,
 
