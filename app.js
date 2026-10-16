@@ -32,9 +32,9 @@ const CATEGORIES = [
   "Tümü",
   "Kahvaltı",
   "Başlangıçlar",
-  "Atıştırmalıklar",
   "Ana yemekler",
   "Salatalar",
+  "Atıştırmalıklar",
   "Tatlılar",
   "İçecekler"
 ];
