@@ -756,3 +756,265 @@ input[type="search"]:focus {
     padding: 13px;
   }
 }
+
+/* ===== QR MENÜ TASARIMINI BELİRGİNLEŞTİR ===== */
+
+/* Filtre bölümünün üst kısmı */
+.allergen-box {
+  padding: 30px !important;
+  background: linear-gradient(145deg, #FFFFFF, #F4F8FD) !important;
+  border: 1px solid #DFE9F5 !important;
+  border-radius: 26px !important;
+  box-shadow: 0 12px 35px rgba(49, 90, 130, 0.08) !important;
+}
+
+.section-top,
+.menu-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.section-top p {
+  max-width: 620px;
+  color: #748195;
+  font-size: 14px;
+}
+
+/* Temizle butonu */
+.clear-btn {
+  padding: 11px 17px;
+  color: #315A82;
+  background: #EAF3FC;
+  border: 1px solid #D4E5F6;
+  border-radius: 13px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #D8EAFB;
+  transform: translateY(-1px);
+}
+
+/* Alerjen seçenekleri */
+.allergen-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.allergen-option {
+  min-height: 42px;
+  padding: 10px 15px !important;
+  color: #53677D !important;
+  background: #FFFFFF !important;
+  border: 1px solid #DFE8F2 !important;
+  border-radius: 13px !important;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.allergen-option:hover {
+  border-color: #8DBBE5 !important;
+  background: #F0F7FE !important;
+}
+
+.allergen-option:has(input:checked) {
+  color: #315A82 !important;
+  background: #E1EFFC !important;
+  border-color: #78ACDA !important;
+  box-shadow: 0 3px 10px rgba(49, 90, 130, 0.08);
+}
+
+/* Filtre durum mesajı */
+.filter-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  padding: 14px 17px;
+  color: #315A82;
+  background: #EDF5FD;
+  border: 1px solid #DFECF9;
+  border-radius: 15px;
+}
+
+.filter-status > span {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  flex-shrink: 0;
+  color: #FFFFFF;
+  background: #5B9BD5;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.filter-status p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.warning {
+  margin-top: 17px;
+  padding: 12px 15px;
+  color: #788598;
+  background: #F8FAFD;
+  border-left: 3px solid #C6DDF2;
+  border-radius: 7px;
+  font-size: 12px;
+}
+
+/* Menü başlığı ve ürün sayısı */
+.menu-title {
+  margin-bottom: 18px;
+}
+
+.result-count {
+  padding: 7px 12px;
+  color: #315A82;
+  background: #E7F1FB;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Kategori butonları */
+.category-btn {
+  padding: 11px 18px !important;
+  border-radius: 13px !important;
+}
+
+/* Yemek kartlarının üst görsel alanı */
+.product-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 175px;
+  overflow: hidden;
+}
+
+.product-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.02),
+    rgba(49,90,130,0.08)
+  );
+  pointer-events: none;
+}
+
+.product-emoji {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.58);
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 50%;
+  font-size: 53px;
+  transition: transform 0.25s ease;
+}
+
+.product-card:hover .product-emoji {
+  transform: scale(1.07) rotate(-3deg);
+}
+
+.product-badge {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  z-index: 2;
+  padding: 7px 11px;
+  color: #315A82;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.product-content {
+  padding: 19px !important;
+}
+
+.product-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.product-name {
+  font-size: 19px !important;
+}
+
+.product-price {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.product-tags {
+  margin-top: 14px;
+}
+
+/* Telefon görünümü */
+@media (max-width: 600px) {
+  .allergen-box {
+    padding: 21px 16px !important;
+    border-radius: 21px !important;
+  }
+
+  .section-top {
+    align-items: flex-start;
+  }
+
+  .section-top p {
+    font-size: 13px;
+  }
+
+  .allergen-list {
+    gap: 8px;
+  }
+
+  .allergen-option {
+    padding: 9px 11px !important;
+    font-size: 12px;
+  }
+
+  .filter-status {
+    padding: 12px;
+  }
+
+  .product-art {
+    min-height: 125px;
+  }
+
+  .product-emoji {
+    width: 72px;
+    height: 72px;
+    font-size: 40px;
+  }
+
+  .product-top {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .product-name {
+    font-size: 16px !important;
+  }
+
+  .product-content {
+    padding: 12px !important;
+  }
+}
