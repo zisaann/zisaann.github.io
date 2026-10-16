@@ -1001,3 +1001,112 @@ input[type="search"] {
     padding: 22px 17px;
   }
 }
+```css
+/* Üst alanın yeni tasarımı */
+.hero {
+  margin: 24px 32px 40px;
+  padding: 76px 48px 68px;
+  min-height: 360px;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: #f0f2e9;
+  color: #203c2b;
+  border: 1px solid #e2e7d9;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.hero .eyebrow {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: #668064;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #203c2b;
+  font-size: clamp(48px, 6vw, 76px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -3px;
+}
+
+.hero h1 em {
+  color: #668064;
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.hero p {
+  max-width: 510px;
+  margin: 24px auto;
+  color: #667264;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 8px;
+  padding: 15px 24px;
+
+  background: #294a35;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hero-button:hover {
+  background: #3d6148;
+  transform: translateY(-2px);
+}
+
+.hero-note {
+  margin-top: 28px;
+  color: #7a8875;
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+/* Telefon ekranları */
+@media (max-width: 600px) {
+  .hero {
+    margin: 14px 12px 28px;
+    padding: 54px 20px 46px;
+    min-height: auto;
+    border-radius: 18px;
+  }
+
+  .hero .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    letter-spacing: -2px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+}
