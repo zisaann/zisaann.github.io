@@ -1020,19 +1020,15 @@ function renderSubcategories() {
   });
 }
 
+
 function getVisibleProducts() {
   const query = searchTerm.trim().toLocaleLowerCase("tr-TR");
 
   return PRODUCTS.filter(product => {
-   const containsSelectedAllergen = [...selectedAllergens].some(id =>
-  product.allergens.includes(id)
-);
-
-if (containsSelectedAllergen) return false;
-
     const containsSelectedAllergen = [...selectedAllergens].some(id =>
       product.allergens.includes(id)
     );
+
     if (containsSelectedAllergen) return false;
 
     const matchesCategory =
