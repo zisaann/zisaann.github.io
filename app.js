@@ -111,8 +111,8 @@ const MENU_DATA = [
         products: [
           "Somon Bowl",
           "Beef Bowl",
-          "Chicken Teriyaki Bowl",
           "Izgara Tavuk Bowl",
+          "Çıtır Tavuk Bowl",
           "Falafel Bowl",
           "Köfte Bowl"
         ]
@@ -284,11 +284,11 @@ image: ({
   
   // Bowllar
   "Beef Bowl": "images/beefbowl.jpg",
-  "Chicken Teriyaki Bowl": "images/chickenteriyalibowl.jpg",
   "Köfte Bowl": "images/köftebowl.jpg",
   "Falafel Bowl": "images/falafelbowl.jpg",
   "Somon Bowl": "images/somonbowl.jpg",
-  "Izgara Tavuk Bowl": "images/cıtırtavukbowl.jpg",
+  "Izgara Tavuk Bowl": "images/izgarabowl.jpg",
+  "Çıtır Tavuk Bowl": "images/cıtırtavukbowl.jpg",
 
   // Makarnalar
   "Mac and Cheese": "images/macnadcheese.jpg",
