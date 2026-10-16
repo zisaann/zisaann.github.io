@@ -375,12 +375,24 @@ image: ({
   "Kremalı Mantar Çorbası": "images/kremalimantar.jpg",
   "Mercimek Çorbası": "images/mercimek.jpg",
   
-  // Kahvaltılıklar
-  "İki Kişilik Kahvaltı": "images/ikikisikahvaltı.jpg",
-  "Kahvaltı Tabağı": "images/kahvaltitabagi.jpg",
-  "Pankek": "images/pankek.jpg",
+    // Kahvaltılıklar
+  "2 Kişilik Kahvaltı": "images/ikikisikahvaltı.jpg",
+  "Kahvaltı Tabağı (Tek Kişilik)": "images/kahvaltitabagi.jpg",
+  "Pankek Tabağı": "images/pankek.jpg",
   "Tek Kişilik Kahvaltı": "images/tekkisikahvaltı.jpg",
   "Pişi Kahvaltı": "images/pisikahvalti.jpg",
+
+    // Sıcak kahvaltı
+  "Menemen": "images/menemen.jpg",
+  "Mıhlama": "images/mıhlama.jpg",
+  "Yumurtalı Ekmek": "images/yumurtaliekmek.jpg",
+  "Gözleme": "images/gözleme.jpg",
+    // Yumurta çeşitleri
+  "Sade Yumurta": "images/sadeyumurta.jpg",
+  "Sucuklu Yumurta": "images/sucukluyumurta.jpg",
+  "Omlet": "images/omlet.jpg",
+  "Beyaz Peynirli Yumurta": "images/beyazpeyniromlet.jpg",
+  "Kaşar Peynirli Yumurta": "images/kaşarlıomlet.jpg",
 
 })[name] || `images/${slugify(name)}.jpg`,
 
