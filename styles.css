@@ -520,3 +520,239 @@ footer {
   border-color: #315A82;
   opacity: 1;
 }
+
+
+/* ===== QR MENÜ: YUMUŞAK VE MODERN TASARIM ===== */
+
+:root {
+  --green: #5B9BD5;
+  --green-dark: #315A82;
+  --cream: #F5F8FC;
+  --white: #FFFFFF;
+  --text: #263548;
+  --muted: #748195;
+  --border: #E3EAF2;
+  --orange: #E9A9C4;
+}
+
+/* Sayfa genel görünümü */
+body {
+  background: #F5F8FC;
+  color: #263548;
+}
+
+/* Bölüm başlıkları */
+h2 {
+  color: #263F5B;
+  letter-spacing: -0.6px;
+}
+
+/* Alerjen filtre alanı */
+.allergen-box,
+.filter-section {
+  padding: 28px;
+  background: #FFFFFF;
+  border: 1px solid #E5ECF4;
+  border-radius: 24px;
+  box-shadow: 0 8px 28px rgba(49, 90, 130, 0.06);
+}
+
+.allergen-box h2,
+.filter-section h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: clamp(24px, 3vw, 30px);
+  color: #315A82;
+}
+
+.allergen-list,
+.allergen-filters {
+  gap: 10px;
+  margin-top: 18px;
+}
+
+/* Alerjen seçimleri */
+.allergen-option,
+.allergen-chip {
+  padding: 10px 15px;
+  color: #50647B;
+  background: #F7FAFD;
+  border: 1px solid #E0E8F1;
+  border-radius: 14px;
+  font-size: 13px;
+  transition: background 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease;
+}
+
+.allergen-option:hover,
+.allergen-chip:hover {
+  background: #EDF5FD;
+  border-color: #B6D2EC;
+}
+
+.allergen-option:has(input:checked),
+.allergen-chip.active {
+  color: #315A82;
+  background: #E5F1FC;
+  border-color: #8DBBE5;
+  font-weight: 600;
+}
+
+/* Arama kutusu */
+.search-input,
+input[type="search"] {
+  min-height: 54px;
+  padding: 0 20px;
+  background: #FFFFFF;
+  border: 1px solid #E0E8F1;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(49, 90, 130, 0.03);
+}
+
+.search-input:focus,
+input[type="search"]:focus {
+  border-color: #79ACDA;
+  box-shadow: 0 0 0 4px rgba(91, 155, 213, 0.12);
+}
+
+/* Kategori butonları */
+.category-list,
+.categories,
+.category-filters {
+  gap: 10px;
+}
+
+.category-btn,
+.category-button,
+.categories button {
+  padding: 11px 19px;
+  color: #5A6C80;
+  background: #FFFFFF;
+  border: 1px solid #E0E8F1;
+  border-radius: 13px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.category-btn:hover,
+.category-button:hover,
+.categories button:hover {
+  color: #315A82;
+  background: #EDF5FD;
+  border-color: #B8D4EF;
+}
+
+.category-btn.active,
+.category-button.active,
+.categories button.active {
+  color: #FFFFFF;
+  background: #315A82;
+  border-color: #315A82;
+  box-shadow: 0 4px 12px rgba(49, 90, 130, 0.18);
+  opacity: 1;
+}
+
+/* Yemek kartları */
+.product-card,
+.menu-card,
+.product {
+  background: #FFFFFF;
+  border: 1px solid #E6ECF3;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(49, 90, 130, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover,
+.menu-card:hover,
+.product:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(49, 90, 130, 0.11);
+}
+
+.product-card img,
+.menu-card img,
+.product img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.product-content,
+.menu-card-content {
+  padding: 20px;
+}
+
+.product-name,
+.product-card h3,
+.menu-card h3,
+.product h3 {
+  color: #2E455F;
+}
+
+.product-price,
+.price {
+  color: #315A82;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.product-description,
+.product-card p,
+.menu-card p,
+.product p {
+  color: #748195;
+}
+
+/* Alerjen etiketleri */
+.product-tag {
+  color: #4C6E8E;
+  background: #EDF5FC;
+  border-radius: 8px;
+  padding: 5px 9px;
+}
+
+/* QR kod alanı */
+.qr-section {
+  background: #EAF2FA;
+  border: 1px solid #DCE8F5;
+  border-radius: 24px;
+}
+
+.qr-card {
+  border: 1px solid #E4EAF1;
+  box-shadow: 0 6px 20px rgba(49, 90, 130, 0.06);
+}
+
+/* Telefon ekranı */
+@media (max-width: 600px) {
+  .allergen-box,
+  .filter-section {
+    padding: 21px 17px;
+    border-radius: 20px;
+  }
+
+  .allergen-option,
+  .allergen-chip {
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+
+  .category-btn,
+  .category-button,
+  .categories button {
+    padding: 10px 15px;
+  }
+
+  .product-card,
+  .menu-card,
+  .product {
+    border-radius: 16px;
+  }
+
+  .product-content,
+  .menu-card-content {
+    padding: 13px;
+  }
+}
