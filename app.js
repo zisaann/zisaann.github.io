@@ -253,6 +253,503 @@ const ALLERGENS = [
   { id: "molluscs", label: "Midye / Kalamar" }
 ];
 
+
+const PRODUCT_INFO_OVERRIDES = {
+  "2 Kişilik Kahvaltı": {
+    price: 520,
+    description: "Peynir, zeytin, domates, salatalık, yumurta ve çeşitli kahvaltılıklarla hazırlanan iki kişilik kahvaltı sunumu.",
+    allergens: ["milk", "egg", "gluten", "sesame"]
+  },
+  "Tek Kişilik Kahvaltı": {
+    price: 290,
+    description: "Peynir, zeytin, taze sebzeler ve kahvaltılık ürünlerden oluşan tek kişilik kahvaltı tabağı.",
+    allergens: ["milk", "egg", "gluten", "sesame"]
+  },
+  "Kahvaltı Tabağı (Tek Kişilik)": {
+    price: 240,
+    description: "Peynir, zeytin, domates, salatalık ve kahvaltılık eşlikçilerle sunulan kahvaltı tabağı.",
+    allergens: ["milk", "egg", "gluten"]
+  },
+  "Pişi Kahvaltı": {
+    price: 190,
+    description: "Pişi ve kahvaltılık eşlikçilerle hazırlanan sıcak kahvaltı seçeneği.",
+    allergens: ["gluten", "egg", "milk"]
+  },
+  "Pankek Tabağı": {
+    price: 180,
+    description: "Pankeklerin tatlı soslar ve çeşitli eşlikçilerle sunulduğu kahvaltı tabağı.",
+    allergens: ["gluten", "egg", "milk"]
+  },
+  "Menemen": {
+    price: 140,
+    description: "Domates, biber ve yumurtayla hazırlanan geleneksel sıcak kahvaltılık.",
+    allergens: ["egg"]
+  },
+  "Mıhlama": {
+    price: 180,
+    description: "Mısır unu, tereyağı ve peynirle hazırlanan sıcak Karadeniz lezzeti.",
+    allergens: ["milk"]
+  },
+  "Yumurtalı Ekmek": {
+    price: 100,
+    description: "Yumurtaya bulanarak pişirilen ekmek dilimleri.",
+    allergens: ["egg", "gluten"]
+  },
+  "Gözleme": {
+    price: 140,
+    description: "İnce açılmış hamurun çeşitli iç harçlarla hazırlanıp pişirilmesiyle sunulan geleneksel lezzet.",
+    allergens: ["gluten"]
+  },
+  "Sade Yumurta": {
+    price: 90,
+    description: "Tereyağı veya sıvı yağ ile hazırlanan sade yumurta.",
+    allergens: ["egg", "milk"]
+  },
+  "Sucuklu Yumurta": {
+    price: 140,
+    description: "Yumurta ve sucukla hazırlanan sıcak kahvaltılık.",
+    allergens: ["egg"]
+  },
+  "Omlet": {
+    price: 120,
+    description: "Çırpılmış yumurtayla tavada hazırlanan sade omlet.",
+    allergens: ["egg", "milk"]
+  },
+  "Beyaz Peynirli Yumurta": {
+    price: 135,
+    description: "Yumurta ve beyaz peynirle hazırlanan sıcak kahvaltılık.",
+    allergens: ["egg", "milk"]
+  },
+  "Kaşar Peynirli Yumurta": {
+    price: 140,
+    description: "Yumurta ve kaşar peyniriyle hazırlanan sıcak kahvaltılık.",
+    allergens: ["egg", "milk"]
+  },
+  "Kaşarlı Tost": {
+    price: 110,
+    description: "Tost ekmeği ve kaşar peyniriyle hazırlanan sıcak tost.",
+    allergens: ["gluten", "milk"]
+  },
+  "Karışık Tost": {
+    price: 130,
+    description: "Kaşar peyniri ve şarküteri ürünleriyle hazırlanan sıcak tost.",
+    allergens: ["gluten", "milk"]
+  },
+  "Ayvalık Tostu": {
+    price: 160,
+    description: "Çeşitli peynir ve şarküteri malzemeleriyle hazırlanan doyurucu tost.",
+    allergens: ["gluten", "milk"]
+  },
+  "Akdeniz Tostu": {
+    price: 145,
+    description: "Peynir ve sebze ağırlıklı malzemelerle hazırlanan tost.",
+    allergens: ["gluten", "milk"]
+  },
+  "Humus": {
+    price: 110,
+    description: "Nohut, tahin, limon ve zeytinyağıyla hazırlanan soğuk meze.",
+    allergens: ["sesame"]
+  },
+  "Haydari": {
+    price: 100,
+    description: "Yoğurt, sarımsak ve çeşitli baharatlarla hazırlanan soğuk meze.",
+    allergens: ["milk"]
+  },
+  "Havuç Tarator": {
+    price: 100,
+    description: "Havuç ve yoğurtla hazırlanan soğuk meze.",
+    allergens: ["milk"]
+  },
+  "Bruschetta": {
+    price: 130,
+    description: "Ekmek dilimleri üzerine domates, zeytinyağı ve baharatlarla hazırlanan başlangıç.",
+    allergens: ["gluten"]
+  },
+  "Yaprak Sarma": {
+    price: 110,
+    description: "Pirinçli ve baharatlı iç harçla hazırlanan yaprak sarma.",
+    allergens: []
+  },
+  "Mercimek Çorbası": {
+    price: 90,
+    description: "Mercimek, sebze ve baharatlarla hazırlanan geleneksel çorba.",
+    allergens: []
+  },
+  "Domates Çorbası": {
+    price: 100,
+    description: "Domatesle hazırlanan, isteğe göre süt veya peynir içerebilen sıcak çorba.",
+    allergens: ["milk", "gluten"]
+  },
+  "Kremalı Mantar Çorbası": {
+    price: 120,
+    description: "Mantar ve krema ile hazırlanan sıcak çorba.",
+    allergens: ["milk", "gluten"]
+  },
+  "Patates Kızartması": {
+    price: 110,
+    description: "Altın rengini alana kadar kızartılmış patates dilimleri.",
+    allergens: []
+  },
+  "Çıtır Tavuk Tabağı": {
+    price: 210,
+    description: "Pane kaplamalı çıtır tavuk parçaları ve eşlikçilerle sunulan tabak.",
+    allergens: ["gluten", "egg"]
+  },
+  "Combo Tabak": {
+    price: 230,
+    description: "Çeşitli sıcak atıştırmalıkların bir arada sunulduğu paylaşım tabağı.",
+    allergens: ["gluten", "egg", "milk"]
+  },
+  "Soğan Halkası": {
+    price: 120,
+    description: "Kaplanıp kızartılmış çıtır soğan halkaları.",
+    allergens: ["gluten"]
+  },
+  "Karışık Börek Tabağı": {
+    price: 160,
+    description: "Çeşitli iç harçlarla hazırlanmış böreklerin bir arada sunumu.",
+    allergens: ["gluten", "milk", "egg"]
+  },
+  "Margarita Pizza": {
+    price: 230,
+    description: "Domates sosu, mozzarella peyniri ve fesleğenle hazırlanan pizza.",
+    allergens: ["gluten", "milk"]
+  },
+  "Karışık Pizza": {
+    price: 290,
+    description: "Peynir, sebze ve çeşitli şarküteri malzemeleriyle hazırlanan pizza.",
+    allergens: ["gluten", "milk"]
+  },
+  "Tavuklu Pizza": {
+    price: 270,
+    description: "Tavuk parçaları, peynir ve domates sosuyla hazırlanan pizza.",
+    allergens: ["gluten", "milk"]
+  },
+  "Akdeniz Pizza": {
+    price: 260,
+    description: "Sebzeler, peynir ve Akdeniz esintili malzemelerle hazırlanan pizza.",
+    allergens: ["gluten", "milk"]
+  },
+  "Hamburger": {
+    price: 230,
+    description: "Burger ekmeği, hamburger köftesi ve çeşitli garnitürlerle hazırlanan klasik burger.",
+    allergens: ["gluten", "sesame"]
+  },
+  "Cheeseburger": {
+    price: 250,
+    description: "Hamburger köftesi, peynir ve burger ekmeğiyle hazırlanan burger.",
+    allergens: ["gluten", "milk", "sesame"]
+  },
+  "Smash Burger": {
+    price: 270,
+    description: "Tavada bastırılarak pişirilen köfte, burger ekmeği ve soslarla hazırlanan burger.",
+    allergens: ["gluten", "milk", "sesame"]
+  },
+  "Cafe de Pars Burger": {
+    price: 290,
+    description: "Özel sunumla hazırlanan burger; içeriği işletmenin reçetesine göre değişebilir.",
+    allergens: ["gluten", "milk", "sesame", "egg"]
+  },
+  "Chicken Burger": {
+    price: 220,
+    description: "Tavuk eti, burger ekmeği ve garnitürlerle hazırlanan burger.",
+    allergens: ["gluten", "egg", "sesame"]
+  },
+  "Tavuklu Dürüm": {
+    price: 180,
+    description: "Tavuk parçaları, lavaş ve sebzelerle hazırlanan dürüm.",
+    allergens: ["gluten"]
+  },
+  "Çıtır Tavuk Dürüm": {
+    price: 200,
+    description: "Pane tavuk parçaları, lavaş ve soslarla hazırlanan dürüm.",
+    allergens: ["gluten", "egg"]
+  },
+  "Etli Dürüm": {
+    price: 230,
+    description: "Et parçaları, lavaş ve çeşitli garnitürlerle hazırlanan dürüm.",
+    allergens: ["gluten"]
+  },
+  "Somon Bowl": {
+    price: 320,
+    description: "Somon, tahıl veya pirinç tabanı ve sebzelerle hazırlanan kase.",
+    allergens: ["fish", "soy", "sesame"]
+  },
+  "Beef Bowl": {
+    price: 300,
+    description: "Dana eti, tahıl veya pirinç tabanı ve sebzelerle hazırlanan kase.",
+    allergens: ["soy", "sesame"]
+  },
+  "Chicken Teriyaki Bowl": {
+    price: 260,
+    description: "Teriyaki soslu tavuk, pirinç ve sebzelerle hazırlanan kase.",
+    allergens: ["soy", "gluten", "sesame"]
+  },
+  "Izgara Tavuk Bowl": {
+    price: 240,
+    description: "Izgara tavuk, tahıl veya pirinç tabanı ve sebzelerle hazırlanan kase.",
+    allergens: []
+  },
+  "Falafel Bowl": {
+    price: 220,
+    description: "Falafel, sebzeler ve tahıl veya pirinç tabanıyla hazırlanan kase.",
+    allergens: ["sesame", "gluten"]
+  },
+  "Köfte Bowl": {
+    price: 260,
+    description: "Köfte, sebzeler ve tahıl veya pirinç tabanıyla hazırlanan kase.",
+    allergens: ["gluten", "egg"]
+  },
+  "Tavuklu Fettuccine": {
+    price: 240,
+    description: "Fettuccine makarna, tavuk ve kremalı veya özel sosla hazırlanan yemek.",
+    allergens: ["gluten", "milk", "egg"]
+  },
+  "Tavuklu Penne": {
+    price: 230,
+    description: "Penne makarna ve tavuk parçalarıyla hazırlanan sıcak yemek.",
+    allergens: ["gluten", "milk"]
+  },
+  "Körili Tavuklu Makarna": {
+    price: 240,
+    description: "Tavuk, makarna ve köri aromalı sosla hazırlanan yemek.",
+    allergens: ["gluten", "milk"]
+  },
+  "Mac and Cheese": {
+    price: 210,
+    description: "Makarna ve peynir sosuyla hazırlanan kremamsı yemek.",
+    allergens: ["gluten", "milk"]
+  },
+  "Izgara Tavuk Şiş": {
+    price: 250,
+    description: "Baharatlarla marine edilip ızgarada pişirilen tavuk şiş.",
+    allergens: []
+  },
+  "Mantarlı Soslu Tavuk": {
+    price: 280,
+    description: "Tavuk ve mantarla hazırlanan soslu ana yemek.",
+    allergens: ["milk"]
+  },
+  "Beğendi Yatağında Piliç Külbastı": {
+    price: 310,
+    description: "Piliç külbastı ve közlenmiş patlıcanlı beğendiyle hazırlanan ana yemek.",
+    allergens: ["milk", "gluten"]
+  },
+  "Köri Soslu Tavuk": {
+    price: 270,
+    description: "Köri aromalı sosla hazırlanan tavuk yemeği.",
+    allergens: ["milk"]
+  },
+  "Barbekü Soslu Tavuk": {
+    price: 270,
+    description: "Barbekü sosuyla lezzetlendirilen tavuk yemeği.",
+    allergens: ["soy", "mustard"]
+  },
+  "Tavuklu Çökertme Kebabı": {
+    price: 290,
+    description: "Tavuk, ince kızarmış patates ve yoğurtlu sosla hazırlanan yemek.",
+    allergens: ["milk"]
+  },
+  "Tavuklu Fajita": {
+    price: 280,
+    description: "Tavuk, biber ve soğanla hazırlanan sıcak fajita.",
+    allergens: []
+  },
+  "Izgara Köfte": {
+    price: 290,
+    description: "Baharatlarla hazırlanan köftelerin ızgarada pişirilmesiyle sunulan ana yemek.",
+    allergens: ["gluten", "egg"]
+  },
+  "Pideli Balaban Köfte": {
+    price: 320,
+    description: "Köfte, pide parçaları, yoğurt ve sosla hazırlanan geleneksel tabak.",
+    allergens: ["gluten", "milk", "egg"]
+  },
+  "Etli Çökertme Kebabı": {
+    price: 360,
+    description: "Dana eti, ince kızarmış patates ve yoğurtlu sosla hazırlanan ana yemek.",
+    allergens: ["milk"]
+  },
+  "Izgara Lokum Bonfile": {
+    price: 480,
+    description: "Izgarada pişirilen dana bonfileyle hazırlanan ana yemek.",
+    allergens: []
+  },
+  "Karışık Izgara": {
+    price: 450,
+    description: "Farklı ızgara et çeşitlerinin bir arada sunulduğu ana yemek.",
+    allergens: []
+  },
+  "Akdeniz Salata": {
+    price: 150,
+    description: "Taze yeşillikler, domates, salatalık ve Akdeniz tarzı eşlikçilerle hazırlanan salata.",
+    allergens: ["milk"]
+  },
+  "Çoban Salata": {
+    price: 120,
+    description: "Domates, salatalık, biber, soğan ve yeşilliklerle hazırlanan salata.",
+    allergens: []
+  },
+  "Çok Tahıllı Salata": {
+    price: 170,
+    description: "Tahıl karışımı, taze sebzeler ve salata sosuyla hazırlanan salata.",
+    allergens: ["gluten", "sesame"]
+  },
+  "Roka Salata": {
+    price: 140,
+    description: "Roka, domates ve salata sosuyla hazırlanan ferah salata.",
+    allergens: []
+  },
+  "Çıtır Tavuk Salata": {
+    price: 190,
+    description: "Çıtır tavuk parçaları ve taze salata malzemeleriyle hazırlanan salata.",
+    allergens: ["gluten", "egg"]
+  },
+  "Tavuklu Sezar Salata": {
+    price: 200,
+    description: "Tavuk, marul, kruton ve Sezar sosuyla hazırlanan salata.",
+    allergens: ["gluten", "milk", "egg", "fish"]
+  },
+  "Kızarmış Dondurma": {
+    price: 160,
+    description: "Dondurmanın dış kaplaması kızartılarak hazırlanan tatlı.",
+    allergens: ["milk", "gluten", "egg"]
+  },
+  "Crème Brûlée": {
+    price: 170,
+    description: "Krema, yumurta ve şekerle hazırlanan, üzeri karamelize edilen tatlı.",
+    allergens: ["milk", "egg"]
+  },
+  "Waffle": {
+    price: 190,
+    description: "Waffle hamuru ve çeşitli meyve, sos veya tatlı eşlikçilerle sunulan tatlı.",
+    allergens: ["gluten", "egg", "milk"]
+  },
+  "Lotuslu Krep Roll": {
+    price: 190,
+    description: "Krep ve Lotus bisküvi kremasıyla hazırlanan rulo tatlı.",
+    allergens: ["gluten", "milk", "soy"]
+  },
+  "Brownie Cup": {
+    price: 160,
+    description: "Çikolatalı brownie parçaları ve tatlı eşlikçilerle hazırlanan kupa tatlısı.",
+    allergens: ["gluten", "egg", "milk", "soy"]
+  },
+  "Magnolia": {
+    price: 150,
+    description: "Sütlü krema, bisküvi ve meyve katmanlarıyla hazırlanan tatlı.",
+    allergens: ["milk", "gluten"]
+  },
+  "Profiterol": {
+    price: 160,
+    description: "Hamur topları, krema ve çikolata sosuyla hazırlanan tatlı.",
+    allergens: ["gluten", "egg", "milk", "soy"]
+  },
+  "Tiramisu": {
+    price: 170,
+    description: "Kahve aromalı katmanlar ve kremayla hazırlanan İtalyan tatlısı.",
+    allergens: ["gluten", "egg", "milk"]
+  },
+  "Supangle": {
+    price: 140,
+    description: "Çikolata aromalı, yoğun kıvamlı sütlü tatlı.",
+    allergens: ["milk", "gluten", "soy"]
+  },
+  "Frambuazlı Cheesecake": {
+    price: 180,
+    description: "Peynirli krema tabanı ve frambuazlı üst katmanla hazırlanan cheesecake.",
+    allergens: ["milk", "gluten", "egg"]
+  },
+  "Fıstıklı San Sebastian": {
+    price: 200,
+    description: "Peynirli San Sebastian tatlısının fıstıkla sunulan çeşidi.",
+    allergens: ["milk", "egg", "peanut", "treeNuts"]
+  }
+};
+
+const PRICE_BY_SUBCATEGORY = [
+  { match: /kahvaltı menüleri/i, price: 250 },
+  { match: /sıcak kahvaltı/i, price: 140 },
+  { match: /yumurta/i, price: 120 },
+  { match: /tost/i, price: 140 },
+  { match: /soğuk başlangıç/i, price: 110 },
+  { match: /çorba/i, price: 100 },
+  { match: /atıştırmalık/i, price: 150 },
+  { match: /pizza/i, price: 260 },
+  { match: /burger/i, price: 240 },
+  { match: /dürüm/i, price: 200 },
+  { match: /bowl/i, price: 240 },
+  { match: /makarna/i, price: 230 },
+  { match: /beyaz et/i, price: 280 },
+  { match: /kırmızı et/i, price: 380 },
+  { match: /salata/i, price: 160 },
+  { match: /tatlı/i, price: 160 },
+  { match: /soğuk içecek/i, price: 50 },
+  { match: /sıcak içecek/i, price: 60 }
+];
+
+function getProductDetails(name, subcategory) {
+  const override = PRODUCT_INFO_OVERRIDES[name];
+
+  if (override) {
+    return {
+      ...override,
+      allergensVerified: false
+    };
+  }
+
+  const lowerName = name.toLocaleLowerCase("tr-TR");
+  const priceRule = PRICE_BY_SUBCATEGORY.find(rule =>
+    rule.match.test(subcategory)
+  );
+
+  let allergens = [];
+
+  if (/kahvaltı|pankek|pişi|gözleme|börek|tost|pizza|makarna|krep|waffle|ekmek|kruton/.test(lowerName)) {
+    allergens.push("gluten");
+  }
+  if (/peynir|kaşar|krema|süt|yoğurt|magnolia|profiterol|cheesecake|dondurma|latte|cappuccino|salep|mac and cheese/.test(lowerName)) {
+    allergens.push("milk");
+  }
+  if (/yumurta|omlet|menemen|pankek|waffle|brownie|profiterol|tiramisu|cheesecake/.test(lowerName)) {
+    allergens.push("egg");
+  }
+  if (/tavuk|köfte|burger|bonfile|etli|fajita|ızgara/.test(lowerName)) {
+    allergens.push("egg");
+  }
+  if (/teriyaki|soya/.test(lowerName)) {
+    allergens.push("soy", "gluten");
+  }
+  if (/somon|balık|sezar/.test(lowerName)) {
+    allergens.push("fish");
+  }
+  if (/fıstık|fındık|badem|ceviz|kuruyemiş/.test(lowerName)) {
+    allergens.push("treeNuts");
+  }
+
+  const descriptionByCategory = {
+    "Kahvaltı": `${name}, kahvaltılık eşlikçilerle sunulan bir kahvaltı seçeneğidir.`,
+    "Başlangıçlar": `${name}, ana yemek öncesinde veya paylaşım için sunulan bir başlangıçtır.`,
+    "Atıştırmalıklar": `${name}, ara öğün veya paylaşım için sunulan sıcak atıştırmalık seçeneğidir.`,
+    "Ana yemekler": `${name}, doyurucu bir ana yemek olarak servis edilir.`,
+    "Salatalar": `${name}, taze salata malzemeleri ve soslarla hazırlanan bir seçenektir.`,
+    "Tatlılar": `${name}, yemek sonrasında tercih edilebilecek tatlı seçeneklerinden biridir.`,
+    "İçecekler": `${name}, soğuk veya sıcak olarak tercih edilebilen içecek seçeneğidir.`
+  };
+
+  return {
+    price: priceRule ? priceRule.price : 100,
+    description: descriptionByCategory[
+      Object.keys(descriptionByCategory).find(category =>
+        category.toLocaleLowerCase("tr-TR") ===
+        (subcategory || "").toLocaleLowerCase("tr-TR")
+      )
+    ] || `${name}, menüde sunulan ürünlerden biridir. İçerik ve sunum kullanılan tarife göre değişebilir.`,
+    allergens: [...new Set(allergens)],
+    allergensVerified: false
+  };
+}
+
 // Ürünler, yukarıdaki menü gruplarından oluşturulur.
 const PRODUCTS = MENU_DATA.flatMap(group =>
   group.subcategories.flatMap(subcategory =>
@@ -405,10 +902,7 @@ image: ({
 
 })[name] || `images/${slugify(name)}.jpg`,
 
-      price: null,
-      description: "",
-      allergens: [],
-      allergensVerified: false
+...getProductDetails(name, subcategory.name)
     }))
   )
 );
@@ -576,20 +1070,37 @@ function renderProductCard(product) {
       </div>
 
       <div class="product-content">
-        <div class="product-top">
-          <h3 class="product-name">${escapeHTML(product.name)}</h3>
-          <span class="product-price">Fiyat bilgisi yok</span>
-        </div>
+        
+<div class="product-top">
+  <h3 class="product-name">${escapeHTML(product.name)}</h3>
+  <span class="product-price">
+    ${product.price != null
+      ? `${product.price.toLocaleString("tr-TR")} TL`
+      : "Fiyat belirtilmedi"}
+  </span>
+</div>
 
-        <p class="product-description">
-          Ürün açıklaması henüz eklenmedi.
-        </p>
+<p class="product-description">
+  ${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}
+</p>
 
-        <div class="product-tags">
-          <span class="product-tag">
-            Alerjen bilgisi doğrulanmadı
-          </span>
-        </div>
+<div class="product-tags">
+  <span class="product-tag">
+    Olası alerjenler: ${
+      product.allergens.length
+        ? escapeHTML(
+            product.allergens
+              .map(id => ALLERGENS.find(a => a.id === id)?.label || id)
+              .join(", ")
+          )
+        : "Tarife göre değişebilir"
+    }
+  </span>
+  <span class="product-tag">
+    Alerjen bilgisi doğrulanmadı
+  </span>
+</div>
+
       </div>
     </article>
   `;
