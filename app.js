@@ -348,7 +348,7 @@ image: ({
   "Red Bull": "images/redbull.jpg",
   "Sprite": "images/sprite.jpg",
   "Su": "images/su.jpg",
-  "Şalgam": "images/şalgam.jpg"
+  "Şalgam": "images/şalgam.jpg",
 
   // Sıcak içecekler
   "Americano": "images/americano.jpg",
@@ -361,7 +361,7 @@ image: ({
   "Filtre Kahve": "images/filtrekahve.jpg",
   "Latte": "images/latte.jpg",
   "Menengiç Kahvesi": "images/menengic.jpg",
-  "Türk Kahvesi": "images/turkkahvesi.jpg"
+  "Türk Kahvesi": "images/turkkahvesi.jpg",
 
   // Soğuk başlangıçlar
   "Bruschetta": "images/bruschetta.jpg",
@@ -373,7 +373,7 @@ image: ({
   // Çorbalar
   "Domates Çorbası": "images/domates.jpg",
   "Kremalı Mantar Çorbası": "images/kremalimantar.jpg",
-  "Mercimek Çorbası": "images/mercimek.jpg"
+  "Mercimek Çorbası": "images/mercimek.jpg",
 
 
 })[name] || `images/${slugify(name)}.jpg`,
