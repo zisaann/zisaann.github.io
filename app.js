@@ -261,6 +261,12 @@ const PRODUCTS = MENU_DATA.flatMap(group =>
       category: group.category,
       subcategory: subcategory.name,
       emoji: subcategory.emoji,
+      image: ({
+  "Margarita Pizza": "images/margaritapizza.webp",
+  "Karışık Pizza": "images/karisikpizza.webp",
+  "Tavuklu Pizza": "images/tavuklupizza.webp",
+  "Akdeniz Pizza": "images/italianopizza.webp"
+})[name] || `images/${slugify(name)}.jpg`,
       price: null,
       description: "",
       allergens: [],
