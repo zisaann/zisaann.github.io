@@ -318,6 +318,13 @@ image: ({
   "Roka Salata": "images/rokasalata.jpg",
   "Tavuklu Sezar Salata": "images/tavuklusezarsalata.jpg",
 
+  // Atıştırmalıklar
+  "Çıtır Tavuk Tabağı": "images/citirtavuktabagı.jpg",
+  "Combo Tabak": "images/combotabak.jpg",
+  "Karışık Börek Tabağı": "images/karisikborektabagi.jpg",
+  "Patates Kızartması": "images/patatestabagi.jpg",
+  "Soğan Halkası": "images/soganhalkasi.jpg",
+
 
 })[name] || `images/${slugify(name)}.jpg`,
 
