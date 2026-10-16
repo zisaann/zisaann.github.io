@@ -310,6 +310,14 @@ image: ({
   "Izgara Köfte": "images/izgaraköfte.jpg",
   "Karışık Izgara": "images/karisikizgara.jpg",
 
+  // Salatalar
+  "Akdeniz Salata": "images/akdenizsalata.jpg",
+  "Çıtır Tavuk Salata": "images/citirtavuksalata.jpg",
+  "Çok Tahıllı Salata": "images/coktahillisalata.jpg",
+  "Çoban Salata": "images/cobansalata.jpg",
+  "Roka Salata": "images/rokasalata.jpg",
+  "Tavuklu Sezar Salata": "images/tavuklusezarsalata.jpg",
+
 
 })[name] || `images/${slugify(name)}.jpg`,
 
