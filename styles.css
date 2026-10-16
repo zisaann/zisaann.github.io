@@ -478,3 +478,54 @@ footer {
   border-color: #315A82;
   opacity: 1;
 }
+
+/* Bugün ne yesek? alanını düzelt */
+.hero {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  min-height: 300px;
+  margin: 28px auto 35px;
+  padding: 60px 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #FFFFFF;
+  background: linear-gradient(120deg, #315A82, #5B9BD5) !important;
+  border: 0;
+  border-radius: 28px;
+  box-shadow: 0 18px 45px rgba(49, 90, 130, 0.15);
+}
+
+.hero h1 {
+  max-width: 650px;
+  margin: 12px 0;
+  color: #FFFFFF;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: 1.08;
+}
+
+.hero p {
+  max-width: 460px;
+  color: #EAF3FC;
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    width: 92%;
+    min-height: 270px;
+    margin: 18px auto 25px;
+    padding: 35px 25px;
+    border-radius: 22px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+}
