@@ -1024,10 +1024,11 @@ function getVisibleProducts() {
   const query = searchTerm.trim().toLocaleLowerCase("tr-TR");
 
   return PRODUCTS.filter(product => {
-    // Alerjen seçilirse doğrulanmamış ürünler gösterilmez.
-    if (selectedAllergens.size > 0 && product.allergensVerified !== true) {
-      return false;
-    }
+   const containsSelectedAllergen = [...selectedAllergens].some(id =>
+  product.allergens.includes(id)
+);
+
+if (containsSelectedAllergen) return false;
 
     const containsSelectedAllergen = [...selectedAllergens].some(id =>
       product.allergens.includes(id)
