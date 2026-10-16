@@ -609,3 +609,50 @@ footer,
     height: 190px;
   }
 }
+
+/* Üst menü marka alanını düzelt */
+.navbar .brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  flex-shrink: 0;
+  color: #315A82;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  white-space: nowrap;
+}
+
+.navbar .brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  margin: 0;
+  color: #5B9BD5;
+  font-size: 15px;
+}
+
+.navbar .dot {
+  color: #E9A9C4;
+}
+
+/* Küçük ekranlarda taşmayı önle */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 14px 4%;
+  }
+
+  .navbar .brand {
+    gap: 6px;
+    font-size: 13px;
+    letter-spacing: -0.3px;
+  }
+
+  .navbar .brand-icon {
+    font-size: 12px;
+  }
+}
