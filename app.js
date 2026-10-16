@@ -279,7 +279,16 @@ image: ({
   // Dürümler
   "Etli Dürüm": "images/etlidurum.jpg",
   "Çıtır Tavuk Dürüm": "images/citirtavukludurum.jpg",
-  "Tavuklu Dürüm": "images/tavukludurum.jpg"
+  "Tavuklu Dürüm": "images/tavukludurum.jpg",
+  
+  // Bowllar
+  "Beef Bowl": "images/beefbowl.jpg",
+  "Chicken Teriyaki Bowl": "images/chickenteriyalibowl.jpg",
+  "Köfte Bowl": "images/köftebowl.jpg",
+  "Falafel Bowl": "images/falafelbowl.jpg",
+  "Somon Bowl": "images/somonbowl.jpg",
+  "Izgara Tavuk Bowl": "images/cıtırtavukbowl.jpg",
+
 })[name] || `images/${slugify(name)}.jpg`,
 
       price: null,
