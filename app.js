@@ -370,6 +370,11 @@ image: ({
   "Havuç Tarator": "images/tarator.jpg",
   "Yaprak Sarma": "images/yapraksarma.jpg",
 
+  // Çorbalar
+  "Domates Çorbası": "images/domates.jpg",
+  "Kremalı Mantar Çorbası": "images/kremalimantar.jpg",
+  "Mercimek Çorbası": "images/mercimek.jpg"
+
 
 })[name] || `images/${slugify(name)}.jpg`,
 
