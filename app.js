@@ -303,12 +303,14 @@ image: ({
   "Izgara Tavuk Şiş": "images/tavuksis.jpg",
   "Beğendi Yatağında Piliç Külbastı": "images/pilickulbasti.jpg",
   "Tavuklu Fajita": "images/etlifajita.jpg",
+  "Köri Soslu Tavuk": "images/körisoslutavuk.jpg",
 
   // Kırmızı etler
   "Etli Çökertme Kebabı": "images/etlicokertmekebabi.jpg",
   "Izgara Lokum Bonfile": "images/izgaralokumbonfile.jpg",
   "Izgara Köfte": "images/izgaraköfte.jpg",
   "Karışık Izgara": "images/karisikizgara.jpg",
+  "Pideli Balaban Köfte": "images/balabanköfte.jpg",
 
   // Salatalar
   "Akdeniz Salata": "images/akdenizsalata.jpg",
@@ -349,6 +351,8 @@ image: ({
   "Sprite": "images/sprite.jpg",
   "Su": "images/su.jpg",
   "Şalgam": "images/şalgam.jpg",
+  "Churchill": "images/churcill.jpg",
+  "Ayran": "images/ayran.jpg",
 
   // Sıcak içecekler
   "Americano": "images/americano.jpg",
