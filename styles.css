@@ -797,3 +797,16 @@ footer, .site-footer {
 .product-emoji {
   display: none;
 }
+
+.allergen-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #eadfc8;
+  border-radius: 8px;
+  background: #fbf6eb;
+  color: #795b28;
+  font-size: 12px;
+  line-height: 1.5;
+}
