@@ -262,10 +262,18 @@ const PRODUCTS = MENU_DATA.flatMap(group =>
       subcategory: subcategory.name,
       emoji: subcategory.emoji,
       image: ({
+  // Pizzalar
   "Margarita Pizza": "images/margaritapizza.webp",
   "Karışık Pizza": "images/karisikpizza.webp",
   "Tavuklu Pizza": "images/tavuklupizza.webp",
-  "Akdeniz Pizza": "images/italianopizza.webp"
+  "Akdeniz Pizza": "images/italianopizza.webp",
+
+  // Burgerler
+  "Hamburger": "images/hamburger.jpg",
+  "Cheeseburger": "images/cheeseburger.jpg",
+  "Smash Burger": "images/smashburger.jpg",
+  "Cafe de Pars Burger": "images/cafedeparisburger.jpg",
+  "Chicken Burger": "images/chickenburger.jpg"
 })[name] || `images/${slugify(name)}.jpg`,
       price: null,
       description: "",
