@@ -52,10 +52,10 @@ const MENU_DATA = [
         emoji: "🥙",
         products: [
           "Humus",
-          "Haydari / Girit Ezmesi",
-          "Kabak Tarator",
+          "Haydari",
+          "Havuç Tarator",
           "Bruschetta",
-          "Yaprak Sarma veya Zeytinyağlı Enginar"
+          "Yaprak Sarma"
         ]
       },
       {
@@ -362,6 +362,13 @@ image: ({
   "Latte": "images/latte.jpg",
   "Menengiç Kahvesi": "images/menengic.jpg",
   "Türk Kahvesi": "images/turkkahvesi.jpg"
+
+  // Soğuk başlangıçlar
+  "Bruschetta": "images/bruschetta.jpg",
+  "Humus": "images/humus.jpg",
+  "Haydari": "images/haydari.jpg",
+  "Havuç Tarator": "images/tarator.jpg",
+  "Yaprak Sarma": "images/yapraksarma.jpg",
 
 
 })[name] || `images/${slugify(name)}.jpg`,
