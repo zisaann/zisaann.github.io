@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7f6f2">
-  <title> Aksaray Üniversitesi | Dijital Menü </title>
+  <title>Aksaray Üniversitesi | Dijital Menü</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script defer src="app.js"></script>
@@ -12,8 +13,8 @@
 <body>
   <header class="navbar">
     <a class="brand" href="#">
-      <span class="brand-icon"> MENÜ | </span>
-      AKSARAY ÜNİVERSİTESİ <span class="dot"></span>
+      <span class="brand-icon">MENÜ |</span>
+      AKSARAY ÜNİVERSİTESİ <span class="dot">●</span>
     </a>
     <a href="#menu" class="nav-link">Menüyü keşfet ↘</a>
   </header>
@@ -44,8 +45,9 @@
       </div>
 
       <p class="warning">
-        Alerjen bilgilerini sipariş öncesinde işletmeyle doğrulayın.
-        Çapraz bulaşma riski olabilir; bu filtreleme güvenlik garantisi vermez.
+        Ürünlerin alerjen bilgileri henüz doğrulanmamıştır.
+        Sipariş öncesinde işletmeyle doğrulayın. Çapraz bulaşma riski olabilir;
+        bu filtreleme güvenlik garantisi vermez.
       </p>
     </section>
 
@@ -62,13 +64,14 @@
         type="search"
         id="searchInput"
         class="search-input"
-        placeholder="⌕  Menüde ara..."
+        placeholder="⌕ Menüde ara..."
         aria-label="Menüde ara"
       >
 
-      <div id="categoryList" class="category-list"></div>
+      <div id="categoryList" class="category-list" aria-label="Ana kategoriler"></div>
+      <div id="subcategoryList" class="subcategory-list" aria-label="Alt kategoriler"></div>
 
-      <div id="productList" class="product-grid"></div>
+      <div id="productList" class="product-sections"></div>
 
       <div id="emptyMessage" class="empty-message" hidden>
         <h3>Uygun ürün bulamadık.</h3>
@@ -85,36 +88,34 @@
         <h2>Menüyü paylaş.</h2>
         <p>Menünü internette yayınla ve bağlantına özel QR kodunu indir.</p>
       </div>
+
       <div class="qr-card">
         <div id="qrcode"></div>
-        <button id="downloadQR" class="clear-btn" type="button">
-          QR kodu indir ↓
-        </button>
+        <button id="downloadQR" class="clear-btn" type="button">QR kodu indir ↓</button>
         <small id="qrMessage"></small>
       </div>
     </section>
   </main>
 
-<footer class="site-footer">
-  <a class="brand" href="#">
-    <img class="brand-icon" src="aksaray-universitesi-logo.png" alt="Aksaray Üniversitesi logosu" />
-    AKSARAY ÜNİVERSİTESİ<span class="dot"></span>
-  </a>
+  <footer class="site-footer">
+    <a class="brand" href="#">
+      <img
+        class="brand-icon"
+        src="aksaray-universitesi-logo.png"
+        alt="Aksaray Üniversitesi logosu"
+      >
+      AKSARAY ÜNİVERSİTESİ<span class="dot">●</span>
+    </a>
 
-  <p class="footer-slogan">Lezzetler bir dokunuş uzağınızda.</p>
+    <p class="footer-slogan">Lezzetler bir dokunuş uzağınızda.</p>
 
-  <div class="footer-credit">
-    <p class="footer-heading">Dijital Menü Tasarımı ve Geliştirme Ekibi</p>
+    <div class="footer-credit">
+      <p class="footer-heading">Dijital Menü Tasarımı ve Geliştirme Ekibi</p>
+      <p class="footer-team">Zişan Güler · Rümeysa Nur Ceylan · Büşra Kötek</p>
+      <p class="footer-team">Şevval Demirel · Zeynep Güzeler · Hacer Ulaş</p>
+    </div>
 
-    <p class="footer-team">
-      Zişan Güler · Rümeysa Nur Ceylan · Büşra Kötek
-    </p>
-    <p class="footer-team">
-      Şevval Demirel · Zeynep Güzeler · Hacer Ulaş
-    </p>
-  </div>
-
-  <p class="footer-copyright">
-    © 2026 · Tüm hakları saklıdır.
-  </p>
-</footer>
+    <p class="footer-copyright">© 2026 · Tüm hakları saklıdır.</p>
+  </footer>
+</body>
+</html>
