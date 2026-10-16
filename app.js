@@ -1084,6 +1084,7 @@ function renderProductCard(product) {
   ${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}
 </p>
 
+
 <div class="product-tags">
   <span class="product-tag">
     Olası alerjenler: ${
@@ -1093,13 +1094,16 @@ function renderProductCard(product) {
               .map(id => ALLERGENS.find(a => a.id === id)?.label || id)
               .join(", ")
           )
-        : "Tarife göre değişebilir"
+        : "İçerik bilgisi kontrol edilmelidir"
     }
   </span>
-  <span class="product-tag">
-    Alerjen bilgisi doğrulanmadı
+
+  <span class="product-tag allergen-warning">
+    <span aria-hidden="true">ⓘ</span>
+    Alerjen bilgisi işletme tarafından doğrulanmalıdır
   </span>
 </div>
+
 
       </div>
     </article>
