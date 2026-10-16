@@ -289,6 +289,14 @@ image: ({
   "Somon Bowl": "images/somonbowl.jpg",
   "Izgara Tavuk Bowl": "images/cıtırtavukbowl.jpg",
 
+  
+  // Makarnalar
+  "Mac and Cheese": "images/macnadcheese.jpg",
+  "Körili Tavuklu Makarna": "images/körilitavuklupenne.jpg",
+  "Tavuklu Penne": "images/tavuklupenne.jpg",
+  "Tavuklu Fettuccine": "images/tavuklufettucine.jpg",
+
+
 })[name] || `images/${slugify(name)}.jpg`,
 
       price: null,
