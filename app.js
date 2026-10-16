@@ -374,7 +374,13 @@ image: ({
   "Domates Çorbası": "images/domates.jpg",
   "Kremalı Mantar Çorbası": "images/kremalimantar.jpg",
   "Mercimek Çorbası": "images/mercimek.jpg",
-
+  
+  // Kahvaltılıklar
+  "İki Kişilik Kahvaltı": "images/ikikisikahvaltı.jpg",
+  "Kahvaltı Tabağı": "images/kahvaltitabagi.jpg",
+  "Pankek": "images/pankek.jpg",
+  "Tek Kişilik Kahvaltı": "images/tekkisikahvaltı.jpg",
+  "Pişi Kahvaltı": "images/pisikahvalti.jpg",
 
 })[name] || `images/${slugify(name)}.jpg`,
 
