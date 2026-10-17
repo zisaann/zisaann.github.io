@@ -671,24 +671,22 @@ const PRODUCT_INFO_OVERRIDES = {
     description: "Peynirli krema tabanı ve frambuazlı üst katmanla hazırlanan cheesecake.",
     allergens: ["milk", "gluten", "egg"]
   },
-    "Fıstıklı San Sebastian": {
+   "Fıstıklı San Sebastian": {
     price: 200,
     description: "Peynirli San Sebastian tatlısının fıstıkla sunulan çeşidi.",
     allergens: ["milk", "egg", "peanut", "treeNuts"]
   },
-
   "Izgara Somon": {
     price: 340,
     description: "Izgarada pişirilen somon, uygun garnitürlerle servis edilir.",
     allergens: ["fish"]
   },
-"Izgara Levrek": {
-  price: 320,
-  description: "Izgarada pişirilen levrek, taze eşlikçilerle sunulur.",
-  allergens: ["fish"],
-  allergensVerified: false
-},
-"Izgara Çipura": {
+  "Izgara Levrek": {
+    price: 320,
+    description: "Izgarada pişirilen levrek, taze eşlikçilerle sunulur.",
+    allergens: ["fish"]
+  },
+  "Izgara Çipura": {
   price: 320,
   description: "Izgarada pişirilen çipura, uygun garnitürlerle servis edilir.",
   allergens: ["fish"],
