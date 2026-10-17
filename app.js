@@ -1096,7 +1096,13 @@ function getVisibleProducts() {
 
 function renderProductCard(product) {
   return `
-    <article class="product-card">
+    <article
+  class="product-card"
+  data-product-id="${escapeHTML(product.id)}"
+  tabindex="0"
+  role="button"
+  aria-label="${escapeHTML(product.name)} ayrıntılarını aç"
+>
       <div class="product-art">
         <span class="product-emoji" aria-hidden="true">
           ${escapeHTML(product.emoji)}
@@ -1208,6 +1214,124 @@ function renderProducts() {
       `Henüz alerjen seçilmedi. ${visibleProducts.length} ürün listeleniyor.`;
   }
 }
+
+function openProductModal(product) {
+  if (!product) return;
+
+  let modal = document.getElementById("productModal");
+
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "productModal";
+    modal.className = "product-modal";
+    modal.hidden = true;
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-labelledby", "productModalTitle");
+    document.body.appendChild(modal);
+  }
+
+  const allergenText = product.allergens.length
+    ? product.allergens
+        .map(id => ALLERGENS.find(item => item.id === id)?.label || id)
+        .join(", ")
+    : "İçerik bilgisi işletme tarafından kontrol edilmelidir.";
+
+  modal.innerHTML = `
+    <div class="product-modal-content">
+      <button
+        type="button"
+        class="product-modal-close"
+        aria-label="Pencereyi kapat"
+      >×</button>
+
+      <img
+        class="product-modal-image"
+        src="${escapeHTML(product.image)}"
+        alt="${escapeHTML(product.name)}"
+      >
+
+      <div class="product-modal-details">
+        <span class="product-modal-category">
+          ${escapeHTML(product.category)} · ${escapeHTML(product.subcategory)}
+        </span>
+
+        <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
+
+        <p class="product-modal-price">
+          ${product.price != null
+            ? `${product.price.toLocaleString("tr-TR")} TL`
+            : "Fiyat belirtilmedi"}
+        </p>
+
+        <h3>Ürün hakkında</h3>
+        <p>${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}</p>
+
+        <h3>Olası alerjenler</h3>
+        <p>${escapeHTML(allergenText)}</p>
+
+        <p class="product-modal-warning">
+          ⓘ Alerjen bilgileri işletme tarafından doğrulanmalıdır.
+        </p>
+      </div>
+    </div>
+  `;
+
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+
+  const closeButton = modal.querySelector(".product-modal-close");
+  closeButton.focus();
+
+  function closeModal() {
+    modal.hidden = true;
+    document.body.classList.remove("modal-open");
+  }
+
+  closeButton.addEventListener("click", closeModal);
+
+  modal.onclick = event => {
+    if (event.target === modal) closeModal();
+  };
+
+  modal.onkeydown = event => {
+    if (event.key === "Escape") closeModal();
+  };
+
+  const modalImage = modal.querySelector(".product-modal-image");
+  modalImage.addEventListener("error", () => {
+    modalImage.style.display = "none";
+  }, { once: true });
+}
+
+// Kartlara tıklanınca ürün ayrıntısını aç.
+productList.addEventListener("click", event => {
+  const card = event.target.closest(".product-card");
+  if (!card) return;
+
+  const product = PRODUCTS.find(
+    item => item.id === card.dataset.productId
+  );
+
+  openProductModal(product);
+});
+
+// Klavyeyle de ürün ayrıntısı açılabilsin.
+productList.addEventListener("keydown", event => {
+  if (event.target.closest("button, a, input, textarea, select")) return;
+  if (event.key !== "Enter" && event.key !== " ") return;
+
+  const card = event.target.closest(".product-card");
+  if (!card) return;
+
+  event.preventDefault();
+
+  const product = PRODUCTS.find(
+    item => item.id === card.dataset.productId
+  );
+
+  openProductModal(product);
+});
 
 function clearFilters() {
   selectedAllergens.clear();
