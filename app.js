@@ -675,7 +675,7 @@ const PRODUCT_INFO_OVERRIDES = {
     price: 200,
     description: "Peynirli San Sebastian tatlısının fıstıkla sunulan çeşidi.",
     allergens: ["milk", "egg", "peanut", "treeNuts"]
-  }
+  },
   "Izgara Somon": {
   price: 340,
   description: "Izgarada pişirilen somon, uygun garnitürlerle servis edilir.",
