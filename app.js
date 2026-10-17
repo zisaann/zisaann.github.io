@@ -141,6 +141,17 @@ const MENU_DATA = [
         ]
       },
       {
+        name: "Balıklar",
+        emoji: "🐟",
+        products: [
+          "Izgara Somon",
+          "Izgara Levrek",
+          "Izgara Çipura",
+          "Mezgit Tava",
+          "Hamsi Tava"
+        ]
+      },
+      {
         name: "Kırmızı etler",
         emoji: "🥩",
         products: [
@@ -665,6 +676,36 @@ const PRODUCT_INFO_OVERRIDES = {
     description: "Peynirli San Sebastian tatlısının fıstıkla sunulan çeşidi.",
     allergens: ["milk", "egg", "peanut", "treeNuts"]
   }
+  "Izgara Somon": {
+  price: 340,
+  description: "Izgarada pişirilen somon, uygun garnitürlerle servis edilir.",
+  allergens: ["fish"],
+  allergensVerified: false
+},
+"Izgara Levrek": {
+  price: 320,
+  description: "Izgarada pişirilen levrek, taze eşlikçilerle sunulur.",
+  allergens: ["fish"],
+  allergensVerified: false
+},
+"Izgara Çipura": {
+  price: 320,
+  description: "Izgarada pişirilen çipura, uygun garnitürlerle servis edilir.",
+  allergens: ["fish"],
+  allergensVerified: false
+},
+"Mezgit Tava": {
+  price: 250,
+  description: "Kaplanıp tavada kızartılan mezgit, uygun eşlikçilerle sunulur.",
+  allergens: ["fish", "gluten"],
+  allergensVerified: false
+},
+"Hamsi Tava": {
+  price: 220,
+  description: "Tavada pişirilen hamsi, geleneksel eşlikçilerle servis edilir.",
+  allergens: ["fish", "gluten"],
+  allergensVerified: false
+},
 };
 
 const PRICE_BY_SUBCATEGORY = [
@@ -899,6 +940,12 @@ image: ({
   "Karışık Tost": "images/karısıktost.jpg",
   "Ayvalık Tostu": "images/ayvalikktost.jpg",
   "Akdeniz Tostu": "images/akdenizztostt.jpg",
+// Balıklar
+"Izgara Somon": "images/somon.jpg",
+"Izgara Levrek": "images/levrek.jpg",
+"Izgara Çipura": "images/cipura.jpg",
+"Mezgit Tava": "images/mezgit.jpg",
+"Hamsi Tava": "images/hamsi.jpg",
 
 })[name] || `images/${slugify(name)}.jpg`,
 
