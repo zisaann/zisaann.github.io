@@ -789,6 +789,140 @@ function getProductDetails(name, subcategory) {
   };
 }
 
+function estimateCalories(name, category, subcategory) {
+  const n = name.toLocaleLowerCase("tr-TR");
+
+  // İçecekler: yaklaşık bir bardak veya standart porsiyon
+  const drinkCalories = {
+    "su": 0,
+    "soda": 0,
+    "espresso": 5,
+    "americano": 10,
+    "filtre kahve": 5,
+    "çay": 2,
+    "bitki çayı": 2,
+    "cola": 140,
+    "fanta": 150,
+    "sprite": 140,
+    "fuse tea": 100,
+    "red bull": 110,
+    "ayran": 90,
+    "meyveli soda": 80,
+    "churchill": 20,
+    "şalgam": 30,
+    "cool lime": 100,
+    "türk kahvesi": 10,
+    "dibek kahvesi": 50,
+    "menengiç kahvesi": 100,
+    "cappuccino": 100,
+    "latte": 150,
+    "salep": 250
+  };
+
+  if (Object.hasOwn(drinkCalories, n)) {
+    return drinkCalories[n];
+  }
+
+  // Kahvaltılıklar
+  if (n.includes("2 kişilik kahvaltı")) return 1200;
+  if (n.includes("tek kişilik kahvaltı")) return 650;
+  if (n.includes("kahvaltı tabağı")) return 650;
+  if (n.includes("pankek")) return 500;
+  if (n.includes("pişi")) return 450;
+  if (n.includes("menemen")) return 300;
+  if (n.includes("mıhlama")) return 400;
+  if (n.includes("yumurtalı ekmek")) return 350;
+  if (n.includes("gözleme")) return 450;
+  if (n.includes("sucuklu yumurta")) return 400;
+  if (n.includes("yumurta") || n.includes("omlet")) return 250;
+  if (n.includes("tost")) return 400;
+
+  // Çorbalar ve başlangıçlar
+  if (n.includes("çorba")) {
+    if (n.includes("kremalı")) return 250;
+    return 170;
+  }
+  if (n.includes("humus")) return 250;
+  if (n.includes("haydari") || n.includes("tarator")) return 180;
+  if (n.includes("bruschetta")) return 250;
+  if (n.includes("yaprak sarma")) return 300;
+
+  // Atıştırmalıklar
+  if (n.includes("patates kızartması")) return 400;
+  if (n.includes("çıtır tavuk tabağı")) return 600;
+  if (n.includes("combo tabak")) return 700;
+  if (n.includes("soğan halkası")) return 350;
+  if (n.includes("börek")) return 450;
+
+  // Ana yemekler
+  if (n.includes("pizza")) {
+    if (n.includes("margarita")) return 700;
+    return 850;
+  }
+  if (n.includes("burger")) {
+    if (n.includes("chicken")) return 600;
+    if (n.includes("cheese")) return 700;
+    return 750;
+  }
+  if (n.includes("dürüm")) {
+    if (n.includes("etli")) return 600;
+    return 500;
+  }
+  if (n.includes("bowl")) {
+    if (n.includes("somon")) return 550;
+    if (n.includes("falafel")) return 500;
+    if (n.includes("beef") || n.includes("köfte")) return 600;
+    if (n.includes("çıtır")) return 650;
+    return 500;
+  }
+  if (n.includes("makarna") || n.includes("fettuccine") ||
+      n.includes("penne") || n.includes("mac and cheese")) {
+    return 650;
+  }
+  if (n.includes("tavuk") || n.includes("piliç")) return 500;
+  if (n.includes("somon")) return 450;
+  if (n.includes("levrek") || n.includes("çipura")) return 350;
+  if (n.includes("mezgit") || n.includes("hamsi")) return 400;
+  if (n.includes("köfte")) return 550;
+  if (n.includes("bonfile")) return 500;
+  if (n.includes("ızgara")) return 650;
+  if (n.includes("çökertme")) return 750;
+  if (n.includes("fajita")) return 450;
+
+  // Salatalar
+  if (n.includes("salata")) {
+    if (n.includes("çıtır tavuk")) return 450;
+    if (n.includes("sezar")) return 400;
+    if (n.includes("tavuk")) return 350;
+    if (n.includes("tahıllı")) return 300;
+    return 200;
+  }
+
+  // Tatlılar
+  if (n.includes("waffle")) return 600;
+  if (n.includes("san sebastian") || n.includes("cheesecake")) return 450;
+  if (n.includes("brownie")) return 450;
+  if (n.includes("krep") || n.includes("lotus")) return 500;
+  if (n.includes("dondurma")) return 350;
+  if (n.includes("crème brûlée")) return 350;
+  if (n.includes("magnolia") || n.includes("profiterol") ||
+      n.includes("tiramisu")) return 400;
+  if (n.includes("supangle")) return 300;
+
+  // Kategoriye göre yedek tahmin: hiçbir ürün boş kalmaz.
+  const categoryDefaults = {
+    "Kahvaltı": 350,
+    "Başlangıçlar": 200,
+    "Atıştırmalıklar": 400,
+    "Ana yemekler": 550,
+    "Salatalar": 250,
+    "Tatlılar": 400,
+    "İçecekler": 100
+  };
+
+  return categoryDefaults[category] ?? 400;
+}
+
 // Ürünler, yukarıdaki menü gruplarından oluşturulur.
 const PRODUCTS = MENU_DATA.flatMap(group =>
   group.subcategories.flatMap(subcategory =>
@@ -947,7 +1081,8 @@ image: ({
 
 })[name] || `images/${slugify(name)}.jpg`,
 
-...getProductDetails(name, subcategory.name)
+...getProductDetails(name, subcategory.name),
+calories: estimateCalories(name, group.category, subcategory.name)
     }))
   )
 );
@@ -1131,7 +1266,10 @@ function renderProductCard(product) {
 <p class="product-description">
   ${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}
 </p>
-
+<p class="product-calories">
+  <span aria-hidden="true">🔥</span>
+  Yaklaşık ${product.calories} kcal / porsiyon
+</p>
 
 <div class="product-tags">
   <span class="product-tag">
@@ -1263,7 +1401,9 @@ function openProductModal(product) {
             ? `${product.price.toLocaleString("tr-TR")} TL`
             : "Fiyat belirtilmedi"}
         </p>
-
+<p class="product-modal-calories">
+  🔥 Yaklaşık ${product.calories} kcal / porsiyon
+</p>
         <h3>Ürün hakkında</h3>
         <p>${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}</p>
 
