@@ -1074,3 +1074,21 @@ body.modal-open {
     font-size: 15px;
   }
 }
+.product-calories,
+.product-modal-calories {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #fff1e8;
+  color: #914b2d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.product-modal-calories {
+  margin: 0 0 20px;
+  font-size: 17px;
+}
