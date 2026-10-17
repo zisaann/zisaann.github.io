@@ -79,6 +79,17 @@ const MENU_DATA = [
           "Karışık Börek Tabağı"
         ]
       }
+      {
+  name: "Kabuklu Deniz ürünleri",
+  emoji: "🦐",
+  products: [
+    "Kalamar",
+    "Midye Dolma",
+    "Midye Tava",
+    "Tereyağlı Karides",
+    "Kaşarlı Midye Güveç"
+  ]
+},
     ]
   },
   {
@@ -704,6 +715,40 @@ const PRODUCT_INFO_OVERRIDES = {
   allergens: ["fish", "gluten"],
   allergensVerified: false
 },
+  "Kalamar": {
+  price: 720,
+  calories: 650,
+  description: "Pane kaplamalı, kızartılmış kalamar halkaları.",
+  allergens: ["gluten", "egg", "molluscs"]
+},
+
+"Midye Dolma": {
+  price: 350,
+  calories: 400,
+  description: "Baharatlı pirinçle doldurulmuş midye, limonla servis edilir.",
+  allergens: ["molluscs"]
+},
+
+"Midye Tava": {
+  price: 400,
+  calories: 500,
+  description: "Pane kaplamalı, kızartılmış midye ve sos.",
+  allergens: ["molluscs", "gluten", "egg"]
+},
+
+"Tereyağlı Karides": {
+  price: 550,
+  calories: 450,
+  description: "Tereyağı ve sarımsakla hazırlanan sıcak karides tabağı.",
+  allergens: ["shellfish", "milk"]
+},
+
+"Kaşarlı Midye Güveç": {
+  price: 600,
+  calories: 520,
+  description: "Peynirle fırınlanmış midye güveç.",
+  allergens: ["molluscs", "milk"]
+},
 };
 
 const PRICE_BY_SUBCATEGORY = [
@@ -996,6 +1041,11 @@ image: ({
   "Karışık Börek Tabağı": "images/karisikborektabagi.jpg",
   "Patates Kızartması": "images/patatestabagi.jpg",
   "Soğan Halkası": "images/soganhalkasi.jpg",
+  "Kalamar": "images/kalamar.jpg",
+  "Midye Dolma": "images/midyedolma.jpg",
+  "Midye Tava": "images/midyetava.jpg",
+  "Tereyağlı Karides": "images/tereyagli-karides.jpg",
+  "Kaşarlı Midye Güveç": "images/midye-guvec.jpg",
 
   // Tatlılar
   "Brownie Cup": "images/browniecup.jpg",
