@@ -78,7 +78,7 @@ const MENU_DATA = [
           "Soğan Halkası",
           "Karışık Börek Tabağı"
         ]
-      }
+      },
       {
   name: "Kabuklu Deniz ürünleri",
   emoji: "🦐",
