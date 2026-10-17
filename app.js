@@ -1047,7 +1047,7 @@ image: ({
   "Midye Dolma": "images/midyedolma.jpg",
   "Midye Tava": "images/midyetava.jpg",
   "Tereyağlı Karides": "images/tereyaglikarides.jpg",
-  "Kaşarlı Midye Güveç": "images/midyeguvec.jpg",
+"Kaşarlı Midye Güveç": "images/midyeguvec.jpg",
 
   // Tatlılar
   "Brownie Cup": "images/browniecup.jpg",
