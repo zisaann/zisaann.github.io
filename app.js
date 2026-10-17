@@ -690,7 +690,7 @@ const PRODUCT_INFO_OVERRIDES = {
   price: 320,
   description: "Izgarada pişirilen çipura, uygun garnitürlerle servis edilir.",
   allergens: ["fish"],
-  allergensVerified: false
+  allergensVerified: true
 },
 "Mezgit Tava": {
   price: 250,
