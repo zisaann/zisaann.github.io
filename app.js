@@ -836,7 +836,9 @@ function getProductDetails(name, subcategory) {
 
 function estimateCalories(name, category, subcategory) {
   const n = name.toLocaleLowerCase("tr-TR");
-
+  const override = PRODUCT_INFO_OVERRIDES[name];
+  if (override?.calories != null) return override.calories;
+  
   // İçecekler: yaklaşık bir bardak veya standart porsiyon
   const drinkCalories = {
     "su": 0,
