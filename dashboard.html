@@ -124,10 +124,11 @@
   async function checkAdmin() {
     const { data, error } = await supabaseClient.auth.getUser();
 
-    if (error || !data.user) {
-      window.location.href = "admin.html";
-      return;
-    }
+   if (error || !data.user) {
+  document.getElementById("status").textContent =
+    "Oturum bulunamadı: " + (error?.message || "Kullanıcı yok");
+  return;
+}
 
     const { data: profile, error: profileError } =
       await supabaseClient
@@ -136,11 +137,11 @@
         .eq("id", data.user.id)
         .single();
 
-    if (profileError || !profile || !profile.is_active) {
-      await supabaseClient.auth.signOut();
-      window.location.href = "admin.html";
-      return;
-    }
+   if (profileError || !profile || !profile.is_active) {
+  document.getElementById("status").textContent =
+    "Yetki hatası: " + (profileError?.message || JSON.stringify(profile));
+  return;
+}
 
     document.getElementById("status").textContent =
       "Giriş yapan kullanıcı: " + data.user.email;
