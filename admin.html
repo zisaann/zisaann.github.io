@@ -4,10 +4,121 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Girişi | Aksaray Üniversitesi</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #f4f6f2;
+      font-family: Arial, sans-serif;
+      color: #26352c;
+    }
+
+    .login-box {
+      width: min(90%, 420px);
+      padding: 40px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 35px #00000012;
+    }
+
+    h1 {
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p {
+      color: #718075;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #dce3dc;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 24px;
+      border: 0;
+      border-radius: 9px;
+      background: #315b43;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #message {
+      margin-top: 18px;
+      font-size: 14px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>Aksaray Üniversitesi</h1>
-  <h2>Yönetim Paneli</h2>
-  <p>Admin giriş ekranı hazırlanıyor...</p>
+  <div class="login-box">
+    <h1>AKSARAY ÜNİVERSİTESİ</h1>
+    <p>Dijital Menü Yönetim Paneli</p>
+
+    <form id="loginForm">
+      <label for="email">E-posta</label>
+      <input type="email" id="email" required>
+
+      <label for="password">Şifre</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Giriş Yap</button>
+    </form>
+
+    <div id="message"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      message.textContent = "Giriş kontrol ediliyor...";
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        message.textContent = "Giriş başarısız: " + error.message;
+        return;
+      }
+
+      message.textContent = "Giriş başarılı!";
+
+      window.location.href = "dashboard.html";
+    });
+  </script>
 </body>
 </html>
