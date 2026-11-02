@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yönetim Paneli | Aksaray Üniversitesi</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f2;
+      color: #26352c;
+    }
+
+    header {
+      background: #315b43;
+      color: white;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 45px auto;
+      padding: 0 20px;
+    }
+
+    .welcome {
+      margin-bottom: 30px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px #00000009;
+    }
+
+    .card h2 {
+      font-size: 19px;
+    }
+
+    .card p {
+      color: #718075;
+    }
+
+    button {
+      padding: 11px 17px;
+      border: none;
+      border-radius: 8px;
+      background: #315b43;
+      color: white;
+      cursor: pointer;
+    }
+
+    #logout {
+      background: white;
+      color: #315b43;
+    }
+
+    #status {
+      margin-top: 25px;
+      color: #718075;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <strong>AKSARAY ÜNİVERSİTESİ | ADMIN</strong>
+  <button id="logout">Çıkış Yap</button>
+</header>
+
+<main>
+  <div class="welcome">
+    <h1>Yönetim Paneli</h1>
+    <p>Dijital menünüzü buradan yönetebilirsiniz.</p>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h2>Ürün Yönetimi</h2>
+      <p>Menü ürünlerini ekleyin, düzenleyin ve silin.</p>
+    </div>
+
+    <div class="card">
+      <h2>Kategori Yönetimi</h2>
+      <p>Menü kategorilerini düzenleyin.</p>
+    </div>
+
+    <div class="card">
+      <h2>Alerjen Yönetimi</h2>
+      <p>Ürünlerin alerjen bilgilerini yönetin.</p>
+    </div>
+
+    <div class="card">
+      <h2>Menü Yönetimi</h2>
+      <p>Menü içeriklerini kontrol edin.</p>
+    </div>
+  </div>
+
+  <p id="status">Panel yükleniyor...</p>
+</main>
+
+<script>
+  async function checkAdmin() {
+    const { data, error } = await supabaseClient.auth.getUser();
+
+    if (error || !data.user) {
+      window.location.href = "admin.html";
+      return;
+    }
+
+    const { data: profile, error: profileError } =
+      await supabaseClient
+        .from("admin_profiles")
+        .select("role, is_active")
+        .eq("id", data.user.id)
+        .single();
+
+    if (profileError || !profile || !profile.is_active) {
+      await supabaseClient.auth.signOut();
+      window.location.href = "admin.html";
+      return;
+    }
+
+    document.getElementById("status").textContent =
+      "Giriş yapan kullanıcı: " + data.user.email;
+  }
+
+  document.getElementById("logout").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    window.location.href = "admin.html";
+  });
+
+  checkAdmin();
+</script>
+
+</body>
+</html>
