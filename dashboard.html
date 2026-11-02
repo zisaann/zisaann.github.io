@@ -9,76 +9,251 @@
   <script src="js/supabase.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f2;
-      color: #26352c;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7f4;
+  color: #26352c;
+  line-height: 1.6;
+}
 
-    header {
-      background: #315b43;
-      color: white;
-      padding: 22px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
+header {
+  background: #315b43;
+  color: white;
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
 
-    main {
-      max-width: 1100px;
-      margin: 45px auto;
-      padding: 0 20px;
-    }
+header strong {
+  font-size: 17px;
+  letter-spacing: 0.5px;
+}
 
-    .welcome {
-      margin-bottom: 30px;
-    }
+main {
+  width: min(1150px, 92%);
+  margin: 55px auto;
+}
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
+.welcome {
+  margin-bottom: 45px;
+}
 
-    .card {
-      background: white;
-      padding: 28px;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px #00000009;
-    }
+.welcome h1 {
+  font-size: 32px;
+  margin: 0 0 10px;
+}
 
-    .card h2 {
-      font-size: 19px;
-    }
+.welcome p {
+  color: #78857b;
+  margin: 0;
+}
 
-    .card p {
-      color: #718075;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+  margin-bottom: 55px;
+}
 
-    button {
-      padding: 11px 17px;
-      border: none;
-      border-radius: 8px;
-      background: #315b43;
-      color: white;
-      cursor: pointer;
-    }
+.card {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px #26352c0a;
+  border: 1px solid #edf0eb;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
-    #logout {
-      background: white;
-      color: #315b43;
-    }
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px #26352c12;
+}
 
-    #status {
-      margin-top: 25px;
-      color: #718075;
-    }
+.card h2 {
+  font-size: 19px;
+  margin: 0 0 12px;
+}
+
+.card p {
+  color: #78857b;
+  font-size: 14px;
+  margin: 0;
+}
+
+#productManagement {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  border: 1px solid #edf0eb;
+  box-shadow: 0 4px 20px #26352c08;
+}
+
+#productManagement > h2 {
+  font-size: 25px;
+  margin: 0 0 25px;
+}
+
+button {
+  padding: 13px 20px;
+  border: none;
+  border-radius: 9px;
+  background: #315b43;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #244832;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+#logout {
+  background: white;
+  color: #315b43;
+}
+
+#productSearch {
+  display: block;
+  width: 100%;
+  margin: 25px 0;
+  padding: 15px 17px;
+  border: 1px solid #dce4dc;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+}
+
+#productSearch:focus,
+#productForm input:focus,
+#productForm textarea:focus {
+  border-color: #648c70;
+  box-shadow: 0 0 0 3px #315b4312;
+}
+
+#productList {
+  display: grid;
+  gap: 18px;
+  margin-top: 25px;
+}
+
+#productList > div {
+  padding: 22px !important;
+  border: 1px solid #edf0eb;
+  border-radius: 13px;
+  gap: 20px !important;
+}
+
+#productList h3 {
+  margin: 0 0 7px;
+}
+
+#productList p {
+  margin: 4px 0;
+  color: #718075;
+}
+
+#productForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px !important;
+  padding: 35px !important;
+  margin-top: 35px !important;
+  border: 1px solid #e7ece6;
+  border-radius: 16px;
+  background: #fafbf9 !important;
+}
+
+#productForm h2 {
+  grid-column: 1 / -1;
+  margin: 0 0 8px;
+}
+
+#productForm label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #46584a;
+  align-self: end;
+}
+
+#productForm input:not([type="checkbox"]),
+#productForm textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 14px;
+  border: 1px solid #dce4dc;
+  border-radius: 9px;
+  background: white;
+  font: inherit;
+  outline: none;
+}
+
+#productForm textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+#productForm input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  margin-right: 8px;
+  accent-color: #315b43;
+  vertical-align: middle;
+}
+
+#productForm input[type="file"] {
+  padding: 10px !important;
+}
+
+#productForm button {
+  margin-top: 10px;
+}
+
+#productForm #cancelProduct {
+  background: #e8eee8;
+  color: #315b43;
+}
+
+#status {
+  margin-top: 30px;
+  color: #718075;
+}
+
+@media (max-width: 650px) {
+  main {
+    margin: 30px auto;
+  }
+
+  .welcome h1 {
+    font-size: 26px;
+  }
+
+  #productManagement {
+    padding: 22px;
+  }
+
+  #productForm {
+    grid-template-columns: 1fr;
+    padding: 22px !important;
+  }
+
+  header {
+    padding: 18px 5%;
+  }
+}
   </style>
 </head>
 
