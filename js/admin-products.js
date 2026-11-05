@@ -286,7 +286,7 @@ function updateSubcategories(categoryId, selectedId = "") {
 }
 
 // Ürün formu
-function openProductForm(product = null) {
+async function openProductForm(product = null) {
   const oldForm = document.getElementById("productForm");
   if (oldForm) oldForm.remove();
 
