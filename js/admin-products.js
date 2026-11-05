@@ -6,6 +6,7 @@ const productSearch = document.getElementById("productSearch");
 let products = [];
 let categories = [];
 let subcategories = [];
+let allergens = [];
 
 const buttonStyle = `
   border: none;
@@ -43,7 +44,17 @@ async function loadCategories() {
   categories = categoryResult.data || [];
   subcategories = subcategoryResult.data || [];
 }
+// Alerjenleri getir
+async function loadAllergens() {
+  const { data, error } = await supabaseClient
+    .from("allergens")
+    .select("*")
+    .order("sort_order", { ascending: true });
 
+  if (error) throw error;
+
+  allergens = data || [];
+}
 // Ürünleri getir
 async function loadProducts() {
   productList.textContent = "Ürünler yükleniyor...";
@@ -348,7 +359,12 @@ function openProductForm(product = null) {
         style="display:none; width:150px; height:150px;
         object-fit:cover; border-radius:12px; margin-top:12px;">
     </div>
-
+<div class="form-field" style="grid-column: 1 / -1;">
+  <label>Üründeki alerjenler</label>
+  <div id="allergenCheckboxes"
+    style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; padding:15px; background:#f8faf7; border-radius:12px;">
+  </div>
+</div>
     <div style="grid-column: 1 / -1; display:flex; gap:20px; flex-wrap:wrap;">
       <label class="checkbox-field">
         <input name="allergens_verified" type="checkbox">
@@ -371,6 +387,49 @@ function openProductForm(product = null) {
 
 document.getElementById("productManagement")
   .insertBefore(form, productDetails);
+  // Alerjen seçim kutularını oluştur
+const allergenContainer = form.querySelector("#allergenCheckboxes");
+
+allergens.forEach(allergen => {
+  const label = document.createElement("label");
+
+  label.style.cssText = `
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:14px;
+    color:#35483b;
+  `;
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.value = allergen.id;
+  checkbox.dataset.allergenId = allergen.id;
+
+  label.append(checkbox, document.createTextNode(allergen.name));
+  allergenContainer.appendChild(label);
+});
+
+// Düzenlenen ürünün mevcut alerjenlerini getir
+if (product) {
+  const { data: selectedAllergens, error } = await supabaseClient
+    .from("product_allergens")
+    .select("allergen_id")
+    .eq("product_id", product.id);
+
+  if (error) {
+    alert("Alerjenler yüklenemedi: " + error.message);
+  } else {
+    const selectedIds = (selectedAllergens || [])
+      .map(item => item.allergen_id);
+
+    allergenContainer
+      .querySelectorAll('input[type="checkbox"]')
+      .forEach(checkbox => {
+        checkbox.checked = selectedIds.includes(checkbox.value);
+      });
+  }
+}
 
   const field = name =>
     form.querySelector(`[name="${name}"]`);
@@ -522,6 +581,39 @@ if (result.error) {
 if (!result.data || result.data.length === 0) {
   throw new Error("Ürün kaydedilemedi. Supabase herhangi bir kayıt döndürmedi.");
 }
+      // Kaydedilen ürünün ID'si
+const savedProduct = result.data[0];
+
+// Formda seçilen alerjenler
+const selectedAllergenIds = Array.from(
+  form.querySelectorAll("#allergenCheckboxes input:checked")
+).map(checkbox => checkbox.value);
+
+// Önce eski alerjen bağlantılarını sil
+const { error: deleteAllergensError } = await supabaseClient
+  .from("product_allergens")
+  .delete()
+  .eq("product_id", savedProduct.id);
+
+if (deleteAllergensError) {
+  throw deleteAllergensError;
+}
+
+// Seçilen alerjenleri kaydet
+if (selectedAllergenIds.length > 0) {
+  const allergenRows = selectedAllergenIds.map(allergenId => ({
+    product_id: savedProduct.id,
+    allergen_id: allergenId
+  }));
+
+  const { error: allergenInsertError } = await supabaseClient
+    .from("product_allergens")
+    .insert(allergenRows);
+
+  if (allergenInsertError) {
+    throw allergenInsertError;
+  }
+}
 
       if (result.error) throw result.error;
 
@@ -540,7 +632,7 @@ if (!result.data || result.data.length === 0) {
 
 // Ürün ekleme
 addProductBtn.addEventListener("click", () => {
-  openProductForm();
+  async function openProductForm(product = null) {
 });
 
 // Ürün düzenleme
@@ -582,8 +674,9 @@ productSearch.addEventListener("input", () => {
 // Başlangıç
 async function initializeProductManagement() {
   try {
-    await loadCategories();
-    await loadProducts();
+await loadCategories();
+await loadAllergens();
+await loadProducts();
   } catch (error) {
     productList.textContent =
       "Kategori bilgileri yüklenemedi: " + error.message;
