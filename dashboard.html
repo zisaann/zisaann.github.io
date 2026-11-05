@@ -321,6 +321,44 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+    #productListDetails {
+  margin-top: 25px;
+  border: 1px solid #e5ebe4;
+  border-radius: 14px;
+  background: #fafbf9;
+  overflow: hidden;
+}
+
+#productListDetails summary {
+  padding: 18px 22px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #315b43;
+  list-style: none;
+}
+
+#productListDetails summary::-webkit-details-marker {
+  display: none;
+}
+
+#productListDetails summary::after {
+  content: "+";
+  float: right;
+  font-size: 20px;
+}
+
+#productListDetails[open] summary::after {
+  content: "−";
+}
+
+#productListDetails #productSearch {
+  width: calc(100% - 40px);
+  margin: 15px 20px;
+}
+
+#productListDetails #productList {
+  padding: 0 20px 20px;
+}
   </style>
 </head>
 
@@ -341,17 +379,23 @@ button:disabled {
 
   <h2>Ürün Yönetimi</h2>
 
-  <button id="addProductBtn">+ Yeni Ürün Ekle</button>
+    <button id="addProductBtn">+ Yeni Ürün Ekle</button>
 
-  <input
-    type="text"
-    id="productSearch"
-    placeholder="Ürün ara..."
-  >
+  <details id="productListDetails">
+    <summary>
+      Ürün Listesini Görüntüle
+    </summary>
 
-  <div id="productList">
-    Ürünler yükleniyor...
-  </div>
+    <input
+      type="text"
+      id="productSearch"
+      placeholder="Ürün ara..."
+    >
+
+    <div id="productList">
+      Ürünler yükleniyor...
+    </div>
+  </details>
 
 </section>
   
