@@ -382,27 +382,74 @@ function renderProductCard(product) {
   `;
 }
 
+
 function renderProducts() {
   const visibleProducts = getVisibleProducts();
   const groups = [];
 
-  visibleProducts.forEach(product => {
-    let group = groups.find(item =>
-      item.category === product.category &&
-      item.subcategory === product.subcategory
-    );
-
-    if (!group) {
-      group = {
-        category: product.category,
-        subcategory: product.subcategory,
-        products: []
-      };
-      groups.push(group);
+  // Kategorilerin ve alt kategorilerin veritabanındaki
+  // sort_order sırasını koru.
+  MENU_DATA.forEach(category => {
+    if (activeCategory !== "Tümü" &&
+        activeCategory !== category.category) {
+      return;
     }
 
-    group.products.push(product);
+    category.subcategories.forEach(subcategory => {
+      if (activeSubcategory &&
+          activeSubcategory !== subcategory.name) {
+        return;
+      }
+
+      const groupProducts = visibleProducts.filter(product =>
+        product.category === category.category &&
+        product.subcategory === subcategory.name
+      );
+
+      if (groupProducts.length > 0) {
+        groups.push({
+          category: category.category,
+          subcategory: subcategory.name,
+          products: groupProducts
+        });
+      }
+    });
   });
+
+  productList.innerHTML = groups.map(group => {
+    const heading = activeCategory === "Tümü"
+      ? `${group.category} · ${group.subcategory}`
+      : group.subcategory;
+
+    return `
+      <section class="product-group" id="${getGroupId(group.category, group.subcategory)}">
+        <div class="product-group-heading">
+          <h3>${escapeHTML(heading)}</h3>
+          <span>${group.products.length} ürün</span>
+        </div>
+        <div class="product-grid">
+          ${group.products.map(renderProductCard).join("")}
+        </div>
+      </section>
+    `;
+  }).join("");
+
+  productList.hidden = visibleProducts.length === 0;
+  emptyMessage.hidden = visibleProducts.length !== 0;
+  resultCount.textContent = `${visibleProducts.length} ürün`;
+
+  if (selectedAllergens.size > 0) {
+    const names = [...selectedAllergens]
+      .map(id => ALLERGENS.find(item => item.id === id)?.label)
+      .filter(Boolean);
+
+    filterMessage.textContent =
+      `${names.join(", ")} seçildi. Alerjen bilgisi doğrulanmamış ürünler gösterilmiyor. ${visibleProducts.length} ürün listelendi.`;
+  } else {
+    filterMessage.textContent =
+      `Henüz alerjen seçilmedi. ${visibleProducts.length} ürün listeleniyor.`;
+  }
+}
 
   productList.innerHTML = groups.map(group => {
     const heading = activeCategory === "Tümü"
