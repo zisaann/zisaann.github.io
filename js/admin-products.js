@@ -447,13 +447,13 @@ form.querySelector("#cancelProduct").addEventListener("click", () => {
   form.remove();
 });
 
-  // Kaydet
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
+ // Kaydet
+form.addEventListener("submit", async event => {
+  event.preventDefault();
 
-    const saveButton = field("saveProductBtn");
-    saveButton.disabled = true;
-    saveButton.textContent = "Kaydediliyor...";
+  const saveButton = form.querySelector("#saveProductBtn");
+  saveButton.disabled = true;
+  saveButton.textContent = "Kaydediliyor...";
 
     try {
       const selectedSubcategory = field("subcategory_id").value;
