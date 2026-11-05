@@ -415,9 +415,6 @@ function renderProducts() {
       }
     });
   });
-
-  productList.innerHTML = groups.map(group => {
-    const heading = activeCategory === "Tümü"
       ? `${group.category} · ${group.subcategory}`
       : group.subcategory;
 
