@@ -439,10 +439,10 @@ function openProductForm(product = null) {
     preview.style.display = "block";
   });
 
-  // İptal
-  field("cancelProduct").addEventListener("click", () => {
-    form.remove();
-  });
+ // İptal
+form.querySelector("#cancelProduct").addEventListener("click", () => {
+  form.remove();
+});
 
   // Kaydet
   form.addEventListener("submit", async event => {
