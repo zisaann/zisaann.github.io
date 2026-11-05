@@ -534,6 +534,7 @@ if (modalImage) {
   modalImage.addEventListener("error", () => {
     modalImage.style.display = "none";
   }, { once: true });
+ }
 }
 
 // Kartlara tıklanınca ürün ayrıntısını aç.
