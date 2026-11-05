@@ -4,14 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8f6f1">
-  <meta name="description" content="Aksaray Üniversitesi dijital menüsü. Günün lezzetlerini keşfedin.">
-
+  <meta name="theme-color" content="#102e78">
   <title>Aksaray Üniversitesi | Dijital Menü</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
 
@@ -23,314 +21,214 @@
 
 <body>
 
-  <!-- ÜST NAVİGASYON -->
-  <header class="navbar">
-    <a class="brand" href="#" aria-label="Aksaray Üniversitesi dijital menü ana sayfa">
+<header class="navbar">
+  <a class="brand" href="#">
+    <span class="brand-mark">AÜ</span>
+    <span class="brand-name">
+      AKSARAY ÜNİVERSİTESİ
+      <small>DİJİTAL MENÜ</small>
+    </span>
+  </a>
+
+  <nav class="nav-links">
+    <a href="#menu">Menüyü keşfet</a>
+    <a href="#allergens">Alerjen bilgileri</a>
+  </nav>
+
+  <a href="admin.html" class="admin-login-link">
+    <span>♧</span> Yönetici girişi
+  </a>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="eyebrow">AKSARAY ÜNİVERSİTESİ · YEMEKHANE</span>
+
+      <h1>
+        Güzel bir gün,<br>
+        güzel bir <em>lezzetle</em><br>
+        başlar.
+      </h1>
+
+      <p>
+        Günün menüsünü keşfet. Sana uygun lezzetleri bul,
+        içerikleri incele ve seçimini kolayca yap.
+      </p>
+
+      <a href="#menu" class="hero-button">
+        Menüyü keşfet <span>↗</span>
+      </a>
+
+      <div class="hero-note">
+        <span class="note-line"></span>
+        Özenle hazırlanan lezzetler
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-circle circle-one"></div>
+      <div class="hero-circle circle-two"></div>
+
+      <div class="hero-food hero-food-main">
+        <span>🍽️</span>
+      </div>
+
+      <div class="hero-food hero-food-small food-left">
+        <span>🥗</span>
+      </div>
+
+      <div class="hero-food hero-food-small food-right">
+        <span>🍝</span>
+      </div>
+
+      <div class="hero-sticker">
+        <span>✳</span>
+        AFİYET<br>OLSUN
+      </div>
+    </div>
+
+    <div class="hero-bottom-wave"></div>
+  </section>
+
+  <!-- ALERJEN FİLTRELERİ -->
+  <section class="allergen-box" id="allergens">
+    <div class="allergen-heading">
+      <div>
+        <span class="eyebrow">BİLİNÇLİ SEÇİM</span>
+        <h2>İçeriğini keşfet.</h2>
+        <p>
+          Kaçınmak istediğin alerjenleri seç.
+          Seçtiklerinden herhangi birini içeren ürünler gizlenir.
+        </p>
+      </div>
+
+      <div class="allergen-symbol" aria-hidden="true">✳</div>
+    </div>
+
+    <div class="allergen-divider">
+      <span>ALERJEN FİLTRELERİ</span>
+      <button id="clearFilters" class="clear-btn" type="button">
+        Seçimleri temizle ↺
+      </button>
+    </div>
+
+    <div id="allergenList" class="allergen-list"></div>
+
+    <div class="filter-status">
+      <span class="status-icon">✓</span>
+      <p id="filterMessage" aria-live="polite">
+        Henüz alerjen seçilmedi.
+      </p>
+    </div>
+
+    <p class="warning">
+      Ürünlerin alerjen bilgileri henüz doğrulanmamıştır.
+      Sipariş öncesinde işletmeyle doğrulayın. Çapraz bulaşma riski olabilir;
+      bu filtreleme güvenlik garantisi vermez.
+    </p>
+  </section>
+
+  <!-- MENÜ -->
+  <section id="menu" class="menu-section">
+
+    <div class="menu-intro">
+      <div>
+        <span class="eyebrow">BUGÜN NE YESEK?</span>
+        <h2>Menümüz<span>.</span></h2>
+      </div>
+
+      <p>
+        Her damak tadına uygun seçenekler.
+        Favori lezzetini bulmak için menümüze göz at.
+      </p>
+    </div>
+
+    <div class="menu-tools">
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="⌕  Menüde lezzet ara..."
+        aria-label="Menüde ara"
+      >
+
+      <span id="resultCount" class="result-count"></span>
+    </div>
+
+    <div class="category-area">
+      <span class="category-label">KATEGORİLER</span>
+      <div id="categoryList" class="category-list" aria-label="Ana kategoriler"></div>
+    </div>
+
+    <div
+      id="subcategoryList"
+      class="subcategory-list"
+      aria-label="Alt kategoriler"
+    ></div>
+
+    <div id="productList" class="product-sections"></div>
+
+    <div id="emptyMessage" class="empty-message" hidden>
+      <span class="empty-icon">🍽️</span>
+      <h3>Aradığın lezzeti bulamadık.</h3>
+      <p>Filtrelerini temizleyebilir veya başka bir ürün arayabilirsin.</p>
+      <button id="emptyClear" class="primary-btn" type="button">
+        Filtreleri temizle
+      </button>
+    </div>
+  </section>
+
+  <!-- QR -->
+  <section class="qr-section">
+    <div class="qr-decoration" aria-hidden="true">✳</div>
+
+    <div class="qr-copy">
+      <span class="eyebrow">HER ZAMAN YANINDA</span>
+      <h2>Menüyü paylaş.<br><em>Lezzeti keşfet.</em></h2>
+      <p>
+        Dijital menü bağlantısını paylaşabilir,
+        QR kodunu indirerek kolayca erişebilirsin.
+      </p>
+    </div>
+
+    <div class="qr-card">
+      <div class="qr-card-heading">AKSARAY ÜNİVERSİTESİ</div>
+      <div id="qrcode"></div>
+      <button id="downloadQR" class="qr-download" type="button">
+        QR kodu indir ↓
+      </button>
+      <small id="qrMessage"></small>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-main">
+    <a class="brand footer-brand" href="#">
       <span class="brand-mark">AÜ</span>
-      <span class="brand-copy">
-        <strong>AKSARAY ÜNİVERSİTESİ</strong>
+      <span class="brand-name">
+        AKSARAY ÜNİVERSİTESİ
         <small>DİJİTAL MENÜ</small>
       </span>
     </a>
 
-    <div class="navbar-right">
-      <span class="navbar-caption">KAMPÜSÜN LEZZET NOKTASI</span>
-      <a href="admin.html" class="admin-login-link">
-        <span aria-hidden="true">↗</span>
-        Yönetici girişi
-      </a>
-    </div>
-  </header>
+    <p class="footer-slogan">
+      Lezzetler bir dokunuş uzağınızda.
+    </p>
+  </div>
 
+  <div class="footer-credit">
+    <p class="footer-heading">DİJİTAL MENÜ TASARIMI VE GELİŞTİRME EKİBİ</p>
+    <p class="footer-team">Zişan Güler · Rümeysa Nur Ceylan · Büşra Kötek</p>
+    <p class="footer-team">Şevval Demirel · Zeynep Güzeler · Hacer Ulaş</p>
+  </div>
 
-  <main>
-
-    <!-- HERO / AÇILIŞ -->
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="hero-kicker">
-          <span class="hero-kicker-line"></span>
-          AKSARAY ÜNİVERSİTESİ · YEMEKHANE
-        </div>
-
-        <h1>
-          Güzel bir gün,<br>
-          güzel bir <em>lezzetle</em><br>
-          başlar.
-        </h1>
-
-        <p class="hero-description">
-          Günün menüsünü keşfet, sevdiğin lezzetleri bul.
-          Kampüsün tüm seçenekleri şimdi bir arada.
-        </p>
-
-        <a href="#menu" class="hero-button">
-          Menüyü keşfet
-          <span aria-hidden="true">↓</span>
-        </a>
-
-        <div class="hero-footnote">
-          <span class="hero-footnote-icon">✳</span>
-          Özenle hazırlanan lezzetler, kolayca keşfedilen bir menü.
-        </div>
-      </div>
-
-      <div class="hero-art" aria-label="Menü tasarım görsel alanı">
-        <div class="hero-art-backdrop"></div>
-        <div class="hero-art-circle hero-art-circle-one"></div>
-        <div class="hero-art-circle hero-art-circle-two"></div>
-
-        <div class="hero-art-card hero-art-card-main">
-          <span class="hero-art-label">GÜNÜN MENÜSÜ</span>
-          <div class="hero-art-illustration" aria-hidden="true">
-            <span class="hero-plate"></span>
-            <span class="hero-food hero-food-one"></span>
-            <span class="hero-food hero-food-two"></span>
-            <span class="hero-food hero-food-three"></span>
-            <span class="hero-herb hero-herb-one">✳</span>
-            <span class="hero-herb hero-herb-two">✳</span>
-          </div>
-          <div class="hero-art-bottom">
-            <span>Her gün yeni bir lezzet</span>
-            <span class="hero-art-star">✳</span>
-          </div>
-        </div>
-
-        <div class="hero-floating-note">
-          <span class="floating-note-icon">✦</span>
-          <span>
-            <strong>Keşfetmeye başla</strong>
-            <small>Favori lezzetini bul</small>
-          </span>
-        </div>
-
-        <div class="hero-side-text">FRESH · SIMPLE · DELICIOUS</div>
-      </div>
-
-      <div class="hero-index">01 <span>/</span> 04</div>
-    </section>
-
-
-    <!-- KISA BİLGİ ŞERİDİ -->
-    <section class="feature-strip" aria-label="Menü özellikleri">
-      <div class="feature-item">
-        <span class="feature-icon">✳</span>
-        <span>
-          <strong>Kolay keşif</strong>
-          <small>Tüm menü tek yerde</small>
-        </span>
-      </div>
-
-      <div class="feature-divider"></div>
-
-      <div class="feature-item">
-        <span class="feature-icon">⌕</span>
-        <span>
-          <strong>Hızlı arama</strong>
-          <small>Aradığın lezzeti bul</small>
-        </span>
-      </div>
-
-      <div class="feature-divider"></div>
-
-      <div class="feature-item">
-        <span class="feature-icon">♡</span>
-        <span>
-          <strong>Alerjen filtreleri</strong>
-          <small>Ürün bilgilerini incele</small>
-        </span>
-      </div>
-    </section>
-
-
-    <!-- MENÜ -->
-    <section id="menu" class="menu-section">
-
-      <div class="menu-intro">
-        <div>
-          <span class="section-kicker">LEZZETLERİ KEŞFET</span>
-          <h2>Bugün menüde <em>neler var?</em></h2>
-          <p>Canının istediği lezzeti seç, menümüzü keşfet.</p>
-        </div>
-
-        <div class="menu-count">
-          <span class="menu-count-dot"></span>
-          <span id="resultCount" class="result-count"></span>
-        </div>
-      </div>
-
-
-      <!-- ARAMA -->
-      <div class="menu-search-wrap">
-        <span class="search-icon" aria-hidden="true">⌕</span>
-        <input
-          type="search"
-          id="searchInput"
-          class="search-input"
-          placeholder="Bir lezzet ara..."
-          aria-label="Menüde ara"
-        >
-        <span class="search-shortcut">MENÜDE ARA</span>
-      </div>
-
-
-      <!-- KATEGORİLER -->
-      <div class="category-area">
-        <div class="category-heading">
-          <span class="section-kicker">MENÜ KATEGORİLERİ</span>
-          <span class="category-heading-note">Bir kategori seç</span>
-        </div>
-
-        <div id="categoryList" class="category-list" aria-label="Ana kategoriler"></div>
-        <div id="subcategoryList" class="subcategory-list" aria-label="Alt kategoriler"></div>
-      </div>
-
-
-      <!-- ÜRÜNLER -->
-      <div class="products-heading">
-        <div>
-          <span class="section-kicker">SENİN İÇİN SEÇTİKLERİMİZ</span>
-          <h3>Menü seçenekleri</h3>
-        </div>
-        <span class="products-heading-decoration">BON APPÉTIT <span>✳</span></span>
-      </div>
-
-      <div id="productList" class="product-sections"></div>
-
-
-      <!-- BOŞ SONUÇ -->
-      <div id="emptyMessage" class="empty-message" hidden>
-        <span class="empty-icon">⌕</span>
-        <h3>Aradığın lezzeti bulamadık.</h3>
-        <p>Arama kelimeni değiştirebilir veya filtrelerini temizleyebilirsin.</p>
-        <button id="emptyClear" class="primary-btn" type="button">
-          Filtreleri temizle
-          <span aria-hidden="true">↺</span>
-        </button>
-      </div>
-
-    </section>
-
-
-    <!-- ALERJEN BİLGİ ALANI -->
-    <section class="allergen-section">
-      <div class="allergen-intro">
-        <div class="allergen-symbol" aria-hidden="true">✳</div>
-        <div>
-          <span class="section-kicker">BİLİNÇLİ SEÇİMLER</span>
-          <h2>İçeriğini <em>tanı.</em></h2>
-          <p>
-            Kaçınmak istediğin alerjenleri seç. Seçtiklerinden herhangi birini
-            içeren ürünler menüde gizlenir.
-          </p>
-        </div>
-      </div>
-
-      <div class="allergen-content">
-        <div class="allergen-toolbar">
-          <span class="allergen-toolbar-title">ALERJEN TERCİHLERİN</span>
-          <button id="clearFilters" class="clear-btn" type="button">
-            Seçimleri temizle <span aria-hidden="true">↺</span>
-          </button>
-        </div>
-
-        <div id="allergenList" class="allergen-list"></div>
-
-        <div class="filter-status">
-          <span class="filter-status-icon" aria-hidden="true">✓</span>
-          <p id="filterMessage" aria-live="polite">Henüz alerjen seçilmedi.</p>
-        </div>
-
-        <div class="warning">
-          <span class="warning-icon" aria-hidden="true">!</span>
-          <p>
-            Ürünlerin alerjen bilgileri henüz doğrulanmamıştır.
-            Sipariş öncesinde işletmeyle doğrulayın. Çapraz bulaşma riski
-            olabilir; bu filtreleme güvenlik garantisi vermez.
-          </p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- QR KOD -->
-    <section class="qr-section">
-      <div class="qr-copy">
-        <span class="section-kicker">HER ZAMAN YANINDA</span>
-        <h2>Menüye ulaşmak<br><em>çok kolay.</em></h2>
-        <p>
-          Dijital menü bağlantısını paylaşabilir, QR kodunu indirerek
-          menüye hızlıca ulaşabilirsin.
-        </p>
-        <div class="qr-decoration">
-          <span>SCAN</span>
-          <span class="qr-decoration-line"></span>
-          <span>DISCOVER</span>
-        </div>
-      </div>
-
-      <div class="qr-card">
-        <div class="qr-card-top">
-          <span>AKSARAY ÜNİVERSİTESİ</span>
-          <span class="qr-card-mark">AÜ</span>
-        </div>
-
-        <div id="qrcode"></div>
-
-        <div class="qr-card-bottom">
-          <span>DİJİTAL MENÜ</span>
-          <button id="downloadQR" class="clear-btn" type="button">
-            QR kodu indir <span aria-hidden="true">↓</span>
-          </button>
-          <small id="qrMessage"></small>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-brand-area">
-        <a class="brand footer-brand" href="#">
-          <img
-            class="brand-logo"
-            src="aksaray-universitesi-logo.png"
-            alt="Aksaray Üniversitesi logosu"
-          >
-          <span class="brand-copy">
-            <strong>AKSARAY ÜNİVERSİTESİ</strong>
-            <small>DİJİTAL MENÜ</small>
-          </span>
-        </a>
-
-        <p class="footer-slogan">
-          Lezzetler bir dokunuş uzağınızda.
-        </p>
-      </div>
-
-      <div class="footer-message">
-        <span class="section-kicker">AFİYET OLSUN</span>
-        <p>Güzel yemek,<br><em>iyi hissettirir.</em></p>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="footer-credit">
-        <span class="footer-heading">TASARIM VE GELİŞTİRME</span>
-        <p class="footer-team">
-          Zişan Güler · Rümeysa Nur Ceylan · Büşra Kötek
-        </p>
-        <p class="footer-team">
-          Şevval Demirel · Zeynep Güzeler · Hacer Ulaş
-        </p>
-      </div>
-
-      <p class="footer-copyright">© 2026 Aksaray Üniversitesi</p>
-    </div>
-  </footer>
+  <p class="footer-copyright">© 2026 · Aksaray Üniversitesi</p>
+</footer>
 
 </body>
 </html>
