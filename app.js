@@ -1,15 +1,78 @@
+
 /*
   AKSARAY ÜNİVERSİTESİ DİJİTAL MENÜ
-  Ürün fiyatları varsa gösterilir.
+  Supabase üzerinden menü verilerini yükler.
   Alerjen filtreleri seçildiğinde alerjen bilgisi
   doğrulanmamış ürünler gösterilmez.
 */
 
-// Supabase'den yüklenecek menü verileri
+// ==========================================
+// MENÜ VERİLERİ
+// ==========================================
+
 let MENU_DATA = [];
 let CATEGORIES = ["Tümü"];
 let ALLERGENS = [];
 let PRODUCTS = [];
+
+const selectedAllergens = new Set();
+
+let activeCategory = "Tümü";
+let activeSubcategory = "";
+let searchTerm = "";
+
+// ==========================================
+// HTML ELEMENTLERİ
+// ==========================================
+
+const allergenList = document.getElementById("allergenList");
+const categoryList = document.getElementById("categoryList");
+const subcategoryList = document.getElementById("subcategoryList");
+const productList = document.getElementById("productList");
+const filterMessage = document.getElementById("filterMessage");
+const resultCount = document.getElementById("resultCount");
+const emptyMessage = document.getElementById("emptyMessage");
+const searchInput = document.getElementById("searchInput");
+
+// ==========================================
+// YARDIMCI FONKSİYONLAR
+// ==========================================
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[char]));
+}
+
+function slugify(value) {
+  return value
+    .toLocaleLowerCase("tr-TR")
+    .replace(/ı/g, "i")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function getGroupId(category, subcategory) {
+  return `group-${slugify(category)}-${slugify(subcategory)}`;
+}
+
+function getSubcategories(category) {
+  const group = MENU_DATA.find(item => item.category === category);
+
+  return group
+    ? group.subcategories.map(item => item.name)
+    : [];
+}
+
+// ==========================================
+// SUPABASE'DEN MENÜ VERİLERİNİ YÜKLE
+// ==========================================
 
 async function loadMenuData() {
   try {
@@ -92,13 +155,17 @@ async function loadMenuData() {
       category: category.name,
 
       subcategories: subcategories
-        .filter(subcategory => subcategory.category_id === category.id)
+        .filter(subcategory =>
+          subcategory.category_id === category.id
+        )
         .map(subcategory => ({
           name: subcategory.name,
           emoji: subcategory.emoji || "🍽️",
 
           products: productRows
-            .filter(product => product.subcategory_id === subcategory.id)
+            .filter(product =>
+              product.subcategory_id === subcategory.id
+            )
             .map(product => product.name)
         }))
     }));
@@ -108,7 +175,7 @@ async function loadMenuData() {
       ...MENU_DATA.map(item => item.category)
     ];
 
-    // Ürünleri mevcut site sisteminin anlayacağı biçime dönüştür
+    // Kategori ve alt kategori eşleştirmeleri
     const subcategoryById = new Map(
       subcategories.map(item => [item.id, item])
     );
@@ -117,13 +184,18 @@ async function loadMenuData() {
       categories.map(item => [item.id, item])
     );
 
+    // Ürünleri site sistemine uygun hale getir
     PRODUCTS = productRows
       .map(product => {
-        const subcategory = subcategoryById.get(product.subcategory_id);
+        const subcategory = subcategoryById.get(
+          product.subcategory_id
+        );
 
         if (!subcategory) return null;
 
-        const category = categoryById.get(subcategory.category_id);
+        const category = categoryById.get(
+          subcategory.category_id
+        );
 
         if (!category) return null;
 
@@ -134,7 +206,9 @@ async function loadMenuData() {
           subcategory: subcategory.name,
           emoji: product.emoji || subcategory.emoji || "🍽️",
           image: product.image_url || "",
-          price: product.price == null ? null : Number(product.price),
+          price: product.price == null
+            ? null
+            : Number(product.price),
           description: product.description || "",
           calories: product.calories == null
             ? null
@@ -145,83 +219,61 @@ async function loadMenuData() {
       })
       .filter(Boolean);
 
-    // Veriler geldikten sonra mevcut ekranları yenile
+    // Ekranları yenile
     renderAllergens();
     renderCategories();
     renderSubcategories();
     renderProducts();
 
-    console.log("Menü Supabase'den yüklendi:", PRODUCTS.length, "ürün");
+    console.log(
+      "Menü Supabase'den yüklendi:",
+      PRODUCTS.length,
+      "ürün"
+    );
 
   } catch (error) {
     console.error("Menü yüklenirken hata oluştu:", error);
 
     productList.hidden = false;
     emptyMessage.hidden = true;
+
     productList.innerHTML =
       "<p>Menü yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>";
   }
 }
 
-const selectedAllergens = new Set();
-let activeCategory = "Tümü";
-let activeSubcategory = "";
-let searchTerm = "";
-
-const allergenList = document.getElementById("allergenList");
-const categoryList = document.getElementById("categoryList");
-const subcategoryList = document.getElementById("subcategoryList");
-const productList = document.getElementById("productList");
-const filterMessage = document.getElementById("filterMessage");
-const resultCount = document.getElementById("resultCount");
-const emptyMessage = document.getElementById("emptyMessage");
-const searchInput = document.getElementById("searchInput");
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  }[char]));
-}
-
-function slugify(value) {
-  return value
-    .toLocaleLowerCase("tr-TR")
-    .replace(/ı/g, "i")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function getGroupId(category, subcategory) {
-  return `group-${slugify(category)}-${slugify(subcategory)}`;
-}
-
-function getSubcategories(category) {
-  const group = MENU_DATA.find(item => item.category === category);
-  return group ? group.subcategories.map(item => item.name) : [];
-}
+// ==========================================
+// ALERJENLERİ GÖSTER
+// ==========================================
 
 function renderAllergens() {
   allergenList.innerHTML = ALLERGENS.map(item => `
     <label class="allergen-option">
-      <input type="checkbox" value="${item.id}" aria-label="${escapeHTML(item.label)}">
+      <input
+        type="checkbox"
+        value="${escapeHTML(item.id)}"
+        aria-label="${escapeHTML(item.label)}"
+      >
       <span>${escapeHTML(item.label)}</span>
     </label>
   `).join("");
 
   allergenList.querySelectorAll("input").forEach(input => {
     input.addEventListener("change", () => {
-      if (input.checked) selectedAllergens.add(input.value);
-      else selectedAllergens.delete(input.value);
+      if (input.checked) {
+        selectedAllergens.add(input.value);
+      } else {
+        selectedAllergens.delete(input.value);
+      }
+
       renderProducts();
     });
   });
 }
+
+// ==========================================
+// KATEGORİLERİ GÖSTER
+// ==========================================
 
 function renderCategories() {
   categoryList.innerHTML = CATEGORIES.map(category => `
@@ -236,12 +288,17 @@ function renderCategories() {
     button.addEventListener("click", () => {
       activeCategory = button.dataset.category;
       activeSubcategory = "";
+
       renderCategories();
       renderSubcategories();
       renderProducts();
     });
   });
 }
+
+// ==========================================
+// ALT KATEGORİLERİ GÖSTER
+// ==========================================
 
 function renderSubcategories() {
   if (activeCategory === "Tümü") {
@@ -251,7 +308,9 @@ function renderSubcategories() {
   }
 
   const subcategories = getSubcategories(activeCategory);
+
   subcategoryList.hidden = subcategories.length === 0;
+
   subcategoryList.innerHTML = subcategories.map(subcategory => `
     <button
       type="button"
@@ -263,6 +322,7 @@ function renderSubcategories() {
   subcategoryList.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", () => {
       activeSubcategory = button.dataset.subcategory;
+
       renderSubcategories();
       renderProducts();
 
@@ -270,33 +330,55 @@ function renderSubcategories() {
         const target = document.getElementById(
           getGroupId(activeCategory, activeSubcategory)
         );
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
       });
     });
   });
 }
 
+// ==========================================
+// FİLTRELENMİŞ ÜRÜNLERİ GETİR
+// ==========================================
 
 function getVisibleProducts() {
-  const query = searchTerm.trim().toLocaleLowerCase("tr-TR");
+  const query = searchTerm
+    .trim()
+    .toLocaleLowerCase("tr-TR");
 
- return PRODUCTS.filter(product => {
-  // Alerjen filtresi seçildiğinde doğrulanmamış ürünleri gizle
-  if (selectedAllergens.size > 0 && !product.allergensVerified) {
-    return false;
-  }
+  return PRODUCTS.filter(product => {
 
-  const containsSelectedAllergen = [...selectedAllergens].some(id =>
-    product.allergens.includes(id)
-  );
+    // Alerjen filtresi seçildiğinde
+    // doğrulanmamış ürünleri gizle
+    if (
+      selectedAllergens.size > 0 &&
+      !product.allergensVerified
+    ) {
+      return false;
+    }
 
-  if (containsSelectedAllergen) return false;
+    // Seçilen alerjenlerden herhangi birini içeren
+    // ürünleri gösterme
+    const containsSelectedAllergen = [
+      ...selectedAllergens
+    ].some(id => product.allergens.includes(id));
+
+    if (containsSelectedAllergen) {
+      return false;
+    }
 
     const matchesCategory =
-      activeCategory === "Tümü" || product.category === activeCategory;
+      activeCategory === "Tümü" ||
+      product.category === activeCategory;
 
     const matchesSubcategory =
-      !activeSubcategory || product.subcategory === activeSubcategory;
+      !activeSubcategory ||
+      product.subcategory === activeSubcategory;
 
     const searchableText = [
       product.name,
@@ -305,99 +387,123 @@ function getVisibleProducts() {
       product.description
     ].join(" ").toLocaleLowerCase("tr-TR");
 
-    return matchesCategory && matchesSubcategory &&
-      (!query || searchableText.includes(query));
+    return (
+      matchesCategory &&
+      matchesSubcategory &&
+      (!query || searchableText.includes(query))
+    );
   });
 }
+
+// ==========================================
+// ÜRÜN KARTI OLUŞTUR
+// ==========================================
 
 function renderProductCard(product) {
   return `
     <article
-  class="product-card"
-  data-product-id="${escapeHTML(product.id)}"
-  tabindex="0"
-  role="button"
-  aria-label="${escapeHTML(product.name)} ayrıntılarını aç"
->
+      class="product-card"
+      data-product-id="${escapeHTML(product.id)}"
+      tabindex="0"
+      role="button"
+      aria-label="${escapeHTML(product.name)} ayrıntılarını aç"
+    >
       <div class="product-art">
         <span class="product-emoji" aria-hidden="true">
           ${escapeHTML(product.emoji)}
         </span>
 
         ${product.image ? `
-  <img
-    class="product-photo"
-    src="${escapeHTML(product.image)}"
-    alt="${escapeHTML(product.name)}"
-    loading="lazy"
-    onerror="this.style.display='none';"
-  >
-` : ""}
+          <img
+            class="product-photo"
+            src="${escapeHTML(product.image)}"
+            alt="${escapeHTML(product.name)}"
+            loading="lazy"
+            onerror="this.style.display='none';"
+          >
+        ` : ""}
       </div>
 
       <div class="product-content">
-        
-<div class="product-top">
-  <h3 class="product-name">${escapeHTML(product.name)}</h3>
-  <span class="product-price">
-    ${product.price != null
-      ? `${product.price.toLocaleString("tr-TR")} TL`
-      : "Fiyat belirtilmedi"}
-  </span>
-</div>
 
-<p class="product-description">
-  ${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}
-</p>
-<p class="product-calories">
-  <span aria-hidden="true">🔥</span>
-  ${product.calories != null
-    ? `Yaklaşık ${product.calories} kcal / porsiyon`
-    : "Kalori bilgisi eklenmedi"}
-</p>
+        <div class="product-top">
+          <h3 class="product-name">
+            ${escapeHTML(product.name)}
+          </h3>
 
-<div class="product-tags">
-  <span class="product-tag">
-    Olası alerjenler: ${
-      product.allergens.length
-        ? escapeHTML(
-            product.allergens
-              .map(id => ALLERGENS.find(a => a.id === id)?.label || id)
-              .join(", ")
-          )
-        : "Alerjen bilgisi henüz eklenmedi"
-    }
-  </span>
+          <span class="product-price">
+            ${product.price != null
+              ? `${product.price.toLocaleString("tr-TR")} TL`
+              : "Fiyat belirtilmedi"}
+          </span>
+        </div>
 
-  ${!product.allergensVerified ? `
-    <span class="product-tag allergen-warning">
-      ⓘ Alerjen bilgisi henüz doğrulanmadı
-    </span>
-  ` : ""}
-</div>
+        <p class="product-description">
+          ${escapeHTML(
+            product.description ||
+            "Ürün açıklaması henüz eklenmedi."
+          )}
+        </p>
 
+        <p class="product-calories">
+          <span aria-hidden="true">🔥</span>
+          ${product.calories != null
+            ? `Yaklaşık ${product.calories} kcal / porsiyon`
+            : "Kalori bilgisi eklenmedi"}
+        </p>
+
+        <div class="product-tags">
+          <span class="product-tag">
+            Olası alerjenler: ${
+              product.allergens.length
+                ? escapeHTML(
+                    product.allergens
+                      .map(id =>
+                        ALLERGENS.find(a => a.id === id)?.label || id
+                      )
+                      .join(", ")
+                  )
+                : "Alerjen bilgisi henüz eklenmedi"
+            }
+          </span>
+
+          ${!product.allergensVerified ? `
+            <span class="product-tag allergen-warning">
+              ⓘ Alerjen bilgisi henüz doğrulanmadı
+            </span>
+          ` : ""}
+        </div>
 
       </div>
     </article>
   `;
 }
 
+// ==========================================
+// ÜRÜNLERİ GÖSTER
+// ==========================================
 
 function renderProducts() {
   const visibleProducts = getVisibleProducts();
   const groups = [];
 
-  // Kategorilerin ve alt kategorilerin veritabanındaki
-  // sort_order sırasını koru.
+  // Kategorilerin ve alt kategorilerin
+  // veritabanındaki sırasını koru
   MENU_DATA.forEach(category => {
-    if (activeCategory !== "Tümü" &&
-        activeCategory !== category.category) {
+
+    if (
+      activeCategory !== "Tümü" &&
+      activeCategory !== category.category
+    ) {
       return;
     }
 
     category.subcategories.forEach(subcategory => {
-      if (activeSubcategory &&
-          activeSubcategory !== subcategory.name) {
+
+      if (
+        activeSubcategory &&
+        activeSubcategory !== subcategory.name
+      ) {
         return;
       }
 
@@ -415,50 +521,23 @@ function renderProducts() {
       }
     });
   });
-      ? `${group.category} · ${group.subcategory}`
-      : group.subcategory;
-
-    return `
-      <section class="product-group" id="${getGroupId(group.category, group.subcategory)}">
-        <div class="product-group-heading">
-          <h3>${escapeHTML(heading)}</h3>
-          <span>${group.products.length} ürün</span>
-        </div>
-        <div class="product-grid">
-          ${group.products.map(renderProductCard).join("")}
-        </div>
-      </section>
-    `;
-  }).join("");
-
-  productList.hidden = visibleProducts.length === 0;
-  emptyMessage.hidden = visibleProducts.length !== 0;
-  resultCount.textContent = `${visibleProducts.length} ürün`;
-
-  if (selectedAllergens.size > 0) {
-    const names = [...selectedAllergens]
-      .map(id => ALLERGENS.find(item => item.id === id)?.label)
-      .filter(Boolean);
-
-    filterMessage.textContent =
-      `${names.join(", ")} seçildi. Alerjen bilgisi doğrulanmamış ürünler gösterilmiyor. ${visibleProducts.length} ürün listelendi.`;
-  } else {
-    filterMessage.textContent =
-      `Henüz alerjen seçilmedi. ${visibleProducts.length} ürün listeleniyor.`;
-  }
-}
 
   productList.innerHTML = groups.map(group => {
+
     const heading = activeCategory === "Tümü"
       ? `${group.category} · ${group.subcategory}`
       : group.subcategory;
 
     return `
-      <section class="product-group" id="${getGroupId(group.category, group.subcategory)}">
+      <section
+        class="product-group"
+        id="${getGroupId(group.category, group.subcategory)}"
+      >
         <div class="product-group-heading">
           <h3>${escapeHTML(heading)}</h3>
           <span>${group.products.length} ürün</span>
         </div>
+
         <div class="product-grid">
           ${group.products.map(renderProductCard).join("")}
         </div>
@@ -468,20 +547,29 @@ function renderProducts() {
 
   productList.hidden = visibleProducts.length === 0;
   emptyMessage.hidden = visibleProducts.length !== 0;
-  resultCount.textContent = `${visibleProducts.length} ürün`;
+
+  resultCount.textContent =
+    `${visibleProducts.length} ürün`;
 
   if (selectedAllergens.size > 0) {
     const names = [...selectedAllergens]
-      .map(id => ALLERGENS.find(item => item.id === id)?.label)
+      .map(id =>
+        ALLERGENS.find(item => item.id === id)?.label
+      )
       .filter(Boolean);
 
     filterMessage.textContent =
       `${names.join(", ")} seçildi. Alerjen bilgisi doğrulanmamış ürünler gösterilmiyor. ${visibleProducts.length} ürün listelendi.`;
+
   } else {
     filterMessage.textContent =
       `Henüz alerjen seçilmedi. ${visibleProducts.length} ürün listeleniyor.`;
   }
 }
+
+// ==========================================
+// ÜRÜN DETAY PENCERESİ
+// ==========================================
 
 function openProductModal(product) {
   if (!product) return;
@@ -493,60 +581,80 @@ function openProductModal(product) {
     modal.id = "productModal";
     modal.className = "product-modal";
     modal.hidden = true;
+
     modal.setAttribute("role", "dialog");
     modal.setAttribute("aria-modal", "true");
     modal.setAttribute("aria-labelledby", "productModalTitle");
+
     document.body.appendChild(modal);
   }
 
   const allergenText = product.allergens.length
     ? product.allergens
-        .map(id => ALLERGENS.find(item => item.id === id)?.label || id)
+        .map(id =>
+          ALLERGENS.find(item => item.id === id)?.label || id
+        )
         .join(", ")
     : "İçerik bilgisi işletme tarafından kontrol edilmelidir.";
 
   modal.innerHTML = `
     <div class="product-modal-content">
+
       <button
         type="button"
         class="product-modal-close"
         aria-label="Pencereyi kapat"
       >×</button>
 
-     ${product.image ? `
-  <img
-    class="product-modal-image"
-    src="${escapeHTML(product.image)}"
-    alt="${escapeHTML(product.name)}"
-  >
-` : ""}
+      ${product.image ? `
+        <img
+          class="product-modal-image"
+          src="${escapeHTML(product.image)}"
+          alt="${escapeHTML(product.name)}"
+        >
+      ` : ""}
 
       <div class="product-modal-details">
+
         <span class="product-modal-category">
-          ${escapeHTML(product.category)} · ${escapeHTML(product.subcategory)}
+          ${escapeHTML(product.category)}
+          ·
+          ${escapeHTML(product.subcategory)}
         </span>
 
-        <h2 id="productModalTitle">${escapeHTML(product.name)}</h2>
+        <h2 id="productModalTitle">
+          ${escapeHTML(product.name)}
+        </h2>
 
         <p class="product-modal-price">
           ${product.price != null
             ? `${product.price.toLocaleString("tr-TR")} TL`
             : "Fiyat belirtilmedi"}
         </p>
-<p class="product-modal-calories">
-  🔥 ${product.calories != null
-    ? `Yaklaşık ${product.calories} kcal / porsiyon`
-    : "Kalori bilgisi eklenmedi"}
-</p>
+
+        <p class="product-modal-calories">
+          🔥 ${product.calories != null
+            ? `Yaklaşık ${product.calories} kcal / porsiyon`
+            : "Kalori bilgisi eklenmedi"}
+        </p>
+
         <h3>Ürün hakkında</h3>
-        <p>${escapeHTML(product.description || "Ürün açıklaması henüz eklenmedi.")}</p>
+
+        <p>
+          ${escapeHTML(
+            product.description ||
+            "Ürün açıklaması henüz eklenmedi."
+          )}
+        </p>
 
         <h3>Olası alerjenler</h3>
+
         <p>${escapeHTML(allergenText)}</p>
 
         <p class="product-modal-warning">
           ⓘ Alerjen bilgileri işletme tarafından doğrulanmalıdır.
         </p>
+
       </div>
     </div>
   `;
@@ -554,7 +662,10 @@ function openProductModal(product) {
   modal.hidden = false;
   document.body.classList.add("modal-open");
 
-  const closeButton = modal.querySelector(".product-modal-close");
+  const closeButton = modal.querySelector(
+    ".product-modal-close"
+  );
+
   closeButton.focus();
 
   function closeModal() {
@@ -565,25 +676,35 @@ function openProductModal(product) {
   closeButton.addEventListener("click", closeModal);
 
   modal.onclick = event => {
-    if (event.target === modal) closeModal();
+    if (event.target === modal) {
+      closeModal();
+    }
   };
 
   modal.onkeydown = event => {
-    if (event.key === "Escape") closeModal();
+    if (event.key === "Escape") {
+      closeModal();
+    }
   };
 
-  const modalImage = modal.querySelector(".product-modal-image");
+  const modalImage = modal.querySelector(
+    ".product-modal-image"
+  );
 
-if (modalImage) {
-  modalImage.addEventListener("error", () => {
-    modalImage.style.display = "none";
-  }, { once: true });
- }
+  if (modalImage) {
+    modalImage.addEventListener("error", () => {
+      modalImage.style.display = "none";
+    }, { once: true });
+  }
 }
 
-// Kartlara tıklanınca ürün ayrıntısını aç.
+// ==========================================
+// ÜRÜN KARTI TIKLAMA
+// ==========================================
+
 productList.addEventListener("click", event => {
   const card = event.target.closest(".product-card");
+
   if (!card) return;
 
   const product = PRODUCTS.find(
@@ -593,12 +714,28 @@ productList.addEventListener("click", event => {
   openProductModal(product);
 });
 
-// Klavyeyle de ürün ayrıntısı açılabilsin.
+// ==========================================
+// KLAVYEYLE ÜRÜN DETAYI AÇMA
+// ==========================================
+
 productList.addEventListener("keydown", event => {
-  if (event.target.closest("button, a, input, textarea, select")) return;
-  if (event.key !== "Enter" && event.key !== " ") return;
+  if (
+    event.target.closest(
+      "button, a, input, textarea, select"
+    )
+  ) {
+    return;
+  }
+
+  if (
+    event.key !== "Enter" &&
+    event.key !== " "
+  ) {
+    return;
+  }
 
   const card = event.target.closest(".product-card");
+
   if (!card) return;
 
   event.preventDefault();
@@ -610,8 +747,13 @@ productList.addEventListener("keydown", event => {
   openProductModal(product);
 });
 
+// ==========================================
+// FİLTRELERİ TEMİZLE
+// ==========================================
+
 function clearFilters() {
   selectedAllergens.clear();
+
   searchTerm = "";
   activeCategory = "Tümü";
   activeSubcategory = "";
@@ -621,25 +763,41 @@ function clearFilters() {
   });
 
   searchInput.value = "";
+
   renderCategories();
   renderSubcategories();
   renderProducts();
 }
 
-document.getElementById("clearFilters").addEventListener("click", clearFilters);
-document.getElementById("emptyClear").addEventListener("click", clearFilters);
+document
+  .getElementById("clearFilters")
+  .addEventListener("click", clearFilters);
+
+document
+  .getElementById("emptyClear")
+  .addEventListener("click", clearFilters);
+
+// ==========================================
+// ARAMA
+// ==========================================
 
 searchInput.addEventListener("input", event => {
   searchTerm = event.target.value;
   renderProducts();
 });
 
+// ==========================================
+// QR KODU OLUŞTUR
+// ==========================================
+
 function createQRCode() {
   const qrElement = document.getElementById("qrcode");
   const message = document.getElementById("qrMessage");
 
   if (typeof QRCode === "undefined") {
-    message.textContent = "QR kütüphanesi yüklenemedi. İnternet bağlantısını kontrol et.";
+    message.textContent =
+      "QR kütüphanesi yüklenemedi. İnternet bağlantısını kontrol et.";
+
     return;
   }
 
@@ -662,33 +820,52 @@ function createQRCode() {
       : "Menü bağlantısının QR kodu hazır.";
 }
 
-document.getElementById("downloadQR").addEventListener("click", () => {
-  const qrElement = document.getElementById("qrcode");
-  const canvas = qrElement.querySelector("canvas");
-  const image = qrElement.querySelector("img");
+// ==========================================
+// QR KODUNU İNDİR
+// ==========================================
 
-  const dataUrl = canvas
-    ? canvas.toDataURL("image/png")
-    : image && image.src.startsWith("data:image")
-      ? image.src
-      : "";
+document
+  .getElementById("downloadQR")
+  .addEventListener("click", () => {
 
-  if (!dataUrl) {
-    document.getElementById("qrMessage").textContent =
-      "QR kod henüz hazır değil. Sayfayı yenileyip tekrar dene.";
-    return;
-  }
+    const qrElement = document.getElementById("qrcode");
 
-  const link = document.createElement("a");
-  link.download = "aksarayuni-menu-qr.png";
-  link.href = dataUrl;
-  link.click();
-});
+    const canvas = qrElement.querySelector("canvas");
+    const image = qrElement.querySelector("img");
+
+    const dataUrl = canvas
+      ? canvas.toDataURL("image/png")
+      : image && image.src.startsWith("data:image")
+        ? image.src
+        : "";
+
+    if (!dataUrl) {
+      document.getElementById("qrMessage").textContent =
+        "QR kod henüz hazır değil. Sayfayı yenileyip tekrar dene.";
+
+      return;
+    }
+
+    const link = document.createElement("a");
+
+    link.download = "aksarayuni-menu-qr.png";
+    link.href = dataUrl;
+
+    link.click();
+  });
+
+// ==========================================
+// BAŞLAT
+// ==========================================
 
 loadMenuData();
 
 if (document.readyState === "complete") {
   createQRCode();
 } else {
-  window.addEventListener("load", createQRCode, { once: true });
+  window.addEventListener(
+    "load",
+    createQRCode,
+    { once: true }
+  );
 }
