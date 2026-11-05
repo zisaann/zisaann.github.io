@@ -367,7 +367,10 @@ function openProductForm(product = null) {
     </div>
   `;
 
-  document.getElementById("productManagement").appendChild(form);
+  const productDetails = document.getElementById("productListDetails");
+
+document.getElementById("productManagement")
+  .insertBefore(form, productDetails);
 
   const field = name =>
     form.querySelector(`[name="${name}"]`);
