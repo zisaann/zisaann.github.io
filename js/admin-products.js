@@ -54,6 +54,8 @@ async function loadAllergens() {
   if (error) throw error;
 
   allergens = data || [];
+  console.log("Supabase'den gelen alerjenler:", allergens);
+console.log("Alerjen sayısı:", allergens.length);
 }
 // Ürünleri getir
 async function loadProducts() {
