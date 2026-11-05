@@ -254,6 +254,73 @@ button:disabled {
     padding: 18px 5%;
   }
 }
+    /* KATEGORİ YÖNETİMİ */
+
+#categoryManagement {
+  background: white;
+  padding: 35px;
+  margin-top: 35px;
+  border-radius: 18px;
+  border: 1px solid #edf0eb;
+  box-shadow: 0 4px 20px #26352c08;
+}
+
+#categoryManagement > h2 {
+  font-size: 25px;
+  margin: 0 0 5px;
+}
+
+.section-description {
+  color: #78857b;
+  margin-bottom: 28px;
+}
+
+.category-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.category-box {
+  background: #fafbf9;
+  border: 1px solid #e7ece6;
+  border-radius: 14px;
+  padding: 25px;
+  min-width: 0;
+}
+
+.category-box h3 {
+  margin: 0 0 20px;
+  font-size: 19px;
+}
+
+.category-box select,
+.category-box input:not([type="checkbox"]) {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 15px;
+  border: 1px solid #dce4dc;
+  border-radius: 9px;
+  font: inherit;
+  background: white;
+}
+
+#categoryList,
+#subcategoryList {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+@media (max-width: 750px) {
+  #categoryManagement {
+    padding: 22px;
+  }
+
+  .category-container {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -287,23 +354,53 @@ button:disabled {
   </div>
 
 </section>
+  
+   <section id="categoryManagement">
 
+  <h2>Kategori Yönetimi</h2>
+  <p class="section-description">
+    Menü kategorilerinizi ve alt kategorilerinizi buradan düzenleyebilirsiniz.
+  </p>
 
-    <div class="card">
-      <h2>Kategori Yönetimi</h2>
-      <p>Menü kategorilerini düzenleyin.</p>
+  <div class="category-container">
+
+    <!-- ANA KATEGORİLER -->
+    <div class="category-box">
+      <h3>Ana Kategoriler</h3>
+
+      <button id="addCategoryBtn">+ Yeni Kategori Ekle</button>
+
+      <div id="categoryFormContainer"></div>
+
+      <div id="categoryList">
+        Kategoriler yükleniyor...
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Alerjen Yönetimi</h2>
-      <p>Ürünlerin alerjen bilgilerini yönetin.</p>
+    <!-- ALT KATEGORİLER -->
+    <div class="category-box">
+      <h3>Alt Kategoriler</h3>
+
+      <label for="parentCategorySelect">
+        Ana Kategori Seçin
+      </label>
+
+      <select id="parentCategorySelect">
+        <option value="">Kategori seçin</option>
+      </select>
+
+      <button id="addSubcategoryBtn">+ Alt Kategori Ekle</button>
+
+      <div id="subcategoryFormContainer"></div>
+
+      <div id="subcategoryList">
+        Alt kategoriler burada görüntülenecek.
+      </div>
     </div>
 
-    <div class="card">
-      <h2>Menü Yönetimi</h2>
-      <p>Menü içeriklerini kontrol edin.</p>
-    </div>
   </div>
+
+</section>
 
   <p id="status">Panel yükleniyor...</p>
 </main>
