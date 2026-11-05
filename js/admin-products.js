@@ -499,16 +499,26 @@ function openProductForm(product = null) {
 
       let result;
 
-      if (product) {
-        result = await supabaseClient
-          .from("products")
-          .update(formData)
-          .eq("id", product.id);
-      } else {
-        result = await supabaseClient
-          .from("products")
-          .insert([formData]);
-      }
+     if (product) {
+  result = await supabaseClient
+    .from("products")
+    .update(formData)
+    .eq("id", product.id)
+    .select();
+} else {
+  result = await supabaseClient
+    .from("products")
+    .insert([formData])
+    .select();
+}
+
+if (result.error) {
+  throw result.error;
+}
+
+if (!result.data || result.data.length === 0) {
+  throw new Error("Ürün kaydedilemedi. Supabase herhangi bir kayıt döndürmedi.");
+}
 
       if (result.error) throw result.error;
 
