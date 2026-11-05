@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menü Veri Aktarımı | Aksaray Üniversitesi</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 18px; color: #20251f; line-height: 1.6; }
+    h1 { font-size: 26px; }
+    .warning { background: #fff4d6; padding: 14px 16px; border-radius: 10px; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; background: #f4f5f2; padding: 16px; border-radius: 10px; }
+    button { border: 0; border-radius: 8px; padding: 12px 18px; background: #245b43; color: white; font-size: 16px; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    a { color: #245b43; }
+  </style>
+</head>
+<body>
+  <h1>Eski Menü Verilerini Supabase'e Aktar</h1>
+  <p class="warning"><strong>Önemli:</strong> Bu sayfa tek seferlik aktarım içindir. Eski dosyadaki fiyatlar ve alerjen bilgileri doğrulanmış değildir. Ürünler alerjen doğrulaması yapılmamış olarak kaydedilir.</p>
+  <p>Önizleme ve aktarım için aynı tarayıcıda yönetici hesabınla giriş yapmış olmalısın.</p>
+  <h2>Aktarım önizlemesi</h2>
+  <pre id="importPreview">Veriler hazırlanıyor…</pre>
+  <button id="startImport" type="button" disabled>Ürünleri Supabase'e Aktar</button>
+  <h2>Durum</h2>
+  <pre id="importStatus">Yönetici yetkisi kontrol ediliyor…</pre>
+  <p><a href="admin.html">Yönetim paneline dön</a></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/menu-import-data.js"></script>
+  <script src="js/import-menu.js"></script>
+</body>
+</html>
