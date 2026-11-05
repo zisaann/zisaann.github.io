@@ -634,7 +634,7 @@ if (selectedAllergenIds.length > 0) {
 
 // Ürün ekleme
 addProductBtn.addEventListener("click", () => {
-  async function openProductForm(product = null) {
+  openProductForm();
 });
 
 // Ürün düzenleme
