@@ -1517,3 +1517,76 @@ button {
   }
 
 }
+
+/* HERO ALANI - DAHA SADE VE KÜÇÜK */
+
+.hero {
+  min-height: 260px;
+  padding: 35px 45px;
+  border-radius: 22px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 4.5vw, 53px);
+  line-height: 1.08;
+  margin: 12px 0;
+}
+
+.hero-content > p {
+  font-size: 11px;
+  max-width: 340px;
+}
+
+.hero-button {
+  margin-top: 15px;
+  padding: 11px 17px;
+}
+
+.hero-note {
+  margin-top: 15px;
+}
+
+/* MOBİL HERO */
+
+@media (max-width: 700px) {
+  .hero {
+    min-height: auto;
+    padding: 17px 16px;
+    margin-top: 5px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .hero .eyebrow {
+    font-size: 6px;
+    letter-spacing: 1px;
+  }
+
+  .hero h1 {
+    font-size: 29px;
+    line-height: 1.12;
+    letter-spacing: -.6px;
+    margin: 7px 0;
+  }
+
+  .hero-content > p {
+    max-width: 260px;
+    font-size: 8px;
+    line-height: 1.5;
+  }
+
+  .hero-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 8px;
+  }
+
+  .hero-note {
+    margin-top: 9px;
+    font-size: 7px;
+  }
+
+  .note-line {
+    width: 18px;
+  }
+}
