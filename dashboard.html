@@ -1705,7 +1705,7 @@
       products: "ÜRÜN YÖNETİMİ",
       categories: "KATEGORİ YÖNETİMİ",
       allergens: "ALERJEN YÖNETİMİ",
-      settings: "AYARLAR"
+      settings: "AYARLAR",
       staff: "ÇALIŞAN YÖNETİMİ"
     };
 
@@ -1732,6 +1732,9 @@ if (!allowedViews[currentUserRole]?.includes(viewName)) {
       });
 
       const selectedPanel = document.getElementById(viewName + "View");
+      if (viewName === "staff" && currentUserRole === "owner") {
+  loadStaff();
+}
 
       if (selectedPanel) {
         selectedPanel.classList.add("active");
