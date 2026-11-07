@@ -1972,6 +1972,40 @@ checkAdmin();
   <script src="js/admin-allergens.js"></script>
   <script src="js/admin-users.js"></script>
   <script src="js/staff-menu.js"></script>
+<!-- ŞİFRE SIFIRLAMA MODALI -->
+<div id="passwordModal" class="password-modal hidden">
+  <div class="password-modal-content">
 
+    <button type="button" id="closePasswordModal"
+      class="modal-close">×</button>
+
+    <h2>Şifreyi Değiştir</h2>
+    <p>Çalışan için yeni bir şifre belirleyin.</p>
+
+    <form id="passwordResetForm">
+
+      <label>Yeni Şifre</label>
+      <input
+        type="password"
+        id="newStaffPassword"
+        minlength="8"
+        required
+        placeholder="En az 8 karakter">
+
+      <label>Yeni Şifre Tekrar</label>
+      <input
+        type="password"
+        id="confirmStaffPassword"
+        minlength="8"
+        required
+        placeholder="Şifreyi tekrar girin">
+
+      <button type="submit" id="saveStaffPassword">
+        Şifreyi Güncelle
+      </button>
+
+    </form>
+  </div>
+</div>
 </body>
 </html>
