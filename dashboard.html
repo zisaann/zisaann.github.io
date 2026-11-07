@@ -16,18 +16,18 @@
 
   <style>
     :root {
-      --cream: #F6F1E7;
-      --white: #FFFCF7;
-      --red: #B94F3B;
-      --red-dark: #A44332;
-      --red-soft: #F5E7E1;
-      --brown: #30251F;
-      --muted: #897F73;
-      --border: #E7D9CC;
-      --soft: #FAF6EF;
-      --beige: #E9D8C9;
-      --shadow: 0 8px 30px rgba(65,45,30,.055);
-    }
+  --cream: #F6F1E7;
+  --white: #FFFCF7;
+  --red: #C5A99A;
+  --red-dark: #AD9082;
+  --red-soft: #F1E8E1;
+  --brown: #493A33;
+  --muted: #897F73;
+  --border: #E7D9CC;
+  --soft: #FAF6EF;
+  --beige: #E9D8C9;
+  --shadow: 0 8px 30px rgba(65,45,30,.045);
+}
 
     * {
       box-sizing: border-box;
@@ -45,106 +45,106 @@
       font-family: inherit;
     }
 
-    /* SOL MENÜ */
+   /* SOL MENÜ */
 
-    .sidebar {
-      position: fixed;
-      inset: 0 auto 0 0;
-      width: 255px;
-      height: 100vh;
-      padding: 28px 18px 20px;
-      display: flex;
-      flex-direction: column;
-      background: var(--red);
-      color: white;
-      z-index: 100;
-      transition: transform .25s ease;
-      overflow-y: auto;
-    }
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 255px;
+  height: 100vh;
+  padding: 28px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  background: #E9D8C9;
+  color: #493A33;
+  z-index: 100;
+  transition: transform .25s ease;
+  overflow-y: auto;
+}
 
-    .brand {
-      padding: 5px 12px 28px;
-      margin-bottom: 27px;
-      border-bottom: 1px solid rgba(255,255,255,.2);
-    }
+.brand {
+  padding: 5px 12px 28px;
+  margin-bottom: 27px;
+  border-bottom: 1px solid rgba(73,58,51,.12);
+}
 
-    .brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -1px;
-      line-height: 1.2;
-    }
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  color: #493A33;
+}
 
-    .brand-subtitle {
-      margin-top: 7px;
-      color: rgba(255,255,255,.75);
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      font-weight: 600;
-    }
+.brand-subtitle {
+  margin-top: 7px;
+  color: #89766A;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
 
-    .menu-label {
-      padding: 0 13px;
-      margin-bottom: 12px;
-      color: rgba(255,255,255,.65);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.8px;
-    }
+.menu-label {
+  padding: 0 13px;
+  margin-bottom: 12px;
+  color: #958276;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
 
-    .sidebar-nav {
-      display: grid;
-      gap: 7px;
-    }
+.sidebar-nav {
+  display: grid;
+  gap: 7px;
+}
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      width: 100%;
-      min-height: 47px;
-      padding: 12px 14px;
-      border: 0;
-      border-radius: 9px;
-      background: transparent;
-      color: rgba(255,255,255,.85);
-      text-align: left;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: .2s ease;
-    }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  min-height: 47px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #65554C;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: .2s ease;
+}
 
-    .nav-item:hover {
-      background: rgba(255,255,255,.12);
-      color: white;
-      transform: none;
-      box-shadow: none;
-    }
+.nav-item:hover {
+  background: rgba(255,252,247,.65);
+  color: #493A33;
+  transform: none;
+  box-shadow: none;
+}
 
-    .nav-item.active {
-      background: rgba(255,255,255,.2);
-      color: white;
-      font-weight: 700;
-    }
+.nav-item.active {
+  background: #C5A99A;
+  color: #493A33;
+  font-weight: 700;
+}
 
-    .nav-icon {
-      width: 22px;
-      text-align: center;
-      font-size: 17px;
-    }
+.nav-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 17px;
+}
 
-    .sidebar-bottom {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,.2);
-    }
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid rgba(73,58,51,.12);
+}
 
-    .sidebar-bottom .nav-item {
-      color: rgba(255,255,255,.85);
-    }
-
+.sidebar-bottom .nav-item {
+  color: #65554C;
+}
     /* ANA ALAN */
 
     .main-area {
