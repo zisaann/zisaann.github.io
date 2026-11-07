@@ -95,6 +95,12 @@ async function loadStaff() {
           data-active="${employee.is_active}">
           ${employee.is_active ? "Pasif Yap" : "Aktif Yap"}
         </button>
+        <button
+  type="button"
+  data-staff-edit="${staffEscape(employee.user_id)}"
+  data-staff-name="${staffEscape(employee.full_name)}">
+  Adı Düzenle
+</button>
       </div>
     </article>
   `).join("");
@@ -229,5 +235,38 @@ if (staffList) {
     await loadStaff();
   });
 }
+// ÇALIŞAN ADINI DÜZENLE
+if (staffList) {
+  staffList.addEventListener("click", async event => {
+    const button = event.target.closest("[data-staff-edit]");
+    if (!button || currentUserRole !== "owner") return;
 
+    const userId = button.dataset.staffEdit;
+    const oldName = button.dataset.staffName;
+
+    const newName = prompt("Yeni çalışan adını girin:", oldName);
+
+    if (newName === null) return;
+
+    const fullName = newName.trim();
+
+    if (!fullName) {
+      alert("Çalışan adı boş bırakılamaz.");
+      return;
+    }
+
+    const { error } = await supabaseClient
+      .from("admin_profiles")
+      .update({ full_name: fullName })
+      .eq("user_id", userId);
+
+    if (error) {
+      alert("Çalışan adı güncellenemedi: " + error.message);
+      return;
+    }
+
+    alert("Çalışan adı başarıyla güncellendi.");
+    await loadStaff();
+  });
+}
 window.loadStaff = loadStaff;
