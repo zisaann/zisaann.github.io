@@ -24,6 +24,7 @@ function staffEscape(value) {
   })[char]);
 }
 
+// ÇALIŞANLARI LİSTELE
 async function loadStaff() {
   if (currentUserRole !== "owner") return;
 
@@ -31,7 +32,7 @@ async function loadStaff() {
 
   const { data, error } = await supabaseClient
     .from("admin_profiles")
-    .select("user_id, full_name, email, role, is_active, created_at")
+    .select("user_id, full_name, username, role, is_active, created_at")
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -49,8 +50,7 @@ async function loadStaff() {
     `${employees.filter(e => !e.is_active).length} pasif`;
 
   if (!employees.length) {
-    staffList.innerHTML =
-      "<p>Henüz çalışan kaydı bulunmuyor.</p>";
+    staffList.innerHTML = "<p>Henüz çalışan kaydı bulunmuyor.</p>";
     return;
   }
 
@@ -60,9 +60,10 @@ async function loadStaff() {
       <div>
         <h3>${staffEscape(employee.full_name)}</h3>
 
-        <p>${staffEscape(employee.email)}</p>
-
-        <p>${staffEscape(employee.user_id)}</p>
+        <p>
+          Kullanıcı adı:
+          <strong>${staffEscape(employee.username || "Henüz tanımlanmamış")}</strong>
+        </p>
 
         <p>
           Görev:
@@ -73,7 +74,6 @@ async function loadStaff() {
           Durum:
           <strong>${employee.is_active ? "Aktif" : "Pasif"}</strong>
         </p>
-
       </div>
 
       <div class="staff-actions">
@@ -104,12 +104,11 @@ async function loadStaff() {
         </button>
 
       </div>
-
     </article>
   `).join("");
 }
 
-// ÇALIŞAN EKLEME
+// YENİ ÇALIŞAN HESABI OLUŞTUR
 staffForm.addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -119,54 +118,67 @@ staffForm.addEventListener("submit", async event => {
   }
 
   const fullName = document.getElementById("staffName").value.trim();
-  const email = document.getElementById("staffEmail").value.trim();
-  const userId = document.getElementById("staffUserId").value.trim();
+  const username = document.getElementById("staffUsername").value.trim().toLowerCase();
+  const password = document.getElementById("staffPassword").value;
   const role = document.getElementById("staffRole").value;
 
-  if (!fullName || !email || !userId) {
+  if (!fullName || !username || !password) {
     alert("Lütfen bütün alanları doldurun.");
     return;
   }
 
-  const uuidPattern =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!/^[a-z0-9._-]{3,30}$/.test(username)) {
+    alert("Kullanıcı adı 3-30 karakter olmalı; küçük harf, rakam, nokta, tire ve alt çizgi kullanılabilir.");
+    return;
+  }
 
-  if (!uuidPattern.test(userId)) {
-    alert("Geçerli bir Supabase kullanıcı UID girin.");
+  if (password.length < 8) {
+    alert("Şifre en az 8 karakter olmalıdır.");
     return;
   }
 
   if (!staffRoleNames[role]) {
-    alert("Geçersiz çalışan rolü.");
+    alert("Geçersiz çalışan görevi.");
     return;
   }
 
   const button = staffForm.querySelector("button[type='submit']");
   button.disabled = true;
+  button.textContent = "Hesap oluşturuluyor...";
 
-  const { error } = await supabaseClient
-    .from("admin_profiles")
-    .insert({
-      user_id: userId,
-      full_name: fullName,
-      email: email,
-      role: role,
-      is_active: true
-    });
+  const { data, error } = await supabaseClient.functions.invoke(
+    "create-staff",
+    {
+      body: {
+        fullName,
+        username,
+        password,
+        role
+      }
+    }
+  );
 
   button.disabled = false;
+  button.textContent = "Çalışan Hesabını Oluştur";
 
   if (error) {
-    alert("Çalışan kaydedilemedi: " + error.message);
+    console.error("Çalışan oluşturma hatası:", error);
+    alert("Çalışan oluşturulamadı: " + error.message);
     return;
   }
 
-  alert("Çalışan başarıyla kaydedildi.");
+  if (!data?.success) {
+    alert(data?.error || "Çalışan hesabı oluşturulamadı.");
+    return;
+  }
+
+  alert("Çalışan hesabı başarıyla oluşturuldu.");
+
   staffForm.reset();
   await loadStaff();
 });
 
-// ROL DEĞİŞTİRME
+// ÇALIŞAN GÖREVİNİ DEĞİŞTİR
 staffList.addEventListener("change", async event => {
   const select = event.target.closest("[data-staff-role]");
 
@@ -191,7 +203,7 @@ staffList.addEventListener("change", async event => {
   await loadStaff();
 });
 
-// AKTİF / PASİF
+// ÇALIŞANI AKTİF / PASİF YAP
 staffList.addEventListener("click", async event => {
   const button = event.target.closest("[data-staff-toggle]");
 
