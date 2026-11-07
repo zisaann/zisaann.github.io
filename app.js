@@ -344,44 +344,48 @@ function renderSubcategories() {
 
 function getVisibleProducts() {
   return PRODUCTS.filter(product => {
+
     // Kategori filtresi
     if (
-      selectedCategory !== "all" &&
-      product.category !== selectedCategory
+      activeCategory !== "Tümü" &&
+      product.category !== activeCategory
     ) {
       return false;
     }
 
     // Alt kategori filtresi
     if (
-      selectedSubcategory !== "all" &&
-      product.subcategory !== selectedSubcategory
+      activeSubcategory &&
+      product.subcategory !== activeSubcategory
     ) {
       return false;
     }
 
     // Arama filtresi
-    const searchText = searchInput.value
+    const normalizedSearch = searchTerm
       .trim()
-      .toLocaleLowerCase("tr");
+      .toLocaleLowerCase("tr-TR");
 
     const searchableText = [
       product.name,
       product.description,
       product.category,
       product.subcategory
-    ].join(" ").toLocaleLowerCase("tr");
+    ].join(" ").toLocaleLowerCase("tr-TR");
 
-    if (searchText && !searchableText.includes(searchText)) {
+    if (
+      normalizedSearch &&
+      !searchableText.includes(normalizedSearch)
+    ) {
       return false;
     }
 
     // Alerjen filtresi
     // Seçilen alerjenlerden herhangi birini içeren ürün gizlenir.
-    // Doğrulanmış/doğrulanmamış ayrımı yapılmaz.
+    // Doğrulanmış veya doğrulanmamış olması fark etmez.
     if (
       selectedAllergens.size > 0 &&
-      product.allergens?.some(allergen =>
+      product.allergens.some(allergen =>
         selectedAllergens.has(allergen)
       )
     ) {
@@ -560,7 +564,7 @@ function renderProducts() {
 
   } else {
     filterMessage.textContent =
-      `Henüz alerjen seçilmedi. ${visibleProducts.length} ürün listeleniyor.`;
+  `${names.join(", ")} filtresi uygulandı. ${visibleProducts.length} ürün listeleniyor. Doğrulanmamış ürünler de listede bulunabilir.`;
   }
 }
 
