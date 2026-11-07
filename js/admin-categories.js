@@ -114,7 +114,11 @@ function renderCategoryList() {
           <button type="button"
             data-action="toggle-category"
             data-id="${category.id}"
-            style="background:${category.is_active ? "#a65c4b" : "#315b43"};">
+           style="
+  background:${category.is_active ? "#EADFD8" : "#DCE8DF"};
+  color:${category.is_active ? "#896B5D" : "#587460"};
+  border:1px solid ${category.is_active ? "#DDCFC5" : "#CEDDD1"};
+"
             ${category.is_active ? "Pasif Yap" : "Aktif Yap"}
           </button>
         </div>
