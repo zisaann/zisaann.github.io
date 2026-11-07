@@ -281,6 +281,9 @@ const passwordResetForm = document.getElementById("passwordResetForm");
 const closePasswordModal = document.getElementById("closePasswordModal");
 
 let selectedStaffId = null;
+console.log("Şifre modalı:", passwordModal);
+console.log("Şifre formu:", passwordResetForm);
+console.log("Şifre kapatma butonu:", closePasswordModal);
 
 if (staffList) {
   staffList.addEventListener("click", event => {
