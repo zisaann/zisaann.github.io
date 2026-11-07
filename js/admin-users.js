@@ -101,6 +101,11 @@ async function loadStaff() {
   data-staff-name="${staffEscape(employee.full_name)}">
   Adı Düzenle
 </button>
+<button
+  type="button"
+  data-staff-password="${staffEscape(employee.user_id)}">
+  Şifre Sıfırla
+</button>
       </div>
     </article>
   `).join("");
@@ -267,6 +272,65 @@ if (staffList) {
 
     alert("Çalışan adı başarıyla güncellendi.");
     await loadStaff();
+  });
+}
+// ÇALIŞAN ŞİFRESİNİ SIFIRLA
+if (staffList) {
+  staffList.addEventListener("click", async event => {
+    const button = event.target.closest("[data-staff-password]");
+    if (!button || currentUserRole !== "owner") return;
+
+    const userId = button.dataset.staffPassword;
+
+    const password = prompt(
+      "Yeni şifreyi girin (en az 8 karakter):"
+    );
+
+    if (password === null) return;
+
+    if (password.length < 8) {
+      alert("Şifre en az 8 karakter olmalıdır.");
+      return;
+    }
+
+    const confirmed = confirm(
+      "Bu çalışanın şifresini değiştirmek istiyor musunuz?"
+    );
+
+    if (!confirmed) return;
+
+    button.disabled = true;
+    button.textContent = "Güncelleniyor...";
+
+    try {
+      const { data, error } = await supabaseClient.functions.invoke(
+        "reset-staff-password",
+        {
+          body: { userId, password }
+        }
+      );
+
+      if (error) {
+        console.error("Şifre sıfırlama hatası:", error);
+        alert("Şifre değiştirilemedi: " + error.message);
+        return;
+      }
+
+      if (!data?.success) {
+        alert(data?.error || "Şifre değiştirilemedi.");
+        return;
+      }
+
+      alert("Çalışan şifresi başarıyla değiştirildi.");
+
+    } catch (error) {
+      console.error(error);
+      alert("Beklenmeyen hata: " + error.message);
+
+    } finally {
+      button.disabled = false;
+      button.textContent = "Şifre Sıfırla";
+    }
   });
 }
 window.loadStaff = loadStaff;
