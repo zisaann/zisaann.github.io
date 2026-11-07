@@ -1656,6 +1656,46 @@
 
 <script>
   let currentUserRole = null;
+  async function loadOverviewStats() {
+  const productEl = document.getElementById("totalProducts");
+  const categoryEl = document.getElementById("totalCategories");
+  const staffEl = document.getElementById("totalStaff");
+
+  try {
+    const [productsResult, categoriesResult, staffResult] = await Promise.all([
+      supabaseClient
+        .from("products")
+        .select("id", { count: "exact", head: true })
+        .eq("is_active", true),
+
+      supabaseClient
+        .from("categories")
+        .select("id", { count: "exact", head: true })
+        .eq("is_active", true),
+
+      supabaseClient
+        .from("admin_profiles")
+        .select("user_id", { count: "exact", head: true })
+        .eq("is_active", true)
+        .in("role", ["manager", "waiter", "kitchen"])
+    ]);
+
+    if (productsResult.error) throw productsResult.error;
+    if (categoriesResult.error) throw categoriesResult.error;
+    if (staffResult.error) throw staffResult.error;
+
+    productEl.textContent = productsResult.count ?? 0;
+    categoryEl.textContent = categoriesResult.count ?? 0;
+    staffEl.textContent = staffResult.count ?? 0;
+
+  } catch (error) {
+    console.error("İstatistikler yüklenemedi:", error);
+
+    productEl.textContent = "—";
+    categoryEl.textContent = "—";
+    staffEl.textContent = "—";
+  }
+}
 // =========================================
 // YÖNETİCİ / PERSONEL KONTROLÜ
 // =========================================
@@ -1680,6 +1720,7 @@ async function checkAdmin() {
   }
 
   currentUserRole = profile.role;
+  loadOverviewStats();
 
   const allowedRoles = ["owner", "manager", "waiter", "kitchen"];
 
