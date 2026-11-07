@@ -1172,3 +1172,176 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
     font-size: 12px;
   }
 }
+
+/* =================================
+   ALERJEN BÖLÜMÜ - YENİ TASARIM
+================================= */
+
+#allergens[hidden] {
+  display: none !important;
+}
+
+.allergen-section {
+  width: min(100% - 40px, 1050px);
+  margin: 35px auto 55px;
+  padding: 34px 38px;
+  background: #f3eee6;
+  border: 1px solid rgba(75, 61, 48, 0.10);
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(48, 41, 35, 0.045);
+  scroll-margin-top: 100px;
+}
+
+.allergen-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding-bottom: 25px;
+}
+
+.allergen-heading .eyebrow {
+  color: #a65b45;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.allergen-heading h2 {
+  margin: 10px 0;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(25px, 3vw, 34px);
+  font-weight: 600;
+}
+
+.allergen-heading p {
+  max-width: 540px;
+  margin: 0;
+  color: #766b60;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.allergen-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #e8ded1;
+  color: #a65b45;
+  font-size: 27px;
+}
+
+.allergen-divider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 0;
+  border-top: 1px solid rgba(75, 61, 48, 0.12);
+  border-bottom: 1px solid rgba(75, 61, 48, 0.12);
+}
+
+.allergen-divider > span {
+  color: #766b60;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.clear-btn {
+  border: 0;
+  background: transparent;
+  color: #a65b45;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.allergen-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 23px 0;
+}
+
+/* Filtre seçenekleri - mevcut JS tarafından oluşturulan butonlar */
+.allergen-list button,
+.allergen-list label {
+  border: 1px solid #ded3c6;
+  border-radius: 30px;
+  padding: 10px 17px;
+  background: #faf8f4;
+  color: #51473f;
+  font-size: 13px;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.allergen-list button:hover,
+.allergen-list label:hover {
+  border-color: #b86b53;
+  background: #f6e9e2;
+}
+
+.filter-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  background: #e9e5dc;
+}
+
+.status-icon {
+  color: #71815e;
+  font-size: 16px;
+}
+
+.filter-status p {
+  margin: 0;
+  color: #62594f;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.warning {
+  margin: 17px 0 0;
+  color: #88796b;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* Mobil uyum */
+@media (max-width: 600px) {
+  .allergen-section {
+    width: calc(100% - 24px);
+    margin: 22px auto 35px;
+    padding: 23px 19px;
+    border-radius: 15px;
+  }
+
+  .allergen-heading {
+    gap: 12px;
+  }
+
+  .allergen-symbol {
+    width: 43px;
+    height: 43px;
+    font-size: 21px;
+  }
+
+  .allergen-list {
+    gap: 8px;
+  }
+
+  .allergen-list button,
+  .allergen-list label {
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+}
