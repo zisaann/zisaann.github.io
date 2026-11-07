@@ -286,14 +286,14 @@
 
       <form id="loginForm">
 
-        <label for="email">E-posta adresi</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="ornek@email.com"
-          autocomplete="username"
-          required
-        >
+       <label for="email">E-posta veya kullanıcı adı</label>
+<input
+  type="text"
+  id="email"
+  placeholder="E-posta veya kullanıcı adınız"
+  autocomplete="username"
+  required
+>
 
         <label for="password">Şifre</label>
         <input
@@ -320,47 +320,62 @@
   </footer>
 
   <script>
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
-    const loginButton = document.getElementById("loginButton");
+const form = document.getElementById("loginForm");
+const message = document.getElementById("message");
+const loginButton = document.getElementById("loginButton");
 
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
+form.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-      message.textContent = "Giriş kontrol ediliyor...";
-      message.className = "info";
-      loginButton.disabled = true;
-      loginButton.textContent = "Kontrol ediliyor...";
+  message.textContent = "Giriş kontrol ediliyor...";
+  message.className = "info";
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  loginButton.disabled = true;
+  loginButton.textContent = "Kontrol ediliyor...";
 
-      try {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
+  const loginInput = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
-        if (error) {
-          message.textContent = "Giriş başarısız: " + error.message;
-          message.className = "error";
-          loginButton.disabled = false;
-          loginButton.textContent = "Yönetim Paneline Giriş Yap →";
-          return;
-        }
+  // E-posta girilmişse yönetici girişi,
+  // kullanıcı adı girilmişse çalışan girişi.
+  const loginEmail = loginInput.includes("@")
+    ? loginInput
+    : `${loginInput.toLowerCase()}@staff.luna.local`;
 
-        message.textContent = "Giriş başarılı! Yönlendiriliyorsunuz...";
-        message.className = "success";
+  try {
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+        email: loginEmail,
+        password: password
+      });
 
-        window.location.href = "dashboard.html";
+    if (error) {
+      message.textContent =
+        "Giriş başarısız. Bilgilerinizi kontrol edin.";
+      message.className = "error";
 
-      } catch (err) {
-        message.textContent = "Bir hata oluştu. Lütfen tekrar deneyin.";
-        message.className = "error";
-        loginButton.disabled = false;
-        loginButton.textContent = "Yönetim Paneline Giriş Yap →";
-      }
-    });
+      loginButton.disabled = false;
+      loginButton.textContent = "Yönetim Paneline Giriş Yap →";
+      return;
+    }
+
+    message.textContent =
+      "Giriş başarılı! Yönlendiriliyorsunuz...";
+    message.className = "success";
+
+    window.location.href = "dashboard.html";
+
+  } catch (err) {
+    console.error("Giriş hatası:", err);
+
+    message.textContent =
+      "Bir hata oluştu. Lütfen tekrar deneyin.";
+    message.className = "error";
+
+    loginButton.disabled = false;
+    loginButton.textContent = "Yönetim Paneline Giriş Yap →";
+  }
+});
   </script>
 
 </body>
