@@ -38,23 +38,20 @@ async function loadStaff() {
  if (error) {
   console.error("Çalışan oluşturma hatası:", error);
 
-  let detay = error.message;
-
   if (error.context) {
-    try {
-      const response = error.context;
-      const body = await response.clone().json();
+    const response = error.context;
 
-      detay = body.error || body.message || JSON.stringify(body);
+    console.log("HTTP STATUS:", response.status);
 
-      console.log("HTTP durum kodu:", response.status);
-      console.log("Sunucudan gelen cevap:", body);
-    } catch (e) {
-      console.log("Hata ayrıntısı okunamadı:", e);
-    }
+    const responseText = await response.clone().text();
+
+    console.log("FUNCTION RESPONSE:", responseText);
+
+    alert("Sunucu hatası: " + responseText);
+  } else {
+    alert("Sunucu hatası: " + error.message);
   }
 
-  alert("Çalışan oluşturulamadı: " + detay);
   return;
 }
 
