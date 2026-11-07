@@ -1759,6 +1759,7 @@
       allergens: "ALERJEN YÖNETİMİ",
       settings: "AYARLAR",
       staff: "ÇALIŞAN YÖNETİMİ"
+      staffMenu: "MENÜYÜ GÖRÜNTÜLE",
     };
 
     function openView(viewName) {
@@ -1787,7 +1788,9 @@ if (!allowedViews[currentUserRole]?.includes(viewName)) {
       if (viewName === "staff" && currentUserRole === "owner") {
   loadStaff();
 }
-
+if (viewName === "staffMenu") {
+  loadStaffMenu();
+}
       if (selectedPanel) {
         selectedPanel.classList.add("active");
       }
@@ -1838,6 +1841,7 @@ if (!allowedViews[currentUserRole]?.includes(viewName)) {
   <script src="js/admin-categories.js"></script>
   <script src="js/admin-allergens.js"></script>
   <script src="js/admin-users.js"></script>
+  <script src="js/staff-menu.js"></script>
 
 </body>
 </html>
