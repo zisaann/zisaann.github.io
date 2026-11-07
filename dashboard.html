@@ -732,6 +732,228 @@
       display: none;
     }
 
+/* ALERJEN YÖNETİMİ */
+
+#allergenManagement {
+  padding: 29px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.allergen-management-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.allergen-management-heading h2 {
+  margin: 0 0 7px;
+  color: var(--brown);
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+}
+
+.allergen-management-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.allergen-summary {
+  padding: 15px 17px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.allergen-search {
+  margin: 20px 0;
+}
+
+#allergenSearch {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+  color: var(--brown);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+#allergenSearch:focus,
+#allergenForm input:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(169,130,120,.15);
+}
+
+#allergenList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.allergen-admin-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  min-width: 0;
+}
+
+.allergen-admin-info {
+  min-width: 0;
+}
+
+.allergen-admin-info strong {
+  display: block;
+  color: var(--brown);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.allergen-admin-info span {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.allergen-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.allergen-admin-actions button {
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--red-soft);
+  color: var(--red-dark);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.allergen-admin-actions button.delete-allergen {
+  background: #F3E3DF;
+  border-color: #E6C9C1;
+  color: #985D50;
+}
+
+#allergenForm {
+  display: grid;
+  grid-template-columns: 1fr 130px;
+  gap: 13px;
+  padding: 20px;
+  margin: 18px 0;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--soft);
+}
+
+#allergenForm h3 {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--brown);
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+}
+
+#allergenForm label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--brown);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#allergenForm input {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  color: var(--brown);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.allergen-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.allergen-form-actions button {
+  min-height: 39px;
+  padding: 9px 14px;
+  border: 1px solid var(--red);
+  border-radius: 8px;
+  background: var(--red);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.allergen-form-actions button.cancel-allergen {
+  background: var(--beige);
+  border-color: var(--beige);
+  color: var(--brown);
+}
+
+.allergen-admin-note {
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+  #allergenList {
+    grid-template-columns: 1fr;
+  }
+
+  #allergenManagement {
+    padding: 20px;
+  }
+
+  #allergenForm {
+    grid-template-columns: 1fr;
+  }
+
+  #allergenForm h3,
+  .allergen-form-actions {
+    grid-column: 1;
+  }
+
+  .allergen-admin-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
     /* TABLET VE MOBİL */
 
     @media (max-width: 850px) {
@@ -1064,24 +1286,58 @@
 
       <!-- ALERJEN YÖNETİMİ -->
 
-      <section class="view-panel" id="allergensView">
+      
+<!-- ALERJEN YÖNETİMİ -->
 
-        <div class="page-heading">
-          <div class="eyebrow">ÜRÜN BİLGİLERİ</div>
-          <h1>Alerjen Yönetimi</h1>
-          <p>Menüdeki alerjen bilgileri için yönetim alanı.</p>
-        </div>
+<section class="view-panel" id="allergensView">
 
-        <div class="empty-panel">
-          <div class="empty-icon">◇</div>
-          <h2>Alerjen Yönetimi</h2>
-          <p>
-            Bu bölümün yönetim işlevleri henüz bağlanmadı.
-            Alerjen verilerini yönetme ekranını sonraki aşamada ekleyebiliriz.
-          </p>
-        </div>
+  <div class="page-heading">
+    <div class="eyebrow">ÜRÜN BİLGİLERİ</div>
+    <h1>Alerjen Yönetimi</h1>
+    <p>Menüde kullanılan alerjenleri ve ürün bağlantılarını yönetin.</p>
+  </div>
 
-      </section>
+  <section id="allergenManagement">
+
+    <div class="allergen-management-heading">
+      <div>
+        <h2>Alerjenler</h2>
+        <p>Eklediğiniz alerjenler ürün düzenleme ekranında da kullanılabilir.</p>
+      </div>
+
+      <button type="button" id="addAllergenBtn">
+        + Yeni Alerjen Ekle
+      </button>
+    </div>
+
+    <div class="allergen-summary" id="allergenSummary">
+      Alerjenler yükleniyor...
+    </div>
+
+    <div id="allergenFormContainer"></div>
+
+    <div class="allergen-search">
+      <input
+        type="search"
+        id="allergenSearch"
+        placeholder="Alerjen ara..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div id="allergenList">
+      Alerjenler yükleniyor...
+    </div>
+
+    <p class="allergen-admin-note">
+      Bilgi: Bir ürüne bağlı olan alerjenler doğrudan silinemez.
+      Önce ilgili ürünlerin alerjen bağlantılarını düzenlemelisiniz.
+    </p>
+
+  </section>
+
+</section>
+
 
       <!-- AYARLAR -->
 
