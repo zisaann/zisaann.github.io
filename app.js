@@ -869,3 +869,27 @@ if (document.readyState === "complete") {
     { once: true }
   );
 }
+// ALERJEN BÖLÜMÜNÜ AÇIP KAPATMA
+const allergenToggleBtn = document.getElementById("allergenToggleBtn");
+const allergenSection = document.getElementById("allergens");
+
+if (allergenToggleBtn && allergenSection) {
+  allergenToggleBtn.addEventListener("click", () => {
+    const isHidden = allergenSection.hidden;
+
+    allergenSection.hidden = !isHidden;
+
+    allergenToggleBtn.innerHTML = isHidden
+      ? 'Alerjenleri gizle <span>⌃</span>'
+      : 'Alerjenleri incele <span>⌄</span>';
+
+    if (isHidden) {
+      setTimeout(() => {
+        allergenSection.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }, 50);
+    }
+  });
+}
