@@ -1047,6 +1047,173 @@
         font-size: 10px;
       }
     }
+    /* ÇALIŞAN YÖNETİMİ */
+
+#staffManagement {
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.staff-info h2 {
+  margin: 0 0 7px;
+  color: var(--brown);
+  font-family: 'Playfair Display', serif;
+  font-size: 25px;
+}
+
+.staff-info p,
+.staff-notice p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.staff-notice {
+  padding: 17px;
+  margin: 22px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--soft);
+}
+
+.staff-notice strong {
+  color: var(--brown);
+  font-size: 13px;
+}
+
+.staff-notice p {
+  margin-bottom: 0;
+}
+
+#staffForm {
+  display: grid;
+  gap: 11px;
+  padding: 23px;
+  margin-bottom: 23px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--soft);
+}
+
+#staffForm h3 {
+  margin: 0 0 8px;
+  font-family: 'Playfair Display', serif;
+  color: var(--brown);
+}
+
+#staffForm label {
+  color: var(--brown);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#staffForm input,
+#staffForm select {
+  width: 100%;
+  min-height: 43px;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  color: var(--brown);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+#staffForm input:focus,
+#staffForm select:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(169,130,120,.15);
+}
+
+#staffForm button {
+  margin-top: 10px;
+  justify-self: start;
+}
+
+.staff-summary {
+  padding: 15px;
+  margin-bottom: 17px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--soft);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.staff-list {
+  display: grid;
+  gap: 13px;
+}
+
+.staff-card {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) auto;
+  gap: 15px;
+  align-items: center;
+  padding: 19px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+
+.staff-card h3 {
+  margin: 0 0 6px;
+  color: var(--brown);
+  font-size: 14px;
+}
+
+.staff-card p {
+  margin: 4px 0;
+  color: var(--muted);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.staff-card select {
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: white;
+  color: var(--brown);
+}
+
+.staff-card button {
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--red-soft);
+  color: var(--red-dark);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.staff-card .staff-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+@media(max-width:600px) {
+  #staffManagement {
+    padding: 19px;
+  }
+
+  .staff-card {
+    grid-template-columns: 1fr;
+  }
+
+  #staffForm {
+    padding: 17px;
+  }
+}
   </style>
 </head>
 
@@ -1070,24 +1237,29 @@
         Genel Bakış
       </button>
 
-      <button class="nav-item" data-view="products">
+      <button class="nav-item" data-view="products" data-roles="owner,manager">
         <span class="nav-icon">♧</span>
         Ürün Yönetimi
       </button>
 
-      <button class="nav-item" data-view="categories">
+      <button class="nav-item" data-view="categories" data-roles="owner,manager">
         <span class="nav-icon">▦</span>
         Kategori Yönetimi
       </button>
 
-      <button class="nav-item" data-view="allergens">
+      <button class="nav-item" data-view="allergens" data-roles="owner,manager">
         <span class="nav-icon">◇</span>
         Alerjen Yönetimi
       </button>
+      <button class="nav-item" data-view="staff" data-roles="owner">
+  <span class="nav-icon">♙</span>
+  Çalışan Yönetimi
+</button>
 
-      <button class="nav-item" data-view="settings">
+      <button class="nav-item" data-view="settings" data-roles="owner">
         <span class="nav-icon">⚙</span>
         Ayarlar
+        
       </button>
 
     </nav>
@@ -1283,9 +1455,6 @@
         </section>
 
       </section>
-
-      <!-- ALERJEN YÖNETİMİ -->
-
       
 <!-- ALERJEN YÖNETİMİ -->
 
@@ -1337,7 +1506,71 @@
   </section>
 
 </section>
+<!-- ÇALIŞAN YÖNETİMİ -->
 
+<section class="view-panel" id="staffView">
+
+  <div class="page-heading">
+    <div class="eyebrow">İŞLETME YÖNETİMİ</div>
+    <h1>Çalışan Yönetimi</h1>
+    <p>Restoran çalışanlarının görevlerini ve hesap durumlarını yönetin.</p>
+  </div>
+
+  <section id="staffManagement">
+
+    <div class="staff-info">
+      <div>
+        <h2>Çalışanlar</h2>
+        <p>Yeni çalışan hesabını önce Supabase Authentication üzerinden oluşturun.</p>
+      </div>
+    </div>
+
+    <div class="staff-notice">
+      <strong>Yeni çalışan ekleme</strong>
+      <p>
+        Önce Supabase Authentication bölümünden e-posta ve şifre ile
+        kullanıcı oluşturun. Ardından kullanıcı UID bilgisini aşağıya girin.
+        Bu işlem çalışana yönetim paneli yetkisi tanımlar; Auth hesabını oluşturmaz.
+      </p>
+    </div>
+
+    <form id="staffForm">
+
+      <h3>Çalışan Kaydı Oluştur</h3>
+
+      <label for="staffName">Ad Soyad</label>
+      <input id="staffName" type="text" required placeholder="Çalışanın adı">
+
+      <label for="staffEmail">E-posta</label>
+      <input id="staffEmail" type="email" required placeholder="ornek@mail.com">
+
+      <label for="staffUserId">Supabase Kullanıcı UID</label>
+      <input id="staffUserId" type="text" required placeholder="Authentication bölümündeki UID">
+
+      <label for="staffRole">Görev</label>
+      <select id="staffRole" required>
+        <option value="waiter">Garson</option>
+        <option value="kitchen">Mutfak Personeli</option>
+        <option value="manager">İşletme Müdürü</option>
+      </select>
+
+      <button type="submit" class="primary-btn">
+        Çalışanı Kaydet
+      </button>
+
+    </form>
+
+    <div class="staff-summary" id="staffSummary">
+      Çalışanlar yükleniyor...
+    </div>
+
+    <div class="staff-list" id="staffList">
+      Çalışan listesi yükleniyor...
+    </div>
+
+  </section>
+
+</section>
 
       <!-- AYARLAR -->
 
