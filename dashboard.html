@@ -1351,7 +1351,82 @@
     padding: 28px 22px;
   }
 }
+/* =====================================
+   AYARLAR EKRANI
+===================================== */
 
+#settingsHome .overview-grid {
+  margin-top: 24px;
+}
+
+#settingsHome .overview-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 220px;
+}
+
+#settingsHome .overview-card p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+#settingsHome .overview-card button {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+#generalSettingsView,
+#auditSettingsView {
+  margin-top: 24px;
+}
+
+#auditLogManagement {
+  padding: 26px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+#auditLogManagement h2 {
+  margin: 0 0 8px;
+  color: var(--brown);
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+}
+
+#auditLogManagement .section-description {
+  margin-bottom: 22px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#auditLogStatus {
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+#auditLogList {
+  display: grid;
+  gap: 12px;
+}
+
+@media (max-width: 650px) {
+  #auditLogManagement {
+    padding: 17px;
+  }
+
+  #auditLogManagement h2 {
+    font-size: 21px;
+  }
+}
   </style>
 </head>
 
@@ -1763,24 +1838,96 @@
 
       <!-- AYARLAR -->
 
-      <section class="view-panel" id="settingsView">
+      
+<!-- AYARLAR -->
 
-        <div class="page-heading">
-          <div class="eyebrow">PANEL AYARLARI</div>
-          <h1>Ayarlar</h1>
-          <p>Yönetim paneli ayarları.</p>
-        </div>
+<section class="view-panel" id="settingsView">
 
-        <div class="empty-panel">
-          <div class="empty-icon">⚙</div>
-          <h2>Panel Ayarları</h2>
-          <p>
-            Bu bölüm henüz yapılandırılmadı.
-            İlerleyen aşamada yönetici hesapları ve diğer panel ayarları buraya eklenebilir.
-          </p>
-        </div>
+  <div class="page-heading">
+    <div class="eyebrow">PANEL AYARLARI</div>
+    <h1>Ayarlar</h1>
+    <p>Yönetim panelinin ayarlarını ve işlem kayıtlarını yönetin.</p>
+  </div>
 
-      </section>
+  <!-- AYARLAR ANA EKRANI -->
+  <div id="settingsHome">
+
+    <div class="overview-grid">
+
+      <div class="overview-card">
+        <div class="card-icon">⚙</div>
+        <h3>Genel Ayarlar</h3>
+        <p>Panelin genel yapılandırma seçenekleri.</p>
+
+        <button
+          type="button"
+          class="primary-btn"
+          data-settings-view="general">
+          Görüntüle
+        </button>
+      </div>
+
+      <div class="overview-card">
+        <div class="card-icon">◷</div>
+        <h3>İşlem Geçmişi</h3>
+        <p>Yönetim panelinde gerçekleştirilen işlemleri inceleyin.</p>
+
+        <button
+          type="button"
+          class="primary-btn"
+          data-settings-view="audit">
+          Kayıtları Görüntüle
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- GENEL AYARLAR ALT EKRANI -->
+  <div id="generalSettingsView" hidden>
+
+    <button type="button" class="primary-btn" data-settings-back>
+      ← Ayarlara Dön
+    </button>
+
+    <div class="empty-panel" style="margin-top:20px;">
+      <div class="empty-icon">⚙</div>
+      <h2>Genel Ayarlar</h2>
+      <p>Bu bölüm sonraki aşamada yapılandırılacak.</p>
+    </div>
+
+  </div>
+
+  <!-- İŞLEM GEÇMİŞİ ALT EKRANI -->
+  <div id="auditSettingsView" hidden>
+
+    <button type="button" class="primary-btn" data-settings-back>
+      ← Ayarlara Dön
+    </button>
+
+    <div id="auditLogManagement" style="margin-top:20px;">
+
+      <h2>İşlem Geçmişi</h2>
+
+      <p class="section-description">
+        Yönetim panelinde gerçekleştirilen işlemlerin kayıtları.
+      </p>
+
+      <div id="auditLogStatus">
+        İşlem kayıtları yüklenmeye hazır.
+      </div>
+
+      <div id="auditLogList">
+        İşlem kayıtları burada görüntülenecek.
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 <!-- ŞİFRE SIFIRLAMA MODALI -->
 <div id="passwordModal" class="password-modal hidden">
   <div class="password-modal-content">
@@ -2136,6 +2283,31 @@ sidebarOverlay.addEventListener("click", closeSidebar);
 // =========================================
 
 checkAdmin();
+  // =====================================
+// AYARLAR ALT MENÜ GEÇİŞLERİ
+// =====================================
+
+document.querySelectorAll("[data-settings-view]").forEach(button => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.settingsView;
+
+    document.getElementById("settingsHome").hidden = true;
+    document.getElementById("generalSettingsView").hidden = target !== "general";
+    document.getElementById("auditSettingsView").hidden = target !== "audit";
+
+    if (target === "audit" && typeof window.loadAuditLogs === "function") {
+      window.loadAuditLogs();
+    }
+  });
+});
+
+document.querySelectorAll("[data-settings-back]").forEach(button => {
+  button.addEventListener("click", () => {
+    document.getElementById("settingsHome").hidden = false;
+    document.getElementById("generalSettingsView").hidden = true;
+    document.getElementById("auditSettingsView").hidden = true;
+  });
+});
 </script>
 
   <!-- MEVCUT YÖNETİM DOSYALARI -->
