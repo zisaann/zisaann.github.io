@@ -35,10 +35,28 @@ async function loadStaff() {
     .select("user_id, full_name, username, role, is_active, created_at")
     .order("created_at", { ascending: false });
 
-  if (error) {
-    staffList.textContent = "Çalışanlar yüklenemedi: " + error.message;
-    return;
+ if (error) {
+  console.error("Çalışan oluşturma hatası:", error);
+
+  let detay = error.message;
+
+  if (error.context) {
+    try {
+      const response = error.context;
+      const body = await response.clone().json();
+
+      detay = body.error || body.message || JSON.stringify(body);
+
+      console.log("HTTP durum kodu:", response.status);
+      console.log("Sunucudan gelen cevap:", body);
+    } catch (e) {
+      console.log("Hata ayrıntısı okunamadı:", e);
+    }
   }
+
+  alert("Çalışan oluşturulamadı: " + detay);
+  return;
+}
 
   const employees = (data || []).filter(
     employee => employee.role !== "owner"
