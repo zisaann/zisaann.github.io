@@ -1764,29 +1764,53 @@
 
     
 function openView(viewName) {
+  
+function openView(viewName) {
   const allowedViews = {
-    owner: [
-      "overview", "products", "categories",
-      "allergens", "settings", "staff", "staffMenu"
-    ],
-    manager: [
-      "overview", "products", "categories",
-      "allergens", "staffMenu"
-    ],
+    owner: ["overview", "products", "categories", "allergens", "settings", "staff", "staffMenu"],
+    manager: ["overview", "products", "categories", "allergens", "staffMenu"],
     waiter: ["overview", "staffMenu"],
-    kitchen: [
-      "overview", "products", "categories", "staffMenu"
-    ]
+    kitchen: ["overview", "products", "categories", "staffMenu"]
   };
 
   if (!allowedViews[currentUserRole]?.includes(viewName)) {
-    console.warn("Bu sayfaya erişim izni yok:", viewName);
+    console.warn("Bu sayfaya erişim yetkiniz yok:", viewName);
     return;
   }
 
   viewPanels.forEach(panel => {
     panel.classList.remove("active");
+    panel.hidden = true;
   });
+
+  navItems.forEach(item => {
+    item.classList.toggle("active", item.dataset.view === viewName);
+  });
+
+  const selectedPanel = document.getElementById(viewName + "View");
+
+  if (!selectedPanel) {
+    console.error("Sayfa bulunamadı:", viewName + "View");
+    return;
+  }
+
+  selectedPanel.hidden = false;
+  selectedPanel.classList.add("active");
+
+  topbarTitle.textContent = pageTitles[viewName] || "YÖNETİM PANELİ";
+
+  if (typeof closeSidebar === "function") {
+    closeSidebar();
+  }
+
+  if (viewName === "staff" && currentUserRole === "owner") {
+    window.loadStaff?.();
+  }
+
+  if (viewName === "staffMenu") {
+    window.loadStaffMenu?.();
+  }
+}
 
   navItems.forEach(item => {
     item.classList.toggle(
