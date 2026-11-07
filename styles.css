@@ -882,3 +882,100 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
     text-align: left;
   }
 }
+/* LUNA RESTORAN FOOTER */
+
+.site-footer {
+  width: 100%;
+  padding: 55px 7% 22px;
+  background: #302923;
+  color: #f8f1e8;
+  border-radius: 12px 12px 0 0;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 1.5fr 0.8fr 1fr;
+  gap: 65px;
+  padding-bottom: 42px;
+  border-bottom: 1px solid #ffffff25;
+}
+
+.footer-logo {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #f4e6d8;
+  font-family: "Playfair Display", serif;
+  font-size: 35px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.footer-about p {
+  max-width: 320px;
+  color: #c8bdb2;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.footer-column h3 {
+  margin: 8px 0 20px;
+  color: #dba58d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.7px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.footer-links a,
+.footer-contact p {
+  color: #c8bdb2;
+  font-size: 11px;
+  line-height: 1.8;
+  transition: color .2s;
+}
+
+.footer-links a:hover {
+  color: #e6b49f;
+}
+
+.footer-contact p {
+  margin-bottom: 7px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding-top: 20px;
+  color: #b7a99b;
+  font-size: 9px;
+}
+
+@media(max-width:700px) {
+
+  .site-footer {
+    padding: 35px 22px 18px;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding-bottom: 25px;
+  }
+
+  .footer-logo {
+    font-size: 30px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+}
