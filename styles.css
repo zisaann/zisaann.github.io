@@ -1069,3 +1069,11 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
     border-radius: 12px;
   }
 }
+/* ALERJEN BÖLÜMÜ GİZLEME VE AÇMA */
+#allergens[hidden] {
+  display: none !important;
+}
+
+#allergens {
+  scroll-margin-top: 25px;
+}
