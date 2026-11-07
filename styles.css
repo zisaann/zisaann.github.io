@@ -1,155 +1,345 @@
-/* AKSARAY ÜNİVERSİTESİ DİJİTAL MENÜ — Luna editorial esintili tasarım */
-:root{
-  --bg:#f8f1e8; --surface:#fbf6ef; --ink:#2e2924; --muted:#81766c;
-  --accent:#b9513b; --accent-dark:#963d2d; --line:#e5d9cc; --cream:#f4e9dc;
-  --heading:"Playfair Display",Georgia,serif; --body:"DM Sans",sans-serif;
-  --shadow:0 3px 14px rgba(55,38,25,.06);
+/* ==========================================
+   AKSARAY ÜNİVERSİTESİ DİJİTAL MENÜ
+   TAM EKRAN + KOMPAKT MENÜ TASARIMI
+========================================== */
+
+/* Kenar boşluklarını kaldır */
+.navbar {
+  width: 100%;
+  padding: 0 35px;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:85px}
-body{background:var(--bg);color:var(--ink);font:14px/1.55 var(--body);overflow-x:hidden}
-button,input{font:inherit} button,a{-webkit-tap-highlight-color:transparent}
-button{cursor:pointer} a{color:inherit;text-decoration:none}
-[hidden]{display:none!important} ::selection{background:#e7c4b5;color:var(--ink)}
-.navbar{height:74px;width:min(1180px,calc(100% - 64px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{display:inline-flex;align-items:center;gap:10px;flex-shrink:0}
-.brand-mark{width:38px;height:38px;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;color:var(--accent);font:600 14px var(--heading);background:transparent}
-.brand-name{font-size:10px;line-height:1.5;letter-spacing:1.2px;font-weight:800}
-.brand-name small{display:block;color:var(--accent);font-size:8px;letter-spacing:2px}
-.nav-links{display:flex;align-items:center;gap:30px}
-.nav-links a{font-size:11px;color:#5d554d;transition:color .2s}
-.nav-links a:hover{color:var(--accent)}
-.admin-login-link{border:1px solid var(--line);border-radius:5px;background:var(--surface);padding:10px 15px;color:var(--accent);font-size:10px;font-weight:700}
-.admin-login-link:hover{background:var(--accent);color:#fff}
-.hero{position:relative;width:min(1180px,calc(100% - 64px));min-height:420px;margin:0 auto 60px;padding:60px 52px;display:flex;align-items:center;overflow:hidden;border-radius:3px;background:#47372c url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1800&q=85") center/cover no-repeat}
-/* Foto katmanı, yazı kontrastını artırır */
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,21,18,.78) 0%,rgba(24,21,18,.53) 55%,rgba(24,21,18,.25) 100%)}
-.hero-content{position:relative;z-index:1;max-width:650px}
-.hero-label{display:flex;align-items:center;gap:10px;color:#f0ded0;font-size:9px;font-weight:600;letter-spacing:1.7px;margin-bottom:18px}
-.hero-label-divider{width:24px;height:1px;background:#cda18c}
-.hero h1{font:600 clamp(38px,5vw,64px)/1.12 var(--heading);letter-spacing:-1.2px;color:#fff;margin:0 0 16px}
-.hero h1 em{display:block;color:#e6b49f;font-style:normal}
-.hero-content>p{max-width:420px;color:#f1e8df;font-size:13px;line-height:1.8}
-.hero-button{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:12px 20px;border-radius:4px;background:var(--accent);color:white;font-size:11px;font-weight:700;transition:background .2s,transform .2s}
-.hero-button:hover{background:var(--accent-dark);transform:translateY(-2px)}
-/* Alerjen alanı */
-.allergen-box{width:min(1180px,calc(100% - 64px));margin:0 auto 62px;padding:28px 32px;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
-.allergen-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.eyebrow{display:block;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:1.8px}
-.allergen-heading h2{font:500 30px var(--heading);margin:8px 0}
-.allergen-heading p{color:var(--muted);font-size:11px;line-height:1.8;max-width:600px}
-.allergen-symbol{width:48px;height:48px;display:grid;place-items:center;border:1px solid #e7c9bb;border-radius:50%;color:var(--accent);font-size:25px}
-.allergen-divider{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-block:1px solid var(--line)}
-.allergen-divider>span{font-size:9px;font-weight:800;letter-spacing:1.3px}
-.clear-btn{padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--accent);font-size:10px}
-.allergen-list{display:flex;flex-wrap:wrap;gap:8px;padding:17px 0}
-.allergen-option{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid var(--line);border-radius:4px;background:#fffaf5;color:#5d5147;font-size:10px;cursor:pointer;transition:.2s}
-.allergen-option:has(input:checked){border-color:var(--accent);background:var(--accent);color:#fff}
-.allergen-option input{width:13px;height:13px;accent-color:var(--accent)}
-.filter-status{display:flex;align-items:center;gap:10px;padding:11px 13px;background:#f3e8dc;border-radius:4px}
-.status-icon{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;flex-shrink:0}
-.filter-status p{font-size:10px;color:#6d5a4c;line-height:1.6}
-.warning{margin-top:12px;color:#938579;font-size:9px;line-height:1.7}
-/* Menü ve kategori şeritleri */
-.menu-section{width:min(1180px,calc(100% - 64px));margin:0 auto;padding-bottom:75px}
-.menu-intro{display:block;text-align:center;margin-bottom:26px}
-.menu-intro .eyebrow{font-size:9px}
-.menu-intro h2{margin-top:7px;font:600 clamp(34px,4vw,48px) var(--heading);letter-spacing:-.7px}
-.menu-intro h2 span{color:var(--accent)}
-.menu-intro>p{max-width:620px;margin:8px auto 0;color:var(--muted);font-size:12px;line-height:1.8}
-.menu-tools{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.search-input{width:100%;height:44px;padding:0 16px;border:1px solid var(--line);outline:none;border-radius:4px;background:var(--surface);color:var(--ink);font-size:11px}
-.search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #b9513b12}
-.search-input::placeholder{color:#a99b8e}
-.result-count{flex-shrink:0;padding:9px 13px;border-radius:4px;background:#ead8ca;color:var(--accent);font-size:10px;font-weight:700}
-.category-area{padding:10px 0 14px;border:1px solid var(--line);border-radius:5px;background:#fbf5ed}
-.category-label{display:none}
-.category-list{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
-.category-btn,.subcategory-btn{padding:10px 18px;border:1px solid transparent;border-radius:24px;background:transparent;color:#51483f;font-size:11px;font-weight:600;transition:.2s}
-.category-btn:hover,.subcategory-btn:hover{color:var(--accent);border-color:#dfc5b5}
-.category-btn.active,.subcategory-btn.active{border-color:var(--accent);background:var(--accent);color:white;box-shadow:0 2px 5px #b9513b26}
-.subcategory-list{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding-top:12px}
-.subcategory-btn{padding:7px 13px;font-size:10px}
-/* Her alt kategori ürün alanı: görsel solda, ürün kartları sağda */
-.product-group{margin-top:28px;scroll-margin-top:88px;display:grid;grid-template-columns:minmax(230px,.82fr) minmax(0,1.4fr);grid-template-areas:"heading heading" "visual cards";column-gap:22px;align-items:start}
-.product-group-heading{grid-area:heading;display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}
-.product-group-heading h3{font:600 26px var(--heading);letter-spacing:-.3px}
-.product-group-heading>span{color:var(--muted);font-size:10px}
-.product-group::before{grid-area:visual;content:"";display:block;min-height:245px;height:100%;border-radius:5px;background:#e9d9c8 url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80") center/cover no-repeat}
-.product-grid{grid-area:cards;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.product-card{min-width:0;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line);border-radius:5px;background:var(--surface);cursor:pointer;box-shadow:var(--shadow);transition:transform .2s,border-color .2s}
-.product-card:hover{transform:translateY(-2px);border-color:#d6b8a6;box-shadow:0 6px 18px #39271a0c}
-.product-art{position:relative;min-height:120px;margin:7px;display:grid;place-items:center;overflow:hidden;border-radius:3px;background:#ead9c7}
-.product-card:nth-child(4n+2) .product-art{background:#e2e6d8}
-.product-card:nth-child(4n+3) .product-art{background:#f0dcd1}
-.product-card:nth-child(4n+4) .product-art{background:#e6dfd4}
-.product-emoji{width:70px;height:70px;display:grid;place-items:center;border-radius:50%;background:#ffffff80;font-size:37px}
-.product-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
-.product-content{padding:9px 12px 13px}
-.product-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.product-name{min-width:0;font:600 15px/1.35 var(--heading)}
-.product-price{flex-shrink:0;color:var(--accent);font-size:10px;font-weight:800;white-space:nowrap}
-.product-description{margin-top:7px;color:#7e7268;font-size:10px;line-height:1.65}
-.product-calories{margin-top:8px;color:#9b8c80;font-size:9px}
-.product-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
-.product-tag{padding:5px 7px;border-radius:4px;background:#eee2d5;color:#796354;font-size:8px;line-height:1.4}
-.allergen-warning{background:#f5e4d7;color:#a15f3e}
-.empty-message{padding:60px 15px;text-align:center}
-.empty-icon{font-size:40px}.empty-message h3{margin:12px 0 7px;font:600 24px var(--heading)}
-.empty-message p{color:var(--muted);font-size:11px}.primary-btn{margin-top:18px;padding:11px 18px;border:0;border-radius:4px;background:var(--accent);color:white;font-size:10px}
-/* QR çağrı alanı */
-.qr-section{position:relative;width:min(1180px,calc(100% - 64px));margin:0 auto 60px;padding:38px 48px;display:flex;align-items:center;justify-content:space-between;gap:30px;overflow:hidden;border-radius:5px;background:#ead9c9}
-.qr-copy{position:relative;z-index:1}.qr-copy h2{margin:12px 0;font:600 38px/1.2 var(--heading);color:var(--ink)}
-.qr-copy h2 em{color:var(--accent);font-style:normal}.qr-copy p{max-width:350px;color:#76685d;font-size:11px;line-height:1.8}
-.qr-card{position:relative;z-index:1;width:230px;padding:19px;display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid #e0cdbd;border-radius:5px;background:var(--surface)}
-.qr-card-heading{font-size:9px;font-weight:800;letter-spacing:1px}#qrcode{padding:8px;border:1px solid var(--line);border-radius:4px;background:#fff}
-#qrcode img,#qrcode canvas{display:block;max-width:100%}.qr-download{padding:9px 15px;border:0;border-radius:4px;background:var(--accent);color:white;font-size:10px;font-weight:700}
-#qrMessage{color:var(--muted);font-size:8px;text-align:center}.qr-decoration{position:absolute;right:35%;top:-60px;color:#b9513b12;font-size:240px}
-/* Footer */
-.site-footer{padding:38px max(calc((100% - 1180px)/2),32px) 20px;background:#2d2925;color:#f5eee6}
-.footer-main{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:24px;border-bottom:1px solid #ffffff20}
-.footer-brand .brand-mark{border-color:#d6a28c;color:#e4b6a0}.footer-brand .brand-name small{color:#d6a28c}
-.footer-slogan{color:#c6b8aa;font:500 18px var(--heading)}
-.footer-credit{padding:20px 0;text-align:center}.footer-heading{margin-bottom:9px;color:#d6a28c;font-size:9px;font-weight:800;letter-spacing:1px}
-.footer-team{margin-top:5px;color:#c6b8aa;font-size:10px}.footer-copyright{padding-top:14px;border-top:1px solid #ffffff20;color:#b7a99b;font-size:9px;text-align:center}
-/* Ürün detay modal */
-.modal-open{overflow:hidden}.product-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:#211c18a6;backdrop-filter:blur(4px)}
-.product-modal-content{position:relative;width:min(460px,100%);max-height:85vh;overflow-y:auto;border-radius:7px;background:var(--surface);box-shadow:0 20px 70px #0002}
-.product-modal-close{position:absolute;top:12px;right:12px;z-index:3;width:34px;height:34px;border:0;border-radius:50%;background:#fbf6ef;color:var(--accent);font-size:23px}
-.product-modal-image{width:100%;max-height:230px;display:block;object-fit:cover}.product-modal-details{padding:24px}
-.product-modal-category{color:var(--accent);font-size:9px;font-weight:800}.product-modal-details h2{margin:9px 0;font:600 28px var(--heading)}
-.product-modal-price{margin-bottom:10px;color:var(--accent);font-size:15px;font-weight:800}.product-modal-calories{margin-bottom:17px;color:var(--muted);font-size:10px}
-.product-modal-details h3{margin:16px 0 6px;font:600 16px var(--heading)}
-.product-modal-details>p:not(.product-modal-price):not(.product-modal-calories){color:var(--muted);font-size:11px;line-height:1.8}
-.product-modal-warning{margin-top:14px;padding:11px;border-radius:4px;background:#f5e4d7;color:#a15f3e!important}
-/* Responsive */
-@media(min-width:701px) and (max-width:1000px){.product-group{grid-template-columns:minmax(190px,.7fr) minmax(0,1.3fr);gap:14px}.product-grid{gap:9px}.product-group::before{min-height:220px}.hero{min-height:360px;padding:42px}}
-@media(max-width:700px){
- body{font-size:12px}.navbar,.hero,.allergen-box,.menu-section,.qr-section{width:calc(100% - 24px)}
- .navbar{height:60px;gap:7px}.brand{gap:6px}.brand-mark{width:30px;height:30px;font-size:11px}.brand-name{font-size:8px;letter-spacing:.5px}.brand-name small{font-size:6px;letter-spacing:1px}
- .nav-links{display:none}.admin-login-link{padding:7px 9px;font-size:8px}
- .hero{min-height:310px;margin:7px auto 25px;padding:26px 19px;border-radius:3px;background-position:center}
- .hero-label{font-size:7px;letter-spacing:1px;gap:7px;margin-bottom:13px}.hero-label-divider{width:15px}
- .hero h1{font-size:clamp(30px,8vw,42px);line-height:1.12;letter-spacing:-.6px;margin-bottom:10px}
- .hero-content>p{font-size:10px;line-height:1.65}.hero-button{margin-top:17px;padding:10px 14px;font-size:9px}
- .allergen-box{margin:0 auto 32px;padding:17px 13px;border-radius:4px}.allergen-heading{margin-bottom:13px}.allergen-heading h2{font-size:23px}.allergen-heading p{font-size:9px}.allergen-symbol{display:none}
- .allergen-divider{padding:9px 0}.allergen-divider>span{font-size:8px}.clear-btn{padding:6px 8px;font-size:8px}
- .allergen-list{gap:5px;padding:11px 0}.allergen-option{padding:6px 8px;font-size:8px}.allergen-option input{width:11px;height:11px}
- .filter-status{padding:8px}.status-icon{width:18px;height:18px;font-size:8px}.filter-status p{font-size:8px}.warning{font-size:7px}
- .menu-intro{margin-bottom:16px}.menu-intro h2{font-size:34px}.menu-intro>p{font-size:10px}
- .menu-tools{gap:6px;margin-bottom:10px}.search-input{height:37px;padding:0 11px;font-size:9px}.result-count{padding:7px 8px;font-size:8px}
- .category-area{padding:8px 5px;border-radius:4px}.category-list{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.category-list::-webkit-scrollbar{display:none}
- .category-btn{flex-shrink:0;padding:8px 12px;font-size:9px}.subcategory-list{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding-top:8px}.subcategory-btn{flex-shrink:0;padding:6px 9px;font-size:8px}
- .product-group{margin-top:20px;grid-template-columns:1fr;grid-template-areas:"heading" "visual" "cards";gap:10px}
- .product-group-heading{margin-bottom:0}.product-group-heading h3{font-size:21px}.product-group-heading>span{font-size:8px}
- .product-group::before{min-height:155px;height:155px;border-radius:4px}
- .product-grid{grid-template-columns:1fr;gap:8px}
- .product-card{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:stretch;border-radius:4px;box-shadow:none}
- .product-card:hover{transform:none;box-shadow:none}.product-art{min-height:86px;margin:5px;border-radius:3px}.product-emoji{width:44px;height:44px;font-size:24px}
- .product-content{min-width:0;padding:8px 8px 7px 2px}.product-name{font-size:12px}.product-price{font-size:8px}.product-description{margin-top:3px;font-size:8px}.product-calories{margin-top:4px;font-size:7px}
- .product-tags{gap:3px;margin-top:5px}.product-tag{padding:3px 5px;font-size:6px}
- .qr-section{margin-bottom:25px;padding:22px 15px;flex-direction:column;align-items:center;gap:17px;border-radius:4px}.qr-copy{width:100%}.qr-copy h2{font-size:28px}.qr-copy p{font-size:9px}.qr-card{width:min(230px,100%);padding:15px}.qr-decoration{display:none}
- .site-footer{padding:24px 15px 14px}.footer-main{flex-direction:column;align-items:flex-start;gap:12px;padding-bottom:16px}.footer-slogan{font-size:14px}.footer-credit{text-align:left;padding:15px 0}.footer-heading{font-size:7px}.footer-team{font-size:8px;line-height:1.6}.footer-copyright{font-size:8px}
- .product-modal{padding:12px}.product-modal-content{max-height:88vh;border-radius:5px}.product-modal-details{padding:18px}.product-modal-details h2{font-size:23px}
+
+.hero {
+  width: 100%;
+  margin: 0 0 35px;
+  border-radius: 0;
+  min-height: 390px;
+  padding: 55px 7%;
 }
-@media(max-width:360px){.navbar,.hero,.allergen-box,.menu-section,.qr-section{width:calc(100% - 18px)}.hero{padding:22px 14px}.hero h1{font-size:29px}.product-card{grid-template-columns:65px minmax(0,1fr)}.product-price{font-size:7px}}
+
+.allergen-box {
+  width: 100%;
+  margin: 0 0 40px;
+  border-radius: 0;
+  padding: 28px 5%;
+}
+
+.menu-section {
+  width: 100%;
+  margin: 0;
+  padding: 0 3% 45px;
+}
+
+.qr-section {
+  width: 100%;
+  margin: 0 0 40px;
+  border-radius: 0;
+  padding: 35px 5%;
+}
+
+.site-footer {
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+/* Menü başlığı */
+.menu-intro {
+  margin-bottom: 18px;
+}
+
+.menu-intro h2 {
+  font-size: 40px;
+  margin-top: 5px;
+}
+
+.menu-intro p {
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+/* Arama alanı */
+.menu-tools {
+  margin-bottom: 13px;
+}
+
+/* Kategori butonları */
+.category-area {
+  padding: 8px 12px;
+}
+
+.category-list {
+  gap: 5px;
+}
+
+.category-btn {
+  padding: 9px 16px;
+  font-size: 11px;
+}
+
+.subcategory-list {
+  padding-top: 8px;
+}
+
+.subcategory-btn {
+  padding: 7px 12px;
+  font-size: 10px;
+}
+
+/* Menü ürün alanı: görsel solda, ürünler sağda */
+.product-group {
+  margin-top: 20px;
+
+  display: grid;
+
+  grid-template-columns: 32% 1fr;
+
+  grid-template-areas:
+    "heading heading"
+    "visual cards";
+
+  gap: 15px;
+}
+
+/* Alt kategori başlığı */
+.product-group-heading {
+  margin-bottom: 10px;
+}
+
+.product-group-heading h3 {
+  font-size: 24px;
+}
+
+/* Sol taraftaki kategori görseli */
+.product-group::before {
+  grid-area: visual;
+
+  min-height: 210px;
+  height: 100%;
+  max-height: 280px;
+
+  border-radius: 5px;
+}
+
+/* Sağ taraftaki ürün kartları */
+.product-grid {
+  grid-area: cards;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+/* Ürün kartları */
+.product-card {
+  border-radius: 5px;
+}
+
+.product-art {
+  min-height: 90px;
+  max-height: 115px;
+  margin: 6px;
+}
+
+.product-content {
+  padding: 8px 10px;
+}
+
+.product-name {
+  font-size: 14px;
+}
+
+.product-description {
+  font-size: 9px;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+.product-price {
+  font-size: 10px;
+}
+
+.product-tags {
+  margin-top: 6px;
+}
+
+.product-tag {
+  padding: 4px 6px;
+  font-size: 7px;
+}
+
+/* ==========================================
+   TELEFON VE TABLET
+========================================== */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    width: 100%;
+    padding: 0 12px;
+  }
+
+  .hero {
+    width: 100%;
+    margin: 0 0 22px;
+    min-height: 270px;
+    padding: 25px 18px;
+    border-radius: 0;
+  }
+
+  .allergen-box {
+    width: 100%;
+    margin: 0 0 25px;
+    padding: 16px 13px;
+    border-radius: 0;
+  }
+
+  .menu-section {
+    width: 100%;
+    padding: 0 12px 30px;
+  }
+
+  .qr-section {
+    width: 100%;
+    margin: 0 0 25px;
+    padding: 22px 14px;
+    border-radius: 0;
+  }
+
+  .site-footer {
+    padding: 24px 14px 15px;
+  }
+
+  .menu-intro {
+    margin-bottom: 13px;
+  }
+
+  .menu-intro h2 {
+    font-size: 30px;
+  }
+
+  .menu-intro p {
+    font-size: 9px;
+  }
+
+  /* Kategoriler yatay ve kısa */
+  .category-area {
+    padding: 7px 5px;
+  }
+
+  .category-list {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .category-btn {
+    flex-shrink: 0;
+    padding: 7px 11px;
+    font-size: 9px;
+  }
+
+  .subcategory-list {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .subcategory-btn {
+    flex-shrink: 0;
+    padding: 6px 9px;
+    font-size: 8px;
+  }
+
+  /* Mobilde kategori görseli üstte */
+  .product-group {
+    margin-top: 15px;
+
+    grid-template-columns: 1fr;
+
+    grid-template-areas:
+      "heading"
+      "visual"
+      "cards";
+
+    gap: 8px;
+  }
+
+  .product-group-heading {
+    margin-bottom: 0;
+  }
+
+  .product-group-heading h3 {
+    font-size: 20px;
+  }
+
+  .product-group::before {
+    min-height: 125px;
+    height: 125px;
+    max-height: none;
+  }
+
+  /* Ürünler tek sütun, kompakt */
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .product-card {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
+  .product-art {
+    min-height: 75px;
+    max-height: none;
+    margin: 4px;
+  }
+
+  .product-content {
+    padding: 7px 7px 6px 1px;
+  }
+
+  .product-name {
+    font-size: 11px;
+  }
+
+  .product-description {
+    font-size: 8px;
+    line-height: 1.4;
+  }
+
+  .product-price {
+    font-size: 8px;
+  }
+
+  .product-tags {
+    margin-top: 4px;
+  }
+
+  .product-tag {
+    padding: 3px 4px;
+    font-size: 6px;
+  }
+}
+
+/* Çok küçük ekranlar */
+@media (max-width: 360px) {
+
+  .menu-section {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .hero {
+    padding: 22px 14px;
+  }
+
+  .hero h1 {
+    font-size: 29px;
+  }
+
+  .product-card {
+    grid-template-columns: 60px minmax(0, 1fr);
+  }
+}
