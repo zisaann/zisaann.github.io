@@ -62,15 +62,21 @@
       Bugünün menüsünü keşfedin, size eşlik edecek lezzeti seçin.
     </p>
 
-    <a href="#menu" class="hero-button">
-      Menüyü keşfet <span>↗</span>
-    </a>
+   <div class="hero-buttons">
+  <a href="#menu" class="hero-button primary">
+    Menüyü keşfet <span>↗</span>
+  </a>
+
+  <button type="button" class="hero-button secondary" id="allergenToggleBtn">
+    Alerjenleri incele <span>⌄</span>
+  </button>
+</div>
 
   </div>
 </section>
 
   <!-- ALERJEN FİLTRELERİ -->
-  <section class="allergen-box" id="allergens">
+  <section class="allergen-section" id="allergens" hidden>
     <div class="allergen-heading">
       <div>
         <span class="eyebrow">BİLİNÇLİ SEÇİM</span>
