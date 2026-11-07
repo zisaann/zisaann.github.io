@@ -1238,7 +1238,7 @@
       </button>
       <button class="nav-item"
         data-view="staffMenu"
-        data-roles="waiter,kitchen">
+        data-roles="owner,manager,waiter,kitchen"
   <span>🍽️</span>
   <span>Menüyü Görüntüle</span>
 </button>
@@ -1763,43 +1763,61 @@
 };
 
     function openView(viewName) {
-    const allowedViews = {
-  owner: ["overview", "products", "categories", "allergens", "settings", "staff", "staffMenu"],
-  manager: ["overview", "products", "categories", "allergens"],
-  waiter: ["overview", "staffMenu"],
-  kitchen: ["overview", "staffMenu"]
-};
+  const allowedViews = {
+    owner: [
+      "overview", "products", "categories",
+      "allergens", "settings", "staff", "staffMenu"
+    ],
+    manager: [
+      "overview", "products", "categories",
+      "allergens", "staffMenu"
+    ],
+    waiter: ["overview", "staffMenu"],
+    kitchen: ["overview", "staffMenu"]
+  };
 
-if (!allowedViews[currentUserRole]?.includes(viewName)) {
-  return;
-}
-      viewPanels.forEach(panel => {
-        panel.classList.remove("active");
-      });
+  if (!allowedViews[currentUserRole]?.includes(viewName)) {
+    console.warn("Bu sayfaya erişim izni yok:", viewName);
+    return;
+  }
 
-      navItems.forEach(item => {
-        item.classList.toggle(
-          "active",
-          item.dataset.view === viewName
-        );
-      });
+  viewPanels.forEach(panel => panel.classList.remove("active"));
 
-      const selectedPanel = document.getElementById(viewName + "View");
-      if (viewName === "staff" && currentUserRole === "owner") {
-  loadStaff();
-}
-if (viewName === "staffMenu") {
-  loadStaffMenu();
-}
-      if (selectedPanel) {
-        selectedPanel.classList.add("active");
-      }
+  navItems.forEach(item => {
+    item.classList.toggle("active", item.dataset.view === viewName);
+  });
 
-      topbarTitle.textContent = pageTitles[viewName] || "YÖNETİM PANELİ";
+  const selectedPanel = document.getElementById(viewName + "View");
 
-      closeSidebar();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+  if (!selectedPanel) {
+    console.error("Sayfa paneli bulunamadı:", viewName + "View");
+    return;
+  }
+
+  selectedPanel.hidden = false;
+  selectedPanel.classList.add("active");
+
+  topbarTitle.textContent = pageTitles[viewName] || "YÖNETİM PANELİ";
+
+  closeSidebar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (viewName === "staff" && currentUserRole === "owner") {
+    if (typeof window.loadStaff === "function") {
+      window.loadStaff();
+    } else {
+      console.error("loadStaff fonksiyonu bulunamadı!");
     }
+  }
+
+  if (viewName === "staffMenu") {
+    if (typeof window.loadStaffMenu === "function") {
+      window.loadStaffMenu();
+    } else {
+      console.error("loadStaffMenu fonksiyonu bulunamadı!");
+    }
+  }
+}
 
     navItems.forEach(item => {
       item.addEventListener("click", () => {
