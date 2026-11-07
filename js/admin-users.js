@@ -23,7 +23,41 @@ function staffEscape(value) {
     "'": "&#39;"
   })[char]);
 }
+// İŞLEM GEÇMİŞİNE KAYIT EKLE
+async function writeAuditLog({
+  action,
+  table_name,
+  record_id,
+  record_name,
+  old_data = null,
+  new_data = null
+}) {
+  try {
+    const { data, error } = await supabaseClient.functions.invoke(
+      "write-audit-log",
+      {
+        body: {
+          action,
+          table_name,
+          record_id,
+          record_name,
+          old_data,
+          new_data
+        }
+      }
+    );
 
+    if (error) throw error;
+
+    if (!data?.success) {
+      throw new Error(data?.error || "İşlem geçmişine kayıt eklenemedi.");
+    }
+
+  } catch (error) {
+    console.error("İşlem geçmişi kayıt hatası:", error);
+    alert("İşlem gerçekleşti ancak işlem geçmişine kaydedilemedi.");
+  }
+}
 // ÇALIŞANLARI LİSTELE
 async function loadStaff() {
   if (currentUserRole !== "owner") return;
@@ -177,9 +211,21 @@ if (staffForm) {
         return;
       }
 
-      alert("Çalışan hesabı başarıyla oluşturuldu.");
-      staffForm.reset();
-      await loadStaff();
+      await writeAuditLog({
+  action: "create",
+  table_name: "admin_profiles",
+  record_id: data.userId,
+  record_name: fullName,
+  new_data: {
+    full_name: fullName,
+    username: username,
+    role: role
+  }
+});
+
+alert("Çalışan hesabı başarıyla oluşturuldu.");
+staffForm.reset();
+await loadStaff();
 
     } catch (error) {
       console.error("Beklenmeyen hata:", error);
@@ -192,22 +238,51 @@ if (staffForm) {
   });
 }
 
+
 // ÇALIŞAN GÖREVİNİ DEĞİŞTİR
 if (staffList) {
   staffList.addEventListener("change", async event => {
     const select = event.target.closest("[data-staff-role]");
     if (!select || currentUserRole !== "owner") return;
 
+    const userId = select.dataset.staffRole;
+    const newRole = select.value;
+
+    const { data: employee, error: fetchError } = await supabaseClient
+      .from("admin_profiles")
+      .select("full_name, role")
+      .eq("user_id", userId)
+      .single();
+
+    if (fetchError || !employee) {
+      alert("Çalışan bilgisi alınamadı.");
+      await loadStaff();
+      return;
+    }
+
+    const oldRole = employee.role;
+
+    if (oldRole === newRole) return;
+
     const { error } = await supabaseClient
       .from("admin_profiles")
-      .update({ role: select.value })
-      .eq("user_id", select.dataset.staffRole);
+      .update({ role: newRole })
+      .eq("user_id", userId);
 
     if (error) {
       alert("Görev değiştirilemedi: " + error.message);
       await loadStaff();
       return;
     }
+
+    await writeAuditLog({
+      action: "role_change",
+      table_name: "admin_profiles",
+      record_id: userId,
+      record_name: employee.full_name,
+      old_data: { role: oldRole },
+      new_data: { role: newRole }
+    });
 
     await loadStaff();
   });
@@ -227,19 +302,32 @@ if (staffList) {
 
     if (!confirmed) return;
 
+    const userId = button.dataset.staffToggle;
+
     const { error } = await supabaseClient
       .from("admin_profiles")
       .update({ is_active: !currentlyActive })
-      .eq("user_id", button.dataset.staffToggle);
+      .eq("user_id", userId);
 
     if (error) {
       alert("Hesap durumu değiştirilemedi: " + error.message);
       return;
     }
 
+    await writeAuditLog({
+      action: "status_change",
+      table_name: "admin_profiles",
+      record_id: userId,
+      record_name: button.closest(".staff-card")?.querySelector("h3")?.textContent,
+      old_data: { is_active: currentlyActive },
+      new_data: { is_active: !currentlyActive }
+    });
+
     await loadStaff();
   });
 }
+
+
 // ÇALIŞAN ADINI DÜZENLE
 if (staffList) {
   staffList.addEventListener("click", async event => {
@@ -260,6 +348,8 @@ if (staffList) {
       return;
     }
 
+    if (fullName === oldName) return;
+
     const { error } = await supabaseClient
       .from("admin_profiles")
       .update({ full_name: fullName })
@@ -270,10 +360,20 @@ if (staffList) {
       return;
     }
 
+    await writeAuditLog({
+      action: "update",
+      table_name: "admin_profiles",
+      record_id: userId,
+      record_name: fullName,
+      old_data: { full_name: oldName },
+      new_data: { full_name: fullName }
+    });
+
     alert("Çalışan adı başarıyla güncellendi.");
     await loadStaff();
   });
 }
+
 // ÇALIŞAN ŞİFRESİNİ SIFIRLA
 // ŞİFRE DEĞİŞTİRME MODALI
 const passwordModal = document.getElementById("passwordModal");
@@ -352,7 +452,16 @@ if (passwordResetForm) {
       if (!data?.success) {
         throw new Error(data?.error || "Şifre güncellenemedi.");
       }
-
+await writeAuditLog({
+  action: "password_reset",
+  table_name: "admin_profiles",
+  record_id: selectedStaffId,
+  record_name: "Çalışan şifresi",
+  old_data: null,
+  new_data: {
+    password_changed: true
+  }
+});
       alert("Çalışan şifresi başarıyla güncellendi.");
 
       passwordResetForm.reset();
