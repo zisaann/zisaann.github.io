@@ -1604,38 +1604,79 @@
   </div>
 
   <script>
+    let currentUserRole = null;
     // YÖNETİCİ KONTROLÜ
 
-    async function checkAdmin() {
-      const { data, error } = await supabaseClient.auth.getUser();
+   async function checkAdmin() {
+  const { data, error } = await supabaseClient.auth.getUser();
 
-      if (error || !data.user) {
-        document.getElementById("status").textContent =
-          "Oturum bulunamadı: " + (error?.message || "Kullanıcı yok");
-        return;
-      }
+  if (error || !data.user) {
+    window.location.href = "admin.html";
+    return;
+  }
 
-      const { data: profile, error: profileError } =
-        await supabaseClient
-          .from("admin_profiles")
-          .select("role, is_active")
-          .eq("user_id", data.user.id)
-          .single();
+  const { data: profile, error: profileError } =
+    await supabaseClient
+      .from("admin_profiles")
+      .select("role, is_active, full_name")
+      .eq("user_id", data.user.id)
+      .single();
 
-      if (profileError || !profile || !profile.is_active) {
-        document.getElementById("status").textContent =
-          "Yetki hatası: " +
-          (profileError?.message || "Yönetici profili bulunamadı.");
-        return;
-      }
+  if (profileError || !profile || !profile.is_active) {
+    await supabaseClient.auth.signOut();
+    window.location.href = "admin.html";
+    return;
+  }
 
-      document.getElementById("status").textContent =
-        "Giriş yapan kullanıcı: " + data.user.email;
+  currentUserRole = profile.role;
 
-      document.getElementById("adminEmail").textContent =
-        data.user.email;
-    }
+  const allowedRoles = [
+    "owner", "manager", "waiter", "kitchen"
+  ];
 
+  if (!allowedRoles.includes(currentUserRole)) {
+    await supabaseClient.auth.signOut();
+    window.location.href = "admin.html";
+    return;
+  }
+
+  document.getElementById("adminEmail").textContent =
+    `${profile.full_name || data.user.email} · ${
+      {
+        owner: "Restoran Sahibi",
+        manager: "İşletme Müdürü",
+        waiter: "Garson",
+        kitchen: "Mutfak Personeli"
+      }[currentUserRole]
+    }`;
+
+  document.getElementById("status").textContent =
+    "Giriş yapan kullanıcı: " + data.user.email;
+
+  document.querySelectorAll("[data-roles]").forEach(item => {
+    const roles = item.dataset.roles.split(",");
+    item.hidden = !roles.includes(currentUserRole);
+  });
+
+  document.getElementById("staffForm").hidden =
+    currentUserRole !== "owner";
+
+  if (currentUserRole === "owner") {
+    loadStaff();
+  }
+
+  if (currentUserRole === "waiter" ||
+      currentUserRole === "kitchen") {
+
+    document.querySelector("#overviewView .welcome-card h2")
+      .textContent = "Hoş geldiniz.";
+
+    document.querySelector("#overviewView .welcome-card p")
+      .textContent = "Restoran menüsünü buradan görüntüleyebilirsiniz.";
+
+    document.querySelector("#overviewView .quick-actions").hidden = true;
+  }
+}
     // ÇIKIŞ
 
     async function logoutAdmin() {
@@ -1665,9 +1706,20 @@
       categories: "KATEGORİ YÖNETİMİ",
       allergens: "ALERJEN YÖNETİMİ",
       settings: "AYARLAR"
+      staff: "ÇALIŞAN YÖNETİMİ"
     };
 
     function openView(viewName) {
+      const allowedViews = {
+  owner: ["overview", "products", "categories", "allergens", "settings", "staff"],
+  manager: ["overview", "products", "categories", "allergens"],
+  waiter: ["overview"],
+  kitchen: ["overview"]
+};
+
+if (!allowedViews[currentUserRole]?.includes(viewName)) {
+  return;
+}
       viewPanels.forEach(panel => {
         panel.classList.remove("active");
       });
@@ -1730,6 +1782,7 @@
   <script src="js/admin-products.js"></script>
   <script src="js/admin-categories.js"></script>
   <script src="js/admin-allergens.js"></script>
+  <script src="js/admin-users.js"></script>
 
 </body>
 </html>
