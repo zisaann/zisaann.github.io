@@ -342,56 +342,53 @@ function renderSubcategories() {
   });
 }
 
-// ==========================================
-// FİLTRELENMİŞ ÜRÜNLERİ GETİR
-// ==========================================
-
 function getVisibleProducts() {
-  const query = searchTerm
-    .trim()
-    .toLocaleLowerCase("tr-TR");
-
   return PRODUCTS.filter(product => {
-
-    // Alerjen filtresi seçildiğinde
-    // doğrulanmamış ürünleri gizle
+    // Kategori filtresi
     if (
-      selectedAllergens.size > 0 &&
-      !product.allergensVerified
+      selectedCategory !== "all" &&
+      product.category !== selectedCategory
     ) {
       return false;
     }
 
-    // Seçilen alerjenlerden herhangi birini içeren
-    // ürünleri gösterme
-    const containsSelectedAllergen = [
-      ...selectedAllergens
-    ].some(id => product.allergens.includes(id));
-
-    if (containsSelectedAllergen) {
+    // Alt kategori filtresi
+    if (
+      selectedSubcategory !== "all" &&
+      product.subcategory !== selectedSubcategory
+    ) {
       return false;
     }
 
-    const matchesCategory =
-      activeCategory === "Tümü" ||
-      product.category === activeCategory;
-
-    const matchesSubcategory =
-      !activeSubcategory ||
-      product.subcategory === activeSubcategory;
+    // Arama filtresi
+    const searchText = searchInput.value
+      .trim()
+      .toLocaleLowerCase("tr");
 
     const searchableText = [
       product.name,
+      product.description,
       product.category,
-      product.subcategory,
-      product.description
-    ].join(" ").toLocaleLowerCase("tr-TR");
+      product.subcategory
+    ].join(" ").toLocaleLowerCase("tr");
 
-    return (
-      matchesCategory &&
-      matchesSubcategory &&
-      (!query || searchableText.includes(query))
-    );
+    if (searchText && !searchableText.includes(searchText)) {
+      return false;
+    }
+
+    // Alerjen filtresi
+    // Seçilen alerjenlerden herhangi birini içeren ürün gizlenir.
+    // Doğrulanmış/doğrulanmamış ayrımı yapılmaz.
+    if (
+      selectedAllergens.size > 0 &&
+      product.allergens?.some(allergen =>
+        selectedAllergens.has(allergen)
+      )
+    ) {
+      return false;
+    }
+
+    return true;
   });
 }
 
