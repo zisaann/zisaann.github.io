@@ -3,509 +3,633 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yönetim Paneli | Aksaray Üniversitesi</title>
+  <meta name="theme-color" content="#F6F1E7">
+  <title>Yönetim Paneli | Luna</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+    :root {
+      --cream: #F6F1E7;
+      --white: #FFFCF7;
+      --red: #B94F3B;
+      --red-dark: #A44332;
+      --brown: #30251F;
+      --muted: #897F73;
+      --border: #E7D9CC;
+      --soft: #FAF6EF;
+      --beige: #E9D8C9;
+      --shadow: 0 8px 30px rgba(65,45,30,.055);
+    }
 
-:root {
-  --navy: #102e78;
-  --navy-dark: #0b2055;
-  --cream: #f7f5ef;
-  --white: #ffffff;
-  --text: #26334b;
-  --muted: #7d8491;
-  --border: #e9e6de;
-  --soft: #f4f3ee;
-  --shadow: 0 8px 28px rgba(23, 39, 75, .055);
-}
+    * {
+      box-sizing: border-box;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--brown);
+      line-height: 1.6;
+    }
 
-body {
-  margin: 0;
-  font-family: 'DM Sans', sans-serif;
-  background: var(--cream);
-  color: var(--text);
-  line-height: 1.6;
-}
+    /* HEADER */
 
-header {
-  min-height: 76px;
-  padding: 15px 6%;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
+    header {
+      min-height: 85px;
+      padding: 14px 6%;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-header strong {
-  color: var(--navy);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1.1px;
-}
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 37px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      color: var(--brown);
+      line-height: 1;
+    }
 
-main {
-  width: min(1160px, 90%);
-  margin: 48px auto 75px;
-}
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
 
-.welcome {
-  margin-bottom: 34px;
-}
+    .header-label {
+      color: var(--red);
+      border: 1px solid #D9A99B;
+      padding: 9px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-.welcome h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 4vw, 38px);
-  font-weight: 600;
-  color: var(--navy);
-  margin: 0 0 5px;
-}
+    /* MAIN */
 
-.welcome p {
-  color: var(--muted);
-  font-size: 14px;
-  margin: 0;
-}
+    main {
+      width: min(1160px, 90%);
+      margin: 48px auto 75px;
+    }
 
-button {
-  min-height: 43px;
-  padding: 11px 19px;
-  border: 1px solid var(--navy);
-  border-radius: 9px;
-  background: var(--navy);
-  color: white;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  transition: .2s ease;
-}
+    .welcome {
+      margin-bottom: 35px;
+    }
 
-button:hover {
-  background: var(--navy-dark);
-  border-color: var(--navy-dark);
-  transform: translateY(-1px);
-}
+    .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
 
-button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-  transform: none;
-}
+    .welcome h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 43px);
+      font-weight: 600;
+      color: var(--brown);
+      margin: 0 0 5px;
+      letter-spacing: -1px;
+    }
 
-#logout {
-  background: var(--white);
-  color: var(--navy);
-  border: 1px solid var(--border);
-  min-height: 39px;
-}
+    .welcome p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
 
-#logout:hover {
-  background: var(--soft);
-  border-color: #d8d4ca;
-}
+    /* BUTTONS */
 
-#productManagement,
-#categoryManagement {
-  background: var(--white);
-  padding: 32px;
-  margin-bottom: 28px;
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  box-shadow: var(--shadow);
-}
+    button {
+      min-height: 44px;
+      padding: 11px 19px;
+      border: 1px solid var(--red);
+      border-radius: 10px;
+      background: var(--red);
+      color: white;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      transition: .2s ease;
+    }
 
-#productManagement > h2,
-#categoryManagement > h2 {
-  font-family: 'Playfair Display', serif;
-  color: var(--navy);
-  font-size: 25px;
-  font-weight: 600;
-  margin: 0 0 20px;
-}
+    button:hover {
+      background: var(--red-dark);
+      border-color: var(--red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 15px rgba(185,79,59,.15);
+    }
 
-.section-description {
-  color: var(--muted);
-  font-size: 13px;
-  margin: -12px 0 25px;
-}
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+      transform: none;
+    }
 
-#productSearch {
-  display: block;
-  width: calc(100% - 40px);
-  margin: 18px 20px;
-  padding: 13px 15px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  font: inherit;
-  font-size: 14px;
-  outline: none;
-  background: #fff;
-}
+    #logout {
+      background: transparent;
+      color: var(--red);
+      border: 1px solid var(--border);
+      min-height: 40px;
+    }
 
-#productSearch:focus,
-#productForm input:focus,
-#productForm textarea:focus,
-.category-box input:focus,
-.category-box select:focus {
-  border-color: var(--navy);
-  box-shadow: 0 0 0 3px rgba(16, 46, 120, .08);
-}
+    #logout:hover {
+      background: var(--soft);
+      border-color: var(--red);
+      box-shadow: none;
+    }
 
-#productListDetails {
-  margin-top: 24px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #fcfbf8;
-  overflow: hidden;
-}
+    /* SECTIONS */
 
-#productListDetails summary {
-  padding: 17px 20px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--navy);
-  list-style: none;
-}
+    #productManagement,
+    #categoryManagement {
+      background: var(--white);
+      padding: 32px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      box-shadow: var(--shadow);
+    }
 
-#productListDetails summary::-webkit-details-marker {
-  display: none;
-}
+    #productManagement > h2,
+    #categoryManagement > h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--brown);
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
 
-#productListDetails summary::after {
-  content: "+";
-  float: right;
-  font-size: 20px;
-  line-height: 1;
-}
+    .section-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin: -12px 0 25px;
+    }
 
-#productListDetails[open] summary::after {
-  content: "−";
-}
+    /* PRODUCT SEARCH */
 
-#productList {
-  display: grid;
-  gap: 13px;
-  margin-top: 15px;
-  padding: 0 20px 20px;
-}
+    #productSearch {
+      display: block;
+      width: calc(100% - 40px);
+      margin: 18px 20px;
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+      background: var(--white);
+      color: var(--brown);
+    }
 
-#productList > div {
-  padding: 20px !important;
-  border: 1px solid var(--border);
-  border-radius: 11px;
-  background: white;
-  gap: 18px !important;
-}
+    #productSearch:focus,
+    #productForm input:focus,
+    #productForm textarea:focus,
+    .category-box input:focus,
+    .category-box select:focus {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(185,79,59,.08);
+    }
 
-#productList h3 {
-  margin: 0 0 6px;
-  color: var(--navy);
-  font-size: 16px;
-}
+    /* PRODUCT LIST */
 
-#productList p {
-  margin: 4px 0;
-  color: var(--muted);
-  font-size: 13px;
-}
+    #productListDetails {
+      margin-top: 24px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--soft);
+      overflow: hidden;
+    }
 
-#productForm {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px !important;
-  padding: 27px !important;
-  margin-top: 28px !important;
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  background: #fcfbf8 !important;
-}
+    #productListDetails summary {
+      padding: 17px 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--brown);
+      list-style: none;
+    }
 
-#productForm h2 {
-  grid-column: 1 / -1;
-  margin: 0 0 5px;
-  color: var(--navy);
-  font-family: 'Playfair Display', serif;
-}
+    #productListDetails summary::-webkit-details-marker {
+      display: none;
+    }
 
-#productForm label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  align-self: end;
-}
+    #productListDetails summary::after {
+      content: "+";
+      float: right;
+      font-size: 20px;
+      line-height: 1;
+      color: var(--red);
+    }
 
-#productForm input:not([type="checkbox"]),
-#productForm textarea {
-  width: 100%;
-  min-height: 44px;
-  padding: 11px 13px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: white;
-  font: inherit;
-  font-size: 13px;
-  outline: none;
-}
+    #productListDetails[open] summary::after {
+      content: "−";
+    }
 
-#productForm textarea {
-  min-height: 95px;
-  resize: vertical;
-}
+    #productList {
+      display: grid;
+      gap: 13px;
+      margin-top: 15px;
+      padding: 0 20px 20px;
+    }
 
-#productForm input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  accent-color: var(--navy);
-  vertical-align: middle;
-}
+    #productList > div {
+      padding: 20px !important;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: white;
+      gap: 18px !important;
+    }
 
-#productForm input[type="file"] {
-  padding: 9px !important;
-}
+    #productList h3 {
+      margin: 0 0 6px;
+      color: var(--brown);
+      font-size: 16px;
+    }
 
-#productForm button {
-  margin-top: 8px;
-}
+    #productList p {
+      margin: 4px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
 
-#productForm #cancelProduct {
-  background: #eeede8;
-  color: var(--navy);
-  border-color: #eeede8;
-}
+    /* PRODUCT FORM */
 
-#categoryManagement {
-  margin-top: 28px;
-}
+    #productForm {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px !important;
+      padding: 27px !important;
+      margin-top: 28px !important;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--soft) !important;
+    }
 
-.category-container {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
-}
+    #productForm h2 {
+      grid-column: 1 / -1;
+      margin: 0 0 5px;
+      color: var(--brown);
+      font-family: 'Playfair Display', serif;
+    }
 
-.category-box {
-  min-width: 0;
-  padding: 24px;
-  border: 1px solid var(--border);
-  border-radius: 13px;
-  background: #fcfbf8;
-}
+    #productForm label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brown);
+      align-self: end;
+    }
 
-.category-box h3 {
-  margin: 0 0 18px;
-  color: var(--navy);
-  font-family: 'Playfair Display', serif;
-  font-size: 19px;
-}
+    #productForm input:not([type="checkbox"]),
+    #productForm textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      color: var(--brown);
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
 
-.category-box label {
-  display: block;
-  margin: 15px 0 5px;
-  font-size: 13px;
-  font-weight: 600;
-}
+    #productForm textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
 
-.category-box select,
-.category-box input:not([type="checkbox"]) {
-  width: 100%;
-  min-height: 43px;
-  padding: 10px 12px;
-  margin: 8px 0 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font: inherit;
-  font-size: 13px;
-  background: white;
-  outline: none;
-}
+    #productForm input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      accent-color: var(--red);
+      vertical-align: middle;
+    }
 
-#categoryList,
-#subcategoryList {
-  display: grid;
-  gap: 11px;
-  margin-top: 20px;
-}
+    #productForm input[type="file"] {
+      padding: 9px !important;
+    }
 
-#status {
-  margin-top: 25px;
-  padding: 13px 16px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: rgba(255,255,255,.7);
-  color: var(--muted);
-  font-size: 12px;
-}
+    #productForm button {
+      margin-top: 8px;
+    }
 
-@media (max-width: 750px) {
-  header {
-    padding: 14px 5%;
-  }
+    #productForm #cancelProduct {
+      background: var(--beige);
+      color: var(--brown);
+      border-color: var(--beige);
+    }
 
-  header strong {
-    font-size: 11px;
-  }
+    #productForm #cancelProduct:hover {
+      background: #DDC9B8;
+      border-color: #DDC9B8;
+      box-shadow: none;
+    }
 
-  main {
-    width: 92%;
-    margin: 30px auto 50px;
-  }
+    /* CATEGORY MANAGEMENT */
 
-  #productManagement,
-  #categoryManagement {
-    padding: 22px;
-  }
+    #categoryManagement {
+      margin-top: 28px;
+    }
 
-  .category-container {
-    grid-template-columns: 1fr;
-  }
+    .category-container {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
 
-  #productForm {
-    grid-template-columns: 1fr;
-    padding: 20px !important;
-  }
+    .category-box {
+      min-width: 0;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--soft);
+    }
 
-  .welcome h1 {
-    font-size: 29px;
-  }
-}
+    .category-box h3 {
+      margin: 0 0 18px;
+      color: var(--brown);
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+    }
 
-@media (max-width: 430px) {
-  header {
-    gap: 10px;
-  }
+    .category-box label {
+      display: block;
+      margin: 15px 0 5px;
+      font-size: 13px;
+      font-weight: 600;
+    }
 
-  header strong {
-    max-width: 210px;
-    line-height: 1.5;
-  }
+    .category-box select,
+    .category-box input:not([type="checkbox"]) {
+      width: 100%;
+      min-height: 43px;
+      padding: 10px 12px;
+      margin: 8px 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font: inherit;
+      font-size: 13px;
+      background: white;
+      color: var(--brown);
+      outline: none;
+    }
 
-  button {
-    padding: 10px 13px;
-    font-size: 12px;
-  }
+    #categoryList,
+    #subcategoryList {
+      display: grid;
+      gap: 11px;
+      margin-top: 20px;
+    }
 
-  #productManagement,
-  #categoryManagement {
-    padding: 18px;
-  }
+    /* STATUS */
 
-  .category-box {
-    padding: 18px;
-  }
-}
+    #status {
+      margin-top: 25px;
+      padding: 14px 17px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--muted);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
 
+    /* FOOTER */
+
+    footer {
+      padding: 22px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    footer span {
+      color: var(--red);
+    }
+
+    /* TABLET */
+
+    @media (max-width: 750px) {
+      header {
+        padding: 15px 5%;
+      }
+
+      main {
+        width: 92%;
+        margin: 32px auto 50px;
+      }
+
+      #productManagement,
+      #categoryManagement {
+        padding: 22px;
+      }
+
+      .category-container {
+        grid-template-columns: 1fr;
+      }
+
+      #productForm {
+        grid-template-columns: 1fr;
+        padding: 20px !important;
+      }
+
+      .welcome h1 {
+        font-size: 33px;
+      }
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 430px) {
+      header {
+        gap: 10px;
+        min-height: 72px;
+      }
+
+      .logo {
+        font-size: 32px;
+      }
+
+      .header-label {
+        font-size: 11px;
+        padding: 8px 12px;
+      }
+
+      button {
+        padding: 10px 13px;
+        font-size: 12px;
+      }
+
+      #productManagement,
+      #categoryManagement {
+        padding: 18px;
+      }
+
+      .category-box {
+        padding: 18px;
+      }
+
+      #productSearch {
+        width: calc(100% - 24px);
+        margin: 15px 12px;
+      }
+
+      #productList {
+        padding: 0 12px 15px;
+      }
+
+      #productManagement > h2,
+      #categoryManagement > h2 {
+        font-size: 25px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
 <header>
-  <strong>AKSARAY ÜNİVERSİTESİ | ADMIN</strong>
-  <button id="logout">Çıkış Yap</button>
+  <div class="logo">Luna</div>
+
+  <div class="header-right">
+    <div class="header-label">Yönetici Paneli</div>
+    <button id="logout">Çıkış Yap</button>
+  </div>
 </header>
 
 <main>
+
   <div class="welcome">
-    <h1>Yönetim Paneli</h1>
-    <p>Dijital menünüzü buradan yönetebilirsiniz.</p>
+    <div class="eyebrow">AKSARAY ÜNİVERSİTESİ</div>
+    <h1>Yönetim Paneli.</h1>
+    <p>Dijital menünüzü buradan kolayca yönetebilirsiniz.</p>
   </div>
 
-<section id="productManagement">
+  <!-- ÜRÜN YÖNETİMİ -->
 
-  <h2>Ürün Yönetimi</h2>
+  <section id="productManagement">
+
+    <h2>Ürün Yönetimi</h2>
+
+    <p class="section-description">
+      Menüdeki yemekleri, fiyatları ve ürün bilgilerini yönetin.
+    </p>
 
     <button id="addProductBtn">+ Yeni Ürün Ekle</button>
 
-  <details id="productListDetails">
-    <summary>
-      Ürün Listesini Görüntüle
-    </summary>
+    <details id="productListDetails">
+      <summary>Ürün Listesini Görüntüle</summary>
 
-    <input
-      type="text"
-      id="productSearch"
-      placeholder="Ürün ara..."
-    >
+      <input
+        type="text"
+        id="productSearch"
+        placeholder="Ürün ara..."
+      >
 
-    <div id="productList">
-      Ürünler yükleniyor...
-    </div>
-  </details>
-
-</section>
-  
-   <section id="categoryManagement">
-
-  <h2>Kategori Yönetimi</h2>
-  <p class="section-description">
-    Menü kategorilerinizi ve alt kategorilerinizi buradan düzenleyebilirsiniz.
-  </p>
-
-  <div class="category-container">
-
-    <!-- ANA KATEGORİLER -->
-    <div class="category-box">
-      <h3>Ana Kategoriler</h3>
-
-      <button id="addCategoryBtn">+ Yeni Kategori Ekle</button>
-
-      <div id="categoryFormContainer"></div>
-
-      <div id="categoryList">
-        Kategoriler yükleniyor...
+      <div id="productList">
+        Ürünler yükleniyor...
       </div>
-    </div>
+    </details>
 
-    <!-- ALT KATEGORİLER -->
-    <div class="category-box">
-      <h3>Alt Kategoriler</h3>
+  </section>
 
-      <label for="parentCategorySelect">
-        Ana Kategori Seçin
-      </label>
+  <!-- KATEGORİ YÖNETİMİ -->
 
-      <select id="parentCategorySelect">
-        <option value="">Kategori seçin</option>
-      </select>
+  <section id="categoryManagement">
 
-      <button id="addSubcategoryBtn">+ Alt Kategori Ekle</button>
+    <h2>Kategori Yönetimi</h2>
 
-      <div id="subcategoryFormContainer"></div>
+    <p class="section-description">
+      Menü kategorilerinizi ve alt kategorilerinizi buradan düzenleyebilirsiniz.
+    </p>
 
-      <div id="subcategoryList">
-        Alt kategoriler burada görüntülenecek.
+    <div class="category-container">
+
+      <!-- ANA KATEGORİLER -->
+
+      <div class="category-box">
+
+        <h3>Ana Kategoriler</h3>
+
+        <button id="addCategoryBtn">
+          + Yeni Kategori Ekle
+        </button>
+
+        <div id="categoryFormContainer"></div>
+
+        <div id="categoryList">
+          Kategoriler yükleniyor...
+        </div>
+
       </div>
+
+      <!-- ALT KATEGORİLER -->
+
+      <div class="category-box">
+
+        <h3>Alt Kategoriler</h3>
+
+        <label for="parentCategorySelect">
+          Ana Kategori Seçin
+        </label>
+
+        <select id="parentCategorySelect">
+          <option value="">Kategori seçin</option>
+        </select>
+
+        <button id="addSubcategoryBtn">
+          + Alt Kategori Ekle
+        </button>
+
+        <div id="subcategoryFormContainer"></div>
+
+        <div id="subcategoryList">
+          Alt kategoriler burada görüntülenecek.
+        </div>
+
+      </div>
+
     </div>
 
-  </div>
-
-</section>
+  </section>
 
   <p id="status">Panel yükleniyor...</p>
+
 </main>
+
+<footer>
+  © 2026 <span>Luna</span> · Aksaray Üniversitesi Dijital Menü
+</footer>
 
 <script>
   async function checkAdmin() {
     const { data, error } = await supabaseClient.auth.getUser();
 
-   if (error || !data.user) {
-  document.getElementById("status").textContent =
-    "Oturum bulunamadı: " + (error?.message || "Kullanıcı yok");
-  return;
-}
+    if (error || !data.user) {
+      document.getElementById("status").textContent =
+        "Oturum bulunamadı: " + (error?.message || "Kullanıcı yok");
+      return;
+    }
 
     const { data: profile, error: profileError } =
       await supabaseClient
@@ -514,11 +638,12 @@ button:disabled {
         .eq("user_id", data.user.id)
         .single();
 
-   if (profileError || !profile || !profile.is_active) {
-  document.getElementById("status").textContent =
-    "Yetki hatası: " + (profileError?.message || JSON.stringify(profile));
-  return;
-}
+    if (profileError || !profile || !profile.is_active) {
+      document.getElementById("status").textContent =
+        "Yetki hatası: " +
+        (profileError?.message || JSON.stringify(profile));
+      return;
+    }
 
     document.getElementById("status").textContent =
       "Giriş yapan kullanıcı: " + data.user.email;
@@ -531,7 +656,9 @@ button:disabled {
 
   checkAdmin();
 </script>
+
 <script src="js/admin-products.js"></script>
 <script src="js/admin-categories.js"></script>
+
 </body>
 </html>
