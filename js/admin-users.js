@@ -275,61 +275,94 @@ if (staffList) {
   });
 }
 // ÇALIŞAN ŞİFRESİNİ SIFIRLA
+// ŞİFRE DEĞİŞTİRME MODALI
+const passwordModal = document.getElementById("passwordModal");
+const passwordResetForm = document.getElementById("passwordResetForm");
+const closePasswordModal = document.getElementById("closePasswordModal");
+
+let selectedStaffId = null;
+
 if (staffList) {
-  staffList.addEventListener("click", async event => {
+  staffList.addEventListener("click", event => {
     const button = event.target.closest("[data-staff-password]");
+
     if (!button || currentUserRole !== "owner") return;
 
-    const userId = button.dataset.staffPassword;
+    selectedStaffId = button.dataset.staffPassword;
 
-    const password = prompt(
-      "Yeni şifreyi girin (en az 8 karakter):"
-    );
+    passwordResetForm.reset();
+    passwordModal.classList.remove("hidden");
+  });
+}
 
-    if (password === null) return;
+// Modalı kapat
+closePasswordModal?.addEventListener("click", () => {
+  passwordModal.classList.add("hidden");
+  selectedStaffId = null;
+});
+
+// Dış alana tıklayınca kapat
+passwordModal?.addEventListener("click", event => {
+  if (event.target === passwordModal) {
+    passwordModal.classList.add("hidden");
+    selectedStaffId = null;
+  }
+});
+
+// Şifreyi güncelle
+if (passwordResetForm) {
+  passwordResetForm.addEventListener("submit", async event => {
+    event.preventDefault();
+
+    if (currentUserRole !== "owner" || !selectedStaffId) return;
+
+    const password = document.getElementById("newStaffPassword").value;
+    const confirmPassword = document.getElementById("confirmStaffPassword").value;
+    const saveButton = document.getElementById("saveStaffPassword");
 
     if (password.length < 8) {
       alert("Şifre en az 8 karakter olmalıdır.");
       return;
     }
 
-    const confirmed = confirm(
-      "Bu çalışanın şifresini değiştirmek istiyor musunuz?"
-    );
+    if (password !== confirmPassword) {
+      alert("Girdiğiniz şifreler eşleşmiyor.");
+      return;
+    }
 
-    if (!confirmed) return;
-
-    button.disabled = true;
-    button.textContent = "Güncelleniyor...";
+    saveButton.disabled = true;
+    saveButton.textContent = "Güncelleniyor...";
 
     try {
       const { data, error } = await supabaseClient.functions.invoke(
         "reset-staff-password",
         {
-          body: { userId, password }
+          body: {
+            userId: selectedStaffId,
+            password
+          }
         }
       );
 
-      if (error) {
-        console.error("Şifre sıfırlama hatası:", error);
-        alert("Şifre değiştirilemedi: " + error.message);
-        return;
-      }
+      if (error) throw error;
 
       if (!data?.success) {
-        alert(data?.error || "Şifre değiştirilemedi.");
-        return;
+        throw new Error(data?.error || "Şifre güncellenemedi.");
       }
 
-      alert("Çalışan şifresi başarıyla değiştirildi.");
+      alert("Çalışan şifresi başarıyla güncellendi.");
+
+      passwordResetForm.reset();
+      passwordModal.classList.add("hidden");
+      selectedStaffId = null;
 
     } catch (error) {
-      console.error(error);
-      alert("Beklenmeyen hata: " + error.message);
+      console.error("Şifre güncelleme hatası:", error);
+      alert("Şifre değiştirilemedi: " + error.message);
 
     } finally {
-      button.disabled = false;
-      button.textContent = "Şifre Sıfırla";
+      saveButton.disabled = false;
+      saveButton.textContent = "Şifreyi Güncelle";
     }
   });
 }
