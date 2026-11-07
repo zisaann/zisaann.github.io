@@ -1243,12 +1243,12 @@
   <span>Menüyü Görüntüle</span>
 </button>
 
-      <button class="nav-item" data-view="products" data-roles="owner,manager">
+      <button class="nav-item" data-view="products" data-roles="owner,manager,kitchen"
         <span class="nav-icon">♧</span>
         Ürün Yönetimi
       </button>
 
-      <button class="nav-item" data-view="categories" data-roles="owner,manager">
+      <button class="nav-item" data-view="categories" data-roles="owner,manager,kitchen"
         <span class="nav-icon">▦</span>
         Kategori Yönetimi
       </button>
@@ -1257,7 +1257,7 @@
         <span class="nav-icon">◇</span>
         Alerjen Yönetimi
       </button>
-      <button class="nav-item" data-view="staff" data-roles="owner">
+      <button class="nav-item" data-view="staff" data-roles="owner,manager,kitchen">
   <span class="nav-icon">♙</span>
   Çalışan Yönetimi
 </button>
@@ -1762,19 +1762,20 @@
   staffMenu: "MENÜYÜ GÖRÜNTÜLE"
 };
 
-    function openView(viewName) {
-  const allowedViews = {
-    owner: [
-      "overview", "products", "categories",
-      "allergens", "settings", "staff", "staffMenu"
-    ],
-    manager: [
-      "overview", "products", "categories",
-      "allergens", "staffMenu"
-    ],
-    waiter: ["overview", "staffMenu"],
-    kitchen: ["overview", "staffMenu"]
-  };
+    const allowedViews = {
+  owner: [
+    "overview", "products", "categories",
+    "allergens", "settings", "staff", "staffMenu"
+  ],
+  manager: [
+    "overview", "products", "categories",
+    "allergens", "staffMenu"
+  ],
+  waiter: ["overview", "staffMenu"],
+  kitchen: [
+    "overview", "products", "categories", "staffMenu"
+  ]
+};
 
   if (!allowedViews[currentUserRole]?.includes(viewName)) {
     console.warn("Bu sayfaya erişim izni yok:", viewName);
