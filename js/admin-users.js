@@ -165,6 +165,9 @@ staffForm.addEventListener("submit", async event => {
   button.textContent = "Hesap oluşturuluyor...";
 
   const { data, error } = await supabaseClient.functions.invoke(
+     console.log("FUNCTION DATA:", data);
+console.log("FUNCTION ERROR:", error);
+console.log("ERROR CONTEXT:", error?.context);
     "create-staff",
     {
       body: {
