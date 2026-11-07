@@ -1533,32 +1533,51 @@
         Bu işlem çalışana yönetim paneli yetkisi tanımlar; Auth hesabını oluşturmaz.
       </p>
     </div>
+    
+<form id="staffForm">
 
-    <form id="staffForm">
+  <h3>Yeni Çalışan Hesabı Oluştur</h3>
 
-      <h3>Çalışan Kaydı Oluştur</h3>
+  <label for="staffName">Ad Soyad</label>
+  <input
+    id="staffName"
+    type="text"
+    required
+    placeholder="Çalışanın adı soyadı"
+  >
 
-      <label for="staffName">Ad Soyad</label>
-      <input id="staffName" type="text" required placeholder="Çalışanın adı">
+  <label for="staffUsername">Kullanıcı Adı</label>
+  <input
+    id="staffUsername"
+    type="text"
+    required
+    minlength="3"
+    placeholder="Örn. ahmetgarson"
+    autocomplete="off"
+  >
 
-      <label for="staffEmail">E-posta</label>
-      <input id="staffEmail" type="email" required placeholder="ornek@mail.com">
+  <label for="staffPassword">İlk Giriş Şifresi</label>
+  <input
+    id="staffPassword"
+    type="password"
+    required
+    minlength="8"
+    placeholder="En az 8 karakter"
+    autocomplete="new-password"
+  >
 
-      <label for="staffUserId">Supabase Kullanıcı UID</label>
-      <input id="staffUserId" type="text" required placeholder="Authentication bölümündeki UID">
+  <label for="staffRole">Görev</label>
+  <select id="staffRole" required>
+    <option value="waiter">Garson</option>
+    <option value="kitchen">Mutfak Personeli</option>
+    <option value="manager">İşletme Müdürü</option>
+  </select>
 
-      <label for="staffRole">Görev</label>
-      <select id="staffRole" required>
-        <option value="waiter">Garson</option>
-        <option value="kitchen">Mutfak Personeli</option>
-        <option value="manager">İşletme Müdürü</option>
-      </select>
+  <button type="submit" class="primary-btn">
+    Çalışan Hesabını Oluştur
+  </button>
 
-      <button type="submit" class="primary-btn">
-        Çalışanı Kaydet
-      </button>
-
-    </form>
+</form>
 
     <div class="staff-summary" id="staffSummary">
       Çalışanlar yükleniyor...
