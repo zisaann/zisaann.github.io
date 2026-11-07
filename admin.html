@@ -3,122 +3,365 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Girişi | Aksaray Üniversitesi</title>
+  <meta name="theme-color" content="#F6F1E7">
+  <title>Admin Girişi | Luna</title>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
       box-sizing: border-box;
     }
 
+    :root {
+      --cream: #F6F1E7;
+      --white: #FFFCF7;
+      --red: #B94F3B;
+      --red-dark: #A44332;
+      --brown: #30251F;
+      --muted: #897F73;
+      --border: #E7D9CC;
+      --beige: #E9D8C9;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #f4f6f2;
-      font-family: Arial, sans-serif;
-      color: #26352c;
+      display: flex;
+      flex-direction: column;
+      background: var(--cream);
+      color: var(--brown);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Üst menü */
+
+    header {
+      width: 100%;
+      padding: 24px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,252,247,0.8);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      color: var(--brown);
+    }
+
+    .header-label {
+      color: var(--red);
+      border: 1px solid #D9A99B;
+      padding: 11px 23px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Ana alan */
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 55px 20px;
     }
 
     .login-box {
-      width: min(90%, 420px);
-      padding: 40px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 8px 35px #00000012;
+      width: 100%;
+      max-width: 440px;
+      padding: 44px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(65,45,30,0.06);
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-align: center;
+      margin-bottom: 17px;
     }
 
     h1 {
-      font-size: 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 600;
       text-align: center;
+      margin: 0 0 10px;
+      letter-spacing: -1px;
     }
 
-    p {
-      color: #718075;
+    .description {
+      color: var(--muted);
       text-align: center;
-      margin-bottom: 30px;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 0 0 35px;
     }
+
+    .divider {
+      width: 45px;
+      height: 3px;
+      background: var(--red);
+      margin: 0 auto 30px;
+      border-radius: 5px;
+    }
+
+    /* Form */
 
     label {
       display: block;
-      margin: 16px 0 7px;
-      font-size: 14px;
+      margin: 19px 0 9px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brown);
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #dce3dc;
-      border-radius: 9px;
-      font-size: 15px;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: #FAF6EF;
+      color: var(--brown);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: 0.25s;
+    }
+
+    input:focus {
+      border-color: var(--red);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(185,79,59,0.08);
+    }
+
+    input::placeholder {
+      color: #B2A89C;
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 24px;
-      border: 0;
-      border-radius: 9px;
-      background: #315b43;
+      padding: 16px;
+      margin-top: 27px;
+      border: none;
+      border-radius: 11px;
+      background: var(--red);
       color: white;
+      font-family: inherit;
       font-size: 15px;
+      font-weight: 700;
       cursor: pointer;
+      transition: 0.25s;
+    }
+
+    button:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 7px 18px rgba(185,79,59,0.2);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
     }
 
     #message {
-      margin-top: 18px;
-      font-size: 14px;
+      display: none;
+      margin-top: 20px;
+      padding: 13px;
+      border-radius: 10px;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    #message.error {
+      display: block;
+      background: #FBECE8;
+      color: #A44332;
+      border: 1px solid #EBCAC0;
+    }
+
+    #message.success {
+      display: block;
+      background: #EDF3E9;
+      color: #526B46;
+      border: 1px solid #D6E3CE;
+    }
+
+    #message.info {
+      display: block;
+      background: #F5EEE3;
+      color: #78634C;
+      border: 1px solid var(--border);
+    }
+
+    /* Alt alan */
+
+    footer {
+      text-align: center;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span {
+      color: var(--red);
+    }
+
+    /* Mobil */
+
+    @media (max-width: 600px) {
+      header {
+        padding: 19px 22px;
+      }
+
+      .logo {
+        font-size: 32px;
+      }
+
+      .header-label {
+        font-size: 12px;
+        padding: 9px 14px;
+      }
+
+      main {
+        padding: 35px 18px;
+      }
+
+      .login-box {
+        padding: 34px 25px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      footer {
+        padding: 18px;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="login-box">
-    <h1>AKSARAY ÜNİVERSİTESİ</h1>
-    <p>Dijital Menü Yönetim Paneli</p>
 
-    <form id="loginForm">
-      <label for="email">E-posta</label>
-      <input type="email" id="email" required>
+  <header>
+    <div class="logo">Luna</div>
+    <div class="header-label">Yönetici Paneli</div>
+  </header>
 
-      <label for="password">Şifre</label>
-      <input type="password" id="password" required>
+  <main>
+    <div class="login-box">
 
-      <button type="submit">Giriş Yap</button>
-    </form>
+      <div class="eyebrow">AKSARAY ÜNİVERSİTESİ</div>
 
-    <div id="message"></div>
-  </div>
+      <h1>Hoş geldiniz.</h1>
+
+      <p class="description">
+        Dijital Menü Yönetim Paneli'ne giriş yaparak
+        günlük menünüzü kolayca yönetin.
+      </p>
+
+      <div class="divider"></div>
+
+      <form id="loginForm">
+
+        <label for="email">E-posta adresi</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="ornek@email.com"
+          autocomplete="username"
+          required
+        >
+
+        <label for="password">Şifre</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="Şifrenizi girin"
+          autocomplete="current-password"
+          required
+        >
+
+        <button type="submit" id="loginButton">
+          Yönetim Paneline Giriş Yap →
+        </button>
+
+      </form>
+
+      <div id="message" role="status" aria-live="polite"></div>
+
+    </div>
+  </main>
+
+  <footer>
+    © 2026 <span>Luna</span> · Aksaray Üniversitesi Dijital Menü
+  </footer>
 
   <script>
     const form = document.getElementById("loginForm");
     const message = document.getElementById("message");
+    const loginButton = document.getElementById("loginButton");
 
     form.addEventListener("submit", async function(event) {
       event.preventDefault();
 
       message.textContent = "Giriş kontrol ediliyor...";
+      message.className = "info";
+      loginButton.disabled = true;
+      loginButton.textContent = "Kontrol ediliyor...";
 
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
 
-      if (error) {
-        message.textContent = "Giriş başarısız: " + error.message;
-        return;
+        if (error) {
+          message.textContent = "Giriş başarısız: " + error.message;
+          message.className = "error";
+          loginButton.disabled = false;
+          loginButton.textContent = "Yönetim Paneline Giriş Yap →";
+          return;
+        }
+
+        message.textContent = "Giriş başarılı! Yönlendiriliyorsunuz...";
+        message.className = "success";
+
+        window.location.href = "dashboard.html";
+
+      } catch (err) {
+        message.textContent = "Bir hata oluştu. Lütfen tekrar deneyin.";
+        message.className = "error";
+        loginButton.disabled = false;
+        loginButton.textContent = "Yönetim Paneline Giriş Yap →";
       }
-
-      message.textContent = "Giriş başarılı!";
-
-      window.location.href = "dashboard.html";
     });
   </script>
+
 </body>
 </html>
