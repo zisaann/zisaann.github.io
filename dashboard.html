@@ -1236,6 +1236,12 @@
         <span class="nav-icon">⌂</span>
         Genel Bakış
       </button>
+      <button class="nav-item"
+        data-view="staffMenu"
+        data-roles="waiter,kitchen">
+  <span>🍽️</span>
+  <span>Menüyü Görüntüle</span>
+</button>
 
       <button class="nav-item" data-view="products" data-roles="owner,manager">
         <span class="nav-icon">♧</span>
@@ -1351,6 +1357,30 @@
         </div>
 
       </section>
+      
+<!-- PERSONEL MENÜ EKRANI -->
+
+<section class="view-panel" id="staffMenuView" hidden>
+
+  <div class="page-heading">
+    <div class="eyebrow">DİJİTAL MENÜ</div>
+    <h1>Restoran Menüsü</h1>
+    <p>Ürünleri, açıklamaları ve alerjen bilgilerini görüntüleyebilirsiniz.</p>
+  </div>
+
+  <input
+    type="search"
+    id="staffMenuSearch"
+    placeholder="Ürün ara..."
+    autocomplete="off"
+  >
+
+  <div id="staffMenuList">
+    Menü yükleniyor...
+  </div>
+
+</section>
+
 
       <!-- ÜRÜN YÖNETİMİ -->
 
@@ -1732,11 +1762,11 @@
     };
 
     function openView(viewName) {
-      const allowedViews = {
+    const allowedViews = {
   owner: ["overview", "products", "categories", "allergens", "settings", "staff"],
   manager: ["overview", "products", "categories", "allergens"],
-  waiter: ["overview"],
-  kitchen: ["overview"]
+  waiter: ["overview", "staffMenu"],
+  kitchen: ["overview", "staffMenu"]
 };
 
 if (!allowedViews[currentUserRole]?.includes(viewName)) {
