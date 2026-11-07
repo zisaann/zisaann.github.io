@@ -1238,17 +1238,17 @@
       </button>
       <button class="nav-item"
         data-view="staffMenu"
-        data-roles="owner,manager,waiter,kitchen"
+        data-roles="owner,manager,waiter,kitchen">
   <span>🍽️</span>
   <span>Menüyü Görüntüle</span>
 </button>
 
-      <button class="nav-item" data-view="products" data-roles="owner,manager,kitchen"
+      <button class="nav-item" data-view="products" data-roles="owner,manager,kitchen">
         <span class="nav-icon">♧</span>
         Ürün Yönetimi
       </button>
 
-      <button class="nav-item" data-view="categories" data-roles="owner,manager,kitchen"
+      <button class="nav-item" data-view="categories" data-roles="owner,manager,kitchen">
         <span class="nav-icon">▦</span>
         Kategori Yönetimi
       </button>
@@ -1257,7 +1257,7 @@
         <span class="nav-icon">◇</span>
         Alerjen Yönetimi
       </button>
-      <button class="nav-item" data-view="staff" data-roles="owner,manager,kitchen">
+      <button class="nav-item" data-view="staff" data-roles="owner">
   <span class="nav-icon">♙</span>
   Çalışan Yönetimi
 </button>
@@ -1762,27 +1762,69 @@
   staffMenu: "MENÜYÜ GÖRÜNTÜLE"
 };
 
-    const allowedViews = {
-  owner: [
-    "overview", "products", "categories",
-    "allergens", "settings", "staff", "staffMenu"
-  ],
-  manager: [
-    "overview", "products", "categories",
-    "allergens", "staffMenu"
-  ],
-  waiter: ["overview", "staffMenu"],
-  kitchen: [
-    "overview", "products", "categories", "staffMenu"
-  ]
-};
+    
+function openView(viewName) {
+  const allowedViews = {
+    owner: [
+      "overview", "products", "categories",
+      "allergens", "settings", "staff", "staffMenu"
+    ],
+    manager: [
+      "overview", "products", "categories",
+      "allergens", "staffMenu"
+    ],
+    waiter: ["overview", "staffMenu"],
+    kitchen: [
+      "overview", "products", "categories", "staffMenu"
+    ]
+  };
 
   if (!allowedViews[currentUserRole]?.includes(viewName)) {
     console.warn("Bu sayfaya erişim izni yok:", viewName);
     return;
   }
 
-  viewPanels.forEach(panel => panel.classList.remove("active"));
+  viewPanels.forEach(panel => {
+    panel.classList.remove("active");
+  });
+
+  navItems.forEach(item => {
+    item.classList.toggle(
+      "active",
+      item.dataset.view === viewName
+    );
+  });
+
+  const selectedPanel =
+    document.getElementById(viewName + "View");
+
+  if (!selectedPanel) {
+    console.error("Panel bulunamadı:", viewName);
+    return;
+  }
+
+  selectedPanel.hidden = false;
+  selectedPanel.classList.add("active");
+
+  topbarTitle.textContent =
+    pageTitles[viewName] || "YÖNETİM PANELİ";
+
+  closeSidebar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (viewName === "staff" && currentUserRole === "owner") {
+    if (typeof window.loadStaff === "function") {
+      window.loadStaff();
+    }
+  }
+
+  if (viewName === "staffMenu") {
+    if (typeof window.loadStaffMenu === "function") {
+      window.loadStaffMenu();
+    }
+  }
+}
+
 
   navItems.forEach(item => {
     item.classList.toggle("active", item.dataset.view === viewName);
