@@ -1655,11 +1655,13 @@
 
   </div>
 
-  <script>
-    let currentUserRole = null;
-    // YÖNETİCİ KONTROLÜ
-
-   async function checkAdmin() {
+<script>
+  let currentUserRole = null;
+// =========================================
+// YÖNETİCİ / PERSONEL KONTROLÜ
+// =========================================
+  let currentUserRole = null;
+async function checkAdmin() {
   const { data, error } = await supabaseClient.auth.getUser();
 
   if (error || !data.user) {
@@ -1667,12 +1669,11 @@
     return;
   }
 
-  const { data: profile, error: profileError } =
-    await supabaseClient
-      .from("admin_profiles")
-      .select("role, is_active, full_name")
-      .eq("user_id", data.user.id)
-      .single();
+  const { data: profile, error: profileError } = await supabaseClient
+    .from("admin_profiles")
+    .select("role, is_active, full_name")
+    .eq("user_id", data.user.id)
+    .single();
 
   if (profileError || !profile || !profile.is_active) {
     await supabaseClient.auth.signOut();
@@ -1682,9 +1683,7 @@
 
   currentUserRole = profile.role;
 
-  const allowedRoles = [
-    "owner", "manager", "waiter", "kitchen"
-  ];
+  const allowedRoles = ["owner", "manager", "waiter", "kitchen"];
 
   if (!allowedRoles.includes(currentUserRole)) {
     await supabaseClient.auth.signOut();
@@ -1692,67 +1691,100 @@
     return;
   }
 
+  const roleNames = {
+    owner: "Restoran Sahibi",
+    manager: "İşletme Müdürü",
+    waiter: "Garson",
+    kitchen: "Mutfak Personeli"
+  };
+
   document.getElementById("adminEmail").textContent =
-    `${profile.full_name || data.user.email} · ${
-      {
-        owner: "Restoran Sahibi",
-        manager: "İşletme Müdürü",
-        waiter: "Garson",
-        kitchen: "Mutfak Personeli"
-      }[currentUserRole]
-    }`;
+    `${profile.full_name || data.user.email} · ${roleNames[currentUserRole]}`;
 
   document.getElementById("status").textContent =
     "Giriş yapan kullanıcı: " + data.user.email;
 
+  // Menüde rolü uygun olmayan sayfaları gizle
   document.querySelectorAll("[data-roles]").forEach(item => {
     const roles = item.dataset.roles.split(",");
     item.hidden = !roles.includes(currentUserRole);
   });
 
-  document.getElementById("staffForm").hidden =
-    currentUserRole !== "owner";
+  // Çalışan yönetimi sadece owner
+  const staffForm = document.getElementById("staffForm");
 
+  if (staffForm) {
+    staffForm.hidden = currentUserRole !== "owner";
+  }
+
+  // Owner çalışan listesini yükleyebilir
   if (currentUserRole === "owner") {
-    loadStaff();
+    if (typeof window.loadStaff === "function") {
+      window.loadStaff();
+    }
   }
 
-  if (currentUserRole === "waiter" ||
-      currentUserRole === "kitchen") {
+  // Garson ve mutfak personeli için genel bakış metni
+  if (currentUserRole === "waiter" || currentUserRole === "kitchen") {
+    const welcomeTitle = document.querySelector(
+      "#overviewView .welcome-card h2"
+    );
 
-    document.querySelector("#overviewView .welcome-card h2")
-      .textContent = "Hoş geldiniz.";
+    const welcomeText = document.querySelector(
+      "#overviewView .welcome-card p"
+    );
 
-    document.querySelector("#overviewView .welcome-card p")
-      .textContent = "Restoran menüsünü buradan görüntüleyebilirsiniz.";
+    const quickActions = document.querySelector(
+      "#overviewView .quick-actions"
+    );
 
-    document.querySelector("#overviewView .quick-actions").hidden = true;
-  }
-}
-    // ÇIKIŞ
-
-    async function logoutAdmin() {
-      const { error } = await supabaseClient.auth.signOut();
-
-      if (error) {
-        document.getElementById("status").textContent =
-          "Çıkış yapılamadı: " + error.message;
-        return;
-      }
-
-      window.location.href = "admin.html";
+    if (welcomeTitle) {
+      welcomeTitle.textContent = "Hoş geldiniz.";
     }
 
-    document.getElementById("logout").addEventListener("click", logoutAdmin);
-    document.getElementById("sidebarLogout").addEventListener("click", logoutAdmin);
+    if (welcomeText) {
+      welcomeText.textContent =
+        "Restoran menüsünü buradan görüntüleyebilirsiniz.";
+    }
 
-    // SAYFA GEÇİŞLERİ
+    if (quickActions) {
+      quickActions.hidden = true;
+    }
+  }
+}
 
-    const navItems = document.querySelectorAll(".nav-item[data-view]");
-    const viewPanels = document.querySelectorAll(".view-panel");
-    const topbarTitle = document.getElementById("topbarTitle");
+// =========================================
+// ÇIKIŞ
+// =========================================
 
-    const pageTitles = {
+async function logoutAdmin() {
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    document.getElementById("status").textContent =
+      "Çıkış yapılamadı: " + error.message;
+    return;
+  }
+
+  window.location.href = "admin.html";
+}
+
+document.getElementById("logout").addEventListener("click", logoutAdmin);
+
+document.getElementById("sidebarLogout").addEventListener(
+  "click",
+  logoutAdmin
+);
+
+// =========================================
+// SAYFA GEÇİŞLERİ
+// =========================================
+
+const navItems = document.querySelectorAll(".nav-item[data-view]");
+const viewPanels = document.querySelectorAll(".view-panel");
+const topbarTitle = document.getElementById("topbarTitle");
+
+const pageTitles = {
   overview: "GENEL BAKIŞ",
   products: "ÜRÜN YÖNETİMİ",
   categories: "KATEGORİ YÖNETİMİ",
@@ -1762,98 +1794,57 @@
   staffMenu: "MENÜYÜ GÖRÜNTÜLE"
 };
 
-    
-function openView(viewName) {
-  
-function openView(viewName) {
-  const allowedViews = {
-    owner: ["overview", "products", "categories", "allergens", "settings", "staff", "staffMenu"],
-    manager: ["overview", "products", "categories", "allergens", "staffMenu"],
-    waiter: ["overview", "staffMenu"],
-    kitchen: ["overview", "products", "categories", "staffMenu"]
-  };
+const allowedViews = {
+  owner: [
+    "overview",
+    "products",
+    "categories",
+    "allergens",
+    "settings",
+    "staff",
+    "staffMenu"
+  ],
 
+  manager: [
+    "overview",
+    "products",
+    "categories",
+    "allergens",
+    "staffMenu"
+  ],
+
+  waiter: [
+    "overview",
+    "staffMenu"
+  ],
+
+  kitchen: [
+    "overview",
+    "products",
+    "categories",
+    "staffMenu"
+  ]
+};
+
+function openView(viewName) {
+  // Kullanıcı rolünün sayfaya erişimini kontrol et
   if (!allowedViews[currentUserRole]?.includes(viewName)) {
     console.warn("Bu sayfaya erişim yetkiniz yok:", viewName);
     return;
   }
 
+  // Önce tüm panelleri kapat
   viewPanels.forEach(panel => {
     panel.classList.remove("active");
     panel.hidden = true;
   });
 
+  // Menü aktif durumlarını güncelle
   navItems.forEach(item => {
     item.classList.toggle("active", item.dataset.view === viewName);
   });
 
-  const selectedPanel = document.getElementById(viewName + "View");
-
-  if (!selectedPanel) {
-    console.error("Sayfa bulunamadı:", viewName + "View");
-    return;
-  }
-
-  selectedPanel.hidden = false;
-  selectedPanel.classList.add("active");
-
-  topbarTitle.textContent = pageTitles[viewName] || "YÖNETİM PANELİ";
-
-  if (typeof closeSidebar === "function") {
-    closeSidebar();
-  }
-
-  if (viewName === "staff" && currentUserRole === "owner") {
-    window.loadStaff?.();
-  }
-
-  if (viewName === "staffMenu") {
-    window.loadStaffMenu?.();
-  }
-}
-
-  navItems.forEach(item => {
-    item.classList.toggle(
-      "active",
-      item.dataset.view === viewName
-    );
-  });
-
-  const selectedPanel =
-    document.getElementById(viewName + "View");
-
-  if (!selectedPanel) {
-    console.error("Panel bulunamadı:", viewName);
-    return;
-  }
-
-  selectedPanel.hidden = false;
-  selectedPanel.classList.add("active");
-
-  topbarTitle.textContent =
-    pageTitles[viewName] || "YÖNETİM PANELİ";
-
-  closeSidebar();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  if (viewName === "staff" && currentUserRole === "owner") {
-    if (typeof window.loadStaff === "function") {
-      window.loadStaff();
-    }
-  }
-
-  if (viewName === "staffMenu") {
-    if (typeof window.loadStaffMenu === "function") {
-      window.loadStaffMenu();
-    }
-  }
-}
-
-
-  navItems.forEach(item => {
-    item.classList.toggle("active", item.dataset.view === viewName);
-  });
-
+  // Seçilen paneli bul
   const selectedPanel = document.getElementById(viewName + "View");
 
   if (!selectedPanel) {
@@ -1861,65 +1852,80 @@ function openView(viewName) {
     return;
   }
 
+  // Seçilen paneli aç
   selectedPanel.hidden = false;
   selectedPanel.classList.add("active");
 
+  // Üst başlığı güncelle
   topbarTitle.textContent = pageTitles[viewName] || "YÖNETİM PANELİ";
 
+  // Mobil menüyü kapat
   closeSidebar();
-  window.scrollTo({ top: 0, behavior: "smooth" });
 
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  // Çalışan ekranına geçildiğinde çalışanları yükle
   if (viewName === "staff" && currentUserRole === "owner") {
     if (typeof window.loadStaff === "function") {
       window.loadStaff();
     } else {
-      console.error("loadStaff fonksiyonu bulunamadı!");
+      console.error("loadStaff fonksiyonu bulunamadı.");
     }
   }
 
+  // Menü görüntüleme ekranına geçildiğinde menüyü yükle
   if (viewName === "staffMenu") {
     if (typeof window.loadStaffMenu === "function") {
       window.loadStaffMenu();
     } else {
-      console.error("loadStaffMenu fonksiyonu bulunamadı!");
+      console.error("loadStaffMenu fonksiyonu bulunamadı.");
     }
   }
 }
 
-    navItems.forEach(item => {
-      item.addEventListener("click", () => {
-        openView(item.dataset.view);
-      });
-    });
+// Sol menü butonlarına tıklama
+navItems.forEach(item => {
+  item.addEventListener("click", () => {
+    openView(item.dataset.view);
+  });
+});
 
-    document.querySelectorAll("[data-open-view]").forEach(button => {
-      button.addEventListener("click", () => {
-        openView(button.dataset.openView);
-      });
-    });
+// Genel bakıştaki hızlı işlem butonları
+document.querySelectorAll("[data-open-view]").forEach(button => {
+  button.addEventListener("click", () => {
+    openView(button.dataset.openView);
+  });
+});
 
-    // MOBİL MENÜ
+// =========================================
+// MOBİL MENÜ
+// =========================================
 
-    const sidebar = document.getElementById("sidebar");
-    const sidebarOverlay = document.getElementById("sidebarOverlay");
-    const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+const menuToggle = document.getElementById("menuToggle");
 
-    function closeSidebar() {
-      sidebar.classList.remove("open");
-      sidebarOverlay.classList.remove("show");
-    }
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
+}
 
-    menuToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-      sidebarOverlay.classList.toggle("show");
-    });
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+  sidebarOverlay.classList.toggle("show");
+});
 
-    sidebarOverlay.addEventListener("click", closeSidebar);
+sidebarOverlay.addEventListener("click", closeSidebar);
 
-    // BAŞLANGIÇ
+// =========================================
+// BAŞLANGIÇ
+// =========================================
 
-    checkAdmin();
-  </script>
+checkAdmin();
+</script>
 
   <!-- MEVCUT YÖNETİM DOSYALARI -->
   <script src="js/admin-products.js"></script>
