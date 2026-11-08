@@ -1521,3 +1521,72 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
     padding: 25px 20px;
   }
 }
+/* MOBİL MENÜ YAZI BOYUTLARI */
+@media (max-width: 700px) {
+
+  /* Kategori ve alt kategori */
+  .category-btn {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+
+  .subcategory-btn {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+
+  /* Alt kategori başlıkları */
+  .product-group-heading h3 {
+    font-size: 23px;
+  }
+
+  .product-group-heading > span {
+    font-size: 11px;
+  }
+
+  /* Ürün kartları */
+  .product-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    min-height: 100px;
+  }
+
+  .product-name {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .product-price {
+    font-size: 12px;
+  }
+
+  .product-description {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .product-calories {
+    font-size: 10px;
+  }
+
+  .product-tag {
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+
+  /* Alerjen alanı */
+  .allergen-option {
+    font-size: 11px;
+  }
+
+  .allergen-heading p {
+    font-size: 12px;
+  }
+
+  .filter-status p {
+    font-size: 11px;
+  }
+
+  .warning {
+    font-size: 10px;
+  }
+}
