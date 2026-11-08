@@ -1885,94 +1885,109 @@
   </div>
 
   <!-- GENEL AYARLAR ALT EKRANI -->
-  
 <!-- İŞLETME BİLGİLERİ -->
-
 <div id="generalSettingsView" hidden>
 
   <button type="button" class="primary-btn" data-settings-back>
     ← Ayarlara Dön
   </button>
 
-  <div class="empty-panel" style="margin-top:20px;">
+  <div class="business-settings-page">
 
-    <div class="page-heading">
-      <div class="eyebrow">İŞLETME YÖNETİMİ</div>
-      <h2>İşletme Bilgileri</h2>
-      <p>Restoranınızın temel bilgilerini buradan düzenleyebilirsiniz.</p>
+    <div class="business-settings-heading">
+      <div>
+        <span class="eyebrow">İŞLETME YÖNETİMİ</span>
+        <h2>İşletme Bilgileri</h2>
+        <p>İşletmenizin kimliğini ve iletişim bilgilerini yönetin.</p>
+      </div>
+      <div class="business-heading-icon">✦</div>
     </div>
 
     <form id="businessSettingsForm">
 
-      <div class="form-group">
-        <label for="businessName">İşletme Adı</label>
-        <input
-          type="text"
-          id="businessName"
-          placeholder="Örn. Luna Restaurant"
-          required
-        >
+      <div class="business-settings-card">
+
+        <div class="business-card-heading">
+          <span class="business-card-icon">🏪</span>
+          <div>
+            <h3>Temel Bilgiler</h3>
+            <p>İşletmenizi tanımlayan bilgiler.</p>
+          </div>
+        </div>
+
+        <div class="business-form-grid">
+
+          <div class="form-group">
+            <label for="businessName">İşletme Adı</label>
+            <input type="text" id="businessName"
+              placeholder="Örn. Luna Restaurant" required>
+          </div>
+
+          <div class="form-group">
+            <label for="businessPhone">Telefon Numarası</label>
+            <input type="tel" id="businessPhone"
+              placeholder="05XX XXX XX XX">
+          </div>
+
+          <div class="form-group business-full-width">
+            <label for="businessLogo">Logo Adresi</label>
+            <input type="url" id="businessLogo"
+              placeholder="https://...">
+            <small>İşletmenizin logo görselinin bağlantısını girin.</small>
+          </div>
+
+          <div class="form-group business-full-width">
+            <label for="businessAddress">İşletme Adresi</label>
+            <textarea id="businessAddress" rows="3"
+              placeholder="Açık adresinizi girin..."></textarea>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="form-group">
-        <label for="businessLogo">Logo URL</label>
-        <input
-          type="url"
-          id="businessLogo"
-          placeholder="https://..."
-        >
+      <div class="business-settings-card">
+
+        <div class="business-card-heading">
+          <span class="business-card-icon">🕒</span>
+          <div>
+            <h3>Çalışma Bilgileri</h3>
+            <p>İşletmenizin çalışma düzeni.</p>
+          </div>
+        </div>
+
+        <div class="business-form-grid">
+
+          <div class="form-group business-full-width">
+            <label for="businessHours">Çalışma Saatleri</label>
+            <input type="text" id="businessHours"
+              placeholder="Örn. 09:00 - 22:00">
+          </div>
+
+          <div class="form-group business-full-width">
+            <label for="businessDescription">İşletme Açıklaması</label>
+            <textarea id="businessDescription" rows="4"
+              placeholder="İşletmeniz hakkında kısa bir açıklama..."></textarea>
+          </div>
+
+        </div>
+
       </div>
 
-      <div class="form-group">
-        <label for="businessAddress">İşletme Adresi</label>
-        <textarea
-          id="businessAddress"
-          rows="3"
-          placeholder="İşletmenizin adresi"
-        ></textarea>
-      </div>
+      <div class="business-save-area">
+        <span>Değişikliklerinizi kaydetmeyi unutmayın.</span>
 
-      <div class="form-group">
-        <label for="businessPhone">Telefon</label>
-        <input
-          type="tel"
-          id="businessPhone"
-          placeholder="05XX XXX XX XX"
-        >
+        <button type="button" class="primary-btn"
+          id="saveBusinessSettings">
+          ✓ Bilgileri Kaydet
+        </button>
       </div>
-
-      <div class="form-group">
-        <label for="businessHours">Çalışma Saatleri</label>
-        <input
-          type="text"
-          id="businessHours"
-          placeholder="Örn. 09:00 - 22:00"
-        >
-      </div>
-
-      <div class="form-group">
-        <label for="businessDescription">İşletme Açıklaması</label>
-        <textarea
-          id="businessDescription"
-          rows="4"
-          placeholder="İşletmeniz hakkında kısa bir açıklama..."
-        ></textarea>
-      </div>
-
-      <button
-        type="button"
-        class="primary-btn"
-        id="saveBusinessSettings"
-      >
-        Bilgileri Kaydet
-      </button>
 
     </form>
 
   </div>
 
 </div>
-
 
   <!-- İŞLEM GEÇMİŞİ ALT EKRANI -->
   <div id="auditSettingsView" hidden>
