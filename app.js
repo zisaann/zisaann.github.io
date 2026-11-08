@@ -872,43 +872,6 @@ function createQRCode() {
       ? "Bu yerel bir önizleme. Gerçek QR kodu için siteyi yayınla."
       : "Menü bağlantısının QR kodu hazır.";
 }
-
-// ==========================================
-// QR KODUNU İNDİR
-// ==========================================
-
-document
-  .getElementById("downloadQR")
-  .addEventListener("click", () => {
-
-    const qrElement = document.getElementById("qrcode");
-
-    if (!qrElement) return;
-
-    const canvas = qrElement.querySelector("canvas");
-    const image = qrElement.querySelector("img");
-
-    const dataUrl = canvas
-      ? canvas.toDataURL("image/png")
-      : image && image.src.startsWith("data:image")
-        ? image.src
-        : "";
-
-    if (!dataUrl) {
-      document.getElementById("qrMessage").textContent =
-        "QR kod henüz hazır değil. Sayfayı yenileyip tekrar dene.";
-
-      return;
-    }
-
-    const link = document.createElement("a");
-
-    link.download = "aksarayuni-menu-qr.png";
-    link.href = dataUrl;
-
-    link.click();
-  });
-
 // ==========================================
 // ALERJEN BÖLÜMÜNÜ AÇIP KAPAT
 // ==========================================
