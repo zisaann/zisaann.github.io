@@ -919,8 +919,43 @@ if (allergenToggleBtn && allergenSection) {
 // ==========================================
 // BAŞLAT
 // ==========================================
+// ==========================================
+// İŞLETME BİLGİLERİNİ YÜKLE
+// ==========================================
 
+async function loadBusinessSettings() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("business_settings")
+      .select("business_name, logo_url, address, phone, business_hours, description")
+      .order("id", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+    if (!data) return;
+
+    const setText = (id, value) => {
+      const element = document.getElementById(id);
+      if (element && value) {
+        element.textContent = value;
+      }
+    };
+
+    setText("businessNameHero", data.business_name);
+    setText("businessNameQR", data.business_name);
+    setText("businessNameFooter", data.business_name);
+    setText("businessDescriptionFooter", data.description);
+    setText("businessAddressFooter", data.address);
+    setText("businessPhoneFooter", data.phone);
+    setText("businessHoursFooter", data.business_hours);
+
+  } catch (error) {
+    console.error("İşletme bilgileri yüklenemedi:", error);
+  }
+}
 loadMenuData();
+loadBusinessSettings();
 
 if (document.readyState === "complete") {
   createQRCode();
