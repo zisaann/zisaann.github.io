@@ -327,7 +327,32 @@
       font-size: 13px;
       line-height: 1.8;
     }
+<!-- MENÜ İSTATİSTİKLERİ -->
 
+<div class="analytics-grid">
+
+  <div class="analytics-card">
+    <div class="analytics-icon">↗</div>
+    <h3>Menü Ziyaretleri</h3>
+    <strong id="totalMenuVisits">Yükleniyor...</strong>
+    <p>Toplam menü açılma sayısı</p>
+  </div>
+
+  <div class="analytics-card">
+    <div class="analytics-heading">
+      <div>
+        <h3>En Çok Görüntülenen Ürünler</h3>
+        <p>Görüntülenme sayılarına göre ilk 5 ürün</p>
+      </div>
+      <span>★</span>
+    </div>
+
+    <div id="topViewedProducts">
+      Ürün istatistikleri yükleniyor...
+    </div>
+  </div>
+
+</div>
     .overview-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0,1fr));
@@ -1618,7 +1643,65 @@
     width: 100%;
   }
 }
+/* MENÜ İSTATİSTİKLERİ */
 
+.analytics-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.analytics-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.analytics-card h3 {
+  color: var(--brown);
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.analytics-card p {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}
+
+.analytics-icon {
+  font-size: 25px;
+  color: var(--red-dark);
+  margin-bottom: 14px;
+}
+
+.analytics-card > strong {
+  display: block;
+  color: var(--brown);
+  font-size: 34px;
+  margin: 12px 0 5px;
+}
+
+.analytics-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.analytics-heading > span {
+  font-size: 22px;
+  color: var(--red-dark);
+}
+
+@media (max-width: 600px) {
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
