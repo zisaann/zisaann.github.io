@@ -2404,6 +2404,43 @@
     staffEl.textContent = "—";
   }
 }
+  async function loadMenuAnalytics() {
+  const visitsEl = document.getElementById("totalMenuVisits");
+  const productsEl = document.getElementById("topViewedProducts");
+
+  try {
+    const { data, error } = await supabaseClient.rpc("get_menu_analytics");
+
+    if (error) throw error;
+
+    visitsEl.textContent = data?.[0]?.total_visits ?? 0;
+
+    const viewedProducts = (data || [])
+      .filter(item => item.product_id);
+
+    if (viewedProducts.length === 0) {
+      productsEl.textContent = "Henüz ürün görüntülenmesi bulunmuyor.";
+      return;
+    }
+
+    productsEl.innerHTML = viewedProducts.map((product, index) => `
+      <div class="top-product-row">
+        <span class="top-product-rank">${index + 1}</span>
+        <span class="top-product-name"></span>
+        <strong>${Number(product.view_count) || 0}</strong>
+      </div>
+    `).join("");
+
+    productsEl.querySelectorAll(".top-product-name").forEach((element, index) => {
+      element.textContent = viewedProducts[index].product_name;
+    });
+
+  } catch (error) {
+    console.error("Menü istatistikleri yüklenemedi:", error);
+    visitsEl.textContent = "—";
+    productsEl.textContent = "İstatistikler yüklenemedi.";
+  }
+}
 // =========================================
 // YÖNETİCİ / PERSONEL KONTROLÜ
 // =========================================
@@ -2430,6 +2467,7 @@ async function checkAdmin() {
   currentUserRole = profile.role;
   await loadPanelBusinessName();
   loadOverviewStats();
+  loadMenuAnalytics();
 
   const allowedRoles = ["owner", "manager", "waiter", "kitchen"];
 
