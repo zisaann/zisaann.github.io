@@ -69,6 +69,26 @@ function getSubcategories(category) {
   const group = MENU_DATA.find(
     item => item.category === category
   );
+  // ==========================================
+// MENÜ İSTATİSTİKLERİNİ KAYDET
+// ==========================================
+
+async function trackMenuAnalytics(eventType, productId = null) {
+  try {
+    const { error } = await supabaseClient
+      .from("menu_analytics")
+      .insert({
+        event_type: eventType,
+        product_id: productId
+      });
+
+    if (error) {
+      console.error("İstatistik kaydedilemedi:", error);
+    }
+  } catch (error) {
+    console.error("İstatistik kayıt hatası:", error);
+  }
+}
 
   return group
     ? group.subcategories.map(item => item.name)
@@ -957,6 +977,8 @@ async function loadBusinessSettings() {
 }
 loadMenuData();
 loadBusinessSettings();
+// Menü ziyareti kaydı
+trackMenuAnalytics("menu_visit");
 
 if (document.readyState === "complete") {
   createQRCode();
