@@ -1427,6 +1427,198 @@
     font-size: 21px;
   }
 }
+    
+/* =====================================
+   İŞLETME BİLGİLERİ TASARIMI
+===================================== */
+
+.business-settings-page {
+  margin-top: 25px;
+  max-width: 1050px;
+}
+
+.business-settings-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  padding: 28px;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.business-settings-heading h2 {
+  margin: 9px 0;
+  color: var(--brown);
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+}
+
+.business-settings-heading p,
+.business-card-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.business-heading-icon {
+  width: 65px;
+  height: 65px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--white);
+  color: var(--red-dark);
+  font-size: 30px;
+}
+
+.business-settings-card {
+  padding: 27px;
+  margin-bottom: 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+}
+
+.business-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 23px;
+  border-bottom: 1px solid var(--border);
+}
+
+.business-card-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+.business-card-heading h3 {
+  margin: 0 0 5px;
+  color: var(--brown);
+  font-size: 16px;
+}
+
+.business-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.business-full-width {
+  grid-column: 1 / -1;
+}
+
+.business-settings-card .form-group {
+  margin: 0;
+}
+
+.business-settings-card label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--brown);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.business-settings-card input,
+.business-settings-card textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #F8F3EE;
+  color: var(--brown);
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.business-settings-card input:focus,
+.business-settings-card textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(169, 130, 120, .13);
+}
+
+.business-settings-card textarea {
+  resize: vertical;
+}
+
+.business-settings-card small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.business-save-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px 24px;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+}
+
+.business-save-area span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.business-save-area button {
+  min-width: 175px;
+}
+
+@media (max-width: 650px) {
+  .business-settings-heading {
+    padding: 20px;
+  }
+
+  .business-settings-heading h2 {
+    font-size: 24px;
+  }
+
+  .business-heading-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
+  }
+
+  .business-settings-card {
+    padding: 19px;
+  }
+
+  .business-form-grid {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .business-full-width {
+    grid-column: auto;
+  }
+
+  .business-save-area {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .business-save-area button {
+    width: 100%;
+  }
+}
+
   </style>
 </head>
 
