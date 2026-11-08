@@ -820,13 +820,16 @@ function clearFilters() {
   renderProducts();
 }
 
-document
-  .getElementById("clearFilters")
-  .addEventListener("click", clearFilters);
+const clearFiltersButton = document.getElementById("clearFilters");
+const emptyClearButton = document.getElementById("emptyClear");
 
-document
-  .getElementById("emptyClear")
-  .addEventListener("click", clearFilters);
+if (clearFiltersButton) {
+  clearFiltersButton.addEventListener("click", clearFilters);
+}
+
+if (emptyClearButton) {
+  emptyClearButton.addEventListener("click", clearFilters);
+}
 
 // ==========================================
 // ARAMA
