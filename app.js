@@ -69,6 +69,12 @@ function getSubcategories(category) {
   const group = MENU_DATA.find(
     item => item.category === category
   );
+
+  return group
+    ? group.subcategories.map(item => item.name)
+    : [];
+}
+
 // ==========================================
 // MENÜ İSTATİSTİKLERİNİ KAYDET
 // ==========================================
@@ -88,10 +94,6 @@ async function trackMenuAnalytics(eventType, productId = null) {
   } catch (error) {
     console.error("İstatistik kayıt hatası:", error);
   }
-}
-  return group
-    ? group.subcategories.map(item => item.name)
-    : [];
 }
 // ==========================================
 // SUPABASE'DEN MENÜ VERİLERİNİ YÜKLE
