@@ -618,6 +618,8 @@ function renderProducts() {
 
 function openProductModal(product) {
   if (!product) return;
+  
+  trackMenuAnalytics("product_view", product.id);
 
   let modal = document.getElementById("productModal");
 
