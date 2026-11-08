@@ -69,7 +69,13 @@ function getSubcategories(category) {
   const group = MENU_DATA.find(
     item => item.category === category
   );
-  // ==========================================
+
+  return group
+    ? group.subcategories.map(item => item.name)
+    : [];
+}
+
+// ==========================================
 // MENÜ İSTATİSTİKLERİNİ KAYDET
 // ==========================================
 
