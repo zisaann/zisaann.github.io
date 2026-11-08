@@ -944,6 +944,7 @@ async function loadBusinessSettings() {
 
     setText("businessNameHero", data.business_name);
     setText("businessNameQR", data.business_name);
+    setText("businessNameHeader", data.business_name);
     setText("businessNameFooter", data.business_name);
     setText("businessDescriptionFooter", data.description);
     setText("businessAddressFooter", data.address);
