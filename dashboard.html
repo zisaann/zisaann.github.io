@@ -1629,8 +1629,8 @@
   <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-      <div class="brand-name">Luna</div>
-      <div class="brand-subtitle">AKSARAY ÜNİVERSİTESİ</div>
+      <div class="brand-name" id="businessNameSidebar">Luna</div>
+      <div class="brand-subtitle">YÖNETİM PANELİ</div>
     </div>
 
     <div class="menu-label">YÖNETİM</div>
@@ -1711,7 +1711,7 @@
       <section class="view-panel active" id="overviewView">
 
         <div class="page-heading">
-          <div class="eyebrow">AKSARAY ÜNİVERSİTESİ</div>
+          <div class="eyebrow" id="businessNameOverview">Luna</div>
           <h1>Genel Bakış</h1>
           <p>Dijital menü yönetim panelinize hoş geldiniz.</p>
         </div>
@@ -2250,13 +2250,37 @@
     </main>
 
     <footer>
-      © 2026 <span>Luna</span> · Aksaray Üniversitesi Dijital Menü
+      © 2026 <span id="businessNameFooterPanel">Luna</span> · Dijital Menü Yönetim Paneli
     </footer>
 
   </div>
 
 <script>
   let currentUserRole = null;
+  async function loadPanelBusinessName() {
+  const { data, error } = await supabaseClient
+    .from("business_settings")
+    .select("business_name")
+    .order("id", { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("İşletme adı yüklenemedi:", error);
+    return;
+  }
+
+  if (!data?.business_name) return;
+
+  const name = data.business_name;
+
+  ["businessNameSidebar", "businessNameOverview", "businessNameFooterPanel"].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = name;
+  });
+
+  document.title = `Yönetim Paneli | ${name}`;
+}
   async function loadOverviewStats() {
   const productEl = document.getElementById("totalProducts");
   const categoryEl = document.getElementById("totalCategories");
@@ -2321,6 +2345,7 @@ async function checkAdmin() {
   }
 
   currentUserRole = profile.role;
+  await loadPanelBusinessName();
   loadOverviewStats();
 
   const allowedRoles = ["owner", "manager", "waiter", "kitchen"];
