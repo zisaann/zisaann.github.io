@@ -153,10 +153,20 @@ async function loadMenuData() {
     }
 
     const categories = categoriesResult.data || [];
-    const subcategories = subcategoriesResult.data || [];
+    const allSubcategories = subcategoriesResult.data || [];
     const productRows = productsResult.data || [];
     const allergenRows = allergensResult.data || [];
     const relationRows = relationsResult.data || [];
+
+    // Yalnızca aktif kategorilere bağlı alt kategorileri al
+    const activeCategoryIds = new Set(
+      categories.map(category => category.id)
+    );
+
+    const subcategories = allSubcategories.filter(
+      subcategory =>
+        activeCategoryIds.has(subcategory.category_id)
+    );
 
     // Alerjen listesini oluştur
     ALLERGENS = allergenRows.map(allergen => ({
@@ -177,7 +187,7 @@ async function loadMenuData() {
         .push(relation.allergen_id);
     });
 
-    // Kategorileri ve alt kategorileri oluştur
+    // Aktif kategorileri ve alt kategorilerini oluştur
     MENU_DATA = categories.map(category => ({
       category: category.name,
 
@@ -268,6 +278,7 @@ async function loadMenuData() {
       "<p>Menü yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>";
   }
 }
+
 
 // ==========================================
 // ALERJENLERİ GÖSTER
