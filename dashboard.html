@@ -3812,7 +3812,7 @@ async function loadMenuAnalytics() {
       <div class="top-product-row">
         <span class="top-product-rank">${index + 1}</span>
         <span class="top-product-name">
-          ${escapeHTML(product.product_name)}
+          ${product.product_name}
         </span>
         <strong>${Number(product.view_count) || 0}</strong>
       </div>
