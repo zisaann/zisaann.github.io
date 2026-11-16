@@ -9,6 +9,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1716,6 +1717,1198 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================
+   AHENK RESTAURANT - MODERN DASHBOARD
+   ========================================== */
+
+:root {
+  --cream: #F4EFE9;
+  --white: #FFFCF8;
+  --red: #B94F3B;
+  --red-dark: #963D2E;
+  --red-soft: #F5E5DF;
+  --brown: #332923;
+  --muted: #81756B;
+  --border: #E7DCD2;
+  --soft: #F7F2ED;
+}
+
+/* GENEL */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #EAE2D9;
+  color: var(--brown);
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* SOL MENÜ */
+
+.sidebar {
+  width: 250px;
+  padding: 28px 17px 20px;
+  background: #302721;
+  color: #F8F2EC;
+  box-shadow: 6px 0 25px rgba(39,29,23,.10);
+}
+
+.brand {
+  padding: 8px 12px 26px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 29px;
+  color: #FFF9F3;
+}
+
+.brand-subtitle {
+  color: #D6A99B;
+  letter-spacing: 2px;
+  font-size: 9px;
+}
+
+.menu-label {
+  color: #A99A8F;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+}
+
+.sidebar-nav {
+  gap: 6px;
+}
+
+.nav-item {
+  min-height: 45px;
+  border-radius: 9px;
+  color: #D9CEC5;
+  font-size: 12px;
+  transition: .2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,.08);
+  color: white;
+  transform: translateX(2px);
+}
+
+.nav-item.active {
+  background: linear-gradient(
+    100deg,
+    rgba(185,79,59,.40),
+    rgba(185,79,59,.15)
+  );
+  color: white;
+  box-shadow: inset 3px 0 #D47B65;
+}
+
+.nav-icon {
+  color: #D99A88;
+}
+
+/* ANA ALAN */
+
+.main-area {
+  margin-left: 250px;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+.topbar {
+  height: 68px;
+  padding: 0 28px;
+  background: #FFFCF8;
+  border: 1px solid #E8DED5;
+  border-radius: 14px 14px 0 0;
+}
+
+.topbar-title {
+  color: #8D594B;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.admin-label {
+  color: #75695F;
+  font-size: 11px;
+}
+
+#logout {
+  border: 1px solid #E8D9CF;
+  border-radius: 8px;
+  background: white;
+  color: var(--red);
+  padding: 9px 15px;
+}
+
+#logout:hover {
+  background: var(--red-soft);
+}
+
+/* İÇERİK ALANI */
+
+.content {
+  width: 100%;
+  max-width: none;
+  padding: 28px;
+  margin: 0;
+  background: #F8F5F1;
+  border: 1px solid #E8DED5;
+  border-top: 0;
+  border-radius: 0 0 15px 15px;
+}
+
+.page-heading {
+  margin-bottom: 20px;
+}
+
+.page-heading h1 {
+  color: #332923;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.page-heading p {
+  color: #897D73;
+  font-size: 12px;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+/* KARŞILAMA ALANI */
+
+.welcome-card {
+  min-height: 145px;
+  padding: 27px 30px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background: linear-gradient(
+    110deg,
+    #783A30,
+    #A94736 58%,
+    #C56D56
+  );
+  box-shadow: 0 10px 24px rgba(128,61,48,.15);
+}
+
+.welcome-card .eyebrow {
+  color: #F1D0C5;
+}
+
+.welcome-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 29px;
+  color: white;
+}
+
+.welcome-card p {
+  color: rgba(255,255,255,.83);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* İSTATİSTİK KARTLARI */
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.overview-card {
+  position: relative;
+  min-height: 125px;
+  padding: 20px;
+  border: 1px solid #E9DED5;
+  border-radius: 13px;
+  background: #FFFCF8;
+  box-shadow: 0 4px 14px rgba(54,38,29,.04);
+  transition: .2s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(54,38,29,.09);
+}
+
+.overview-card h3 {
+  color: #897D73;
+  font-size: 11px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.overview-card p strong {
+  color: #332923;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.overview-card .card-icon {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: #F7E8E2;
+  color: var(--red);
+  font-size: 17px;
+}
+
+/* ANALİTİK KARTLAR */
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, .8fr) minmax(0, 1.5fr);
+  gap: 15px;
+  margin-bottom: 16px;
+}
+
+.analytics-card {
+  min-height: 190px;
+  padding: 22px;
+  border: 1px solid #E9DED5;
+  border-radius: 13px;
+  background: #FFFCF8;
+  box-shadow: 0 4px 14px rgba(54,38,29,.04);
+}
+
+.analytics-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  background: #F7E8E2;
+  color: var(--red);
+  font-size: 18px;
+}
+
+.analytics-card h3 {
+  color: #3B3029;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.analytics-card > strong {
+  display: block;
+  margin: 12px 0 6px;
+  color: var(--red);
+  font-size: 30px;
+}
+
+.analytics-card p {
+  color: #93877D;
+  font-size: 10px;
+}
+
+.analytics-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.analytics-heading > span {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #F7E8E2;
+  color: var(--red);
+}
+
+#topViewedProducts {
+  display: grid;
+  gap: 8px;
+  color: #74675D;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+/* HIZLI İŞLEMLER */
+
+.quick-actions {
+  padding: 21px;
+  border: 1px solid #E9DED5;
+  border-radius: 13px;
+  background: #FFFCF8;
+  box-shadow: 0 4px 14px rgba(54,38,29,.04);
+}
+
+.quick-actions h3 {
+  margin-bottom: 15px;
+  color: #3B3029;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.quick-buttons {
+  gap: 10px;
+}
+
+.primary-btn,
+#addProductBtn,
+#addCategoryBtn,
+#addSubcategoryBtn {
+  padding: 11px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--red);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  transition: .2s ease;
+}
+
+.primary-btn:hover,
+#addProductBtn:hover,
+#addCategoryBtn:hover,
+#addSubcategoryBtn:hover {
+  background: var(--red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(185,79,59,.18);
+}
+
+/* DİĞER YÖNETİM EKRANLARI */
+
+#productManagement,
+#categoryManagement,
+#allergenManagement,
+#staffManagement,
+#auditLogManagement {
+  border: 1px solid #E9DED5;
+  border-radius: 14px;
+  background: #FFFCF8;
+  box-shadow: 0 6px 20px rgba(54,38,29,.045);
+}
+
+#productManagement,
+#categoryManagement {
+  padding: 25px;
+}
+
+#productManagement h2,
+#categoryManagement h2,
+#staffManagement h2,
+#allergenManagement h2,
+#auditLogManagement h2 {
+  color: #332923;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+#productListDetails,
+.category-box,
+.staff-card,
+.allergen-admin-item {
+  border-color: #E9DED5;
+  border-radius: 10px;
+}
+
+#productListDetails {
+  background: #F7F1EB;
+}
+
+#productForm {
+  border-radius: 11px;
+  background: #F7F1EB !important;
+}
+
+input, select, textarea {
+  border-radius: 8px;
+}
+
+/* MOBİL UYUMLULUK */
+
+@media (max-width: 1000px) {
+  .content {
+    padding: 22px;
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr 1.3fr;
+  }
+}
+
+@media (max-width: 850px) {
+  .main-area {
+    margin-left: 0;
+    padding: 0;
+  }
+
+  .topbar {
+    border-radius: 0;
+  }
+
+  .content {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 620px) {
+  .content {
+    padding: 17px;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .overview-card {
+    min-height: 100px;
+  }
+
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-card {
+    padding: 22px;
+  }
+
+  .welcome-card h2 {
+    font-size: 23px;
+  }
+
+  .page-heading h1 {
+    font-size: 26px;
+  }
+
+  .quick-buttons {
+    flex-direction: column;
+  }
+
+  .quick-buttons button {
+    width: 100%;
+  }
+
+  #productManagement,
+  #categoryManagement {
+    padding: 17px;
+  }
+}
+
+/* ==========================================
+   AHENK - DASHBOARD YERLEŞİMİ
+   ========================================== */
+
+#overviewView {
+  width: 100%;
+}
+
+.dashboard-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.dashboard-heading h1 {
+  margin: 5px 0;
+  font-size: 29px;
+  font-weight: 700;
+  color: #332923;
+}
+
+.dashboard-heading p {
+  margin: 0;
+  color: #897D73;
+  font-size: 12px;
+}
+
+.dashboard-eyebrow,
+.panel-eyebrow {
+  color: #B94F3B;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.dashboard-live {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #E5DCD2;
+  border-radius: 30px;
+  background: #FFFCF8;
+  color: #6C6259;
+  font-size: 10px;
+}
+
+.dashboard-live span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5A986B;
+}
+
+/* KARŞILAMA */
+
+.dashboard-welcome {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 145px;
+  overflow: hidden;
+  padding: 27px 32px;
+  margin-bottom: 17px;
+  border-radius: 15px;
+  color: white;
+  background: linear-gradient(110deg,#60372E,#9D4938 65%,#B95F49);
+  box-shadow: 0 10px 25px rgba(95,53,42,.13);
+}
+
+.dashboard-welcome > div:first-child {
+  position: relative;
+  z-index: 2;
+}
+
+.dashboard-welcome span {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #EBC9BC;
+  font-weight: 700;
+}
+
+.dashboard-welcome h2 {
+  margin: 9px 0;
+  font-family: 'Playfair Display',serif;
+  font-size: clamp(21px,2.5vw,29px);
+  font-weight: 600;
+}
+
+.dashboard-welcome p {
+  margin: 0;
+  color: rgba(255,255,255,.78);
+  font-size: 11px;
+}
+
+.welcome-symbol {
+  position: absolute;
+  right: 35px;
+  top: -47px;
+  color: rgba(255,255,255,.10);
+  font: 250px 'Playfair Display',serif;
+}
+
+/* ÜST İSTATİSTİKLER */
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 14px;
+  margin-bottom: 17px;
+}
+
+.dash-stat {
+  min-width: 0;
+  padding: 17px 19px;
+  border: 1px solid #E8DED5;
+  border-radius: 12px;
+  background: #FFFCF8;
+  box-shadow: 0 4px 15px rgba(54,38,29,.035);
+}
+
+.dash-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #897D73;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.dash-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #F5E7E0;
+  color: #B94F3B;
+  font-size: 17px;
+}
+
+.dash-stat > strong {
+  display: block;
+  margin: 10px 0 4px;
+  color: #332923;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+.dash-stat small {
+  color: #9A8E84;
+  font-size: 10px;
+}
+
+/* ANA İKİ SÜTUNLU YAPI */
+
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1.85fr) minmax(245px,.85fr);
+  gap: 15px;
+  align-items: stretch;
+}
+
+.dashboard-main-column,
+.dashboard-side-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  min-width: 0;
+}
+
+.dash-panel {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid #E8DED5;
+  border-radius: 13px;
+  background: #FFFCF8;
+  box-shadow: 0 4px 15px rgba(54,38,29,.035);
+}
+
+.dash-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.dash-panel-heading h3 {
+  margin: 5px 0;
+  color: #332923;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dash-panel-heading p {
+  margin: 0;
+  color: #93877D;
+  font-size: 10px;
+}
+
+.panel-icon {
+  display: grid;
+  place-items: center;
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #F5E7E0;
+  color: #B94F3B;
+  font-size: 17px;
+}
+
+/* GRAFİKLER */
+
+.main-chart-panel {
+  min-height: 315px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 235px;
+}
+
+.dashboard-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 15px;
+}
+
+.donut-container {
+  position: relative;
+  width: 100%;
+  height: 175px;
+}
+
+.chart-note {
+  margin: 10px 0 0;
+  color: #93877D;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* SAĞ KOLON */
+
+.visits-panel {
+  min-height: 195px;
+  overflow: hidden;
+}
+
+.visit-number {
+  display: block;
+  margin: 18px 0 5px;
+  color: #A94736;
+  font-size: 37px;
+  font-weight: 700;
+}
+
+.visits-panel > p {
+  margin: 0;
+  color: #93877D;
+  font-size: 10px;
+}
+
+.visit-decoration {
+  height: 45px;
+  display: flex;
+  align-items: end;
+  gap: 7px;
+  margin-top: 16px;
+  padding: 0 5px;
+  border-bottom: 1px solid #E9DED5;
+}
+
+.visit-decoration span {
+  flex: 1;
+  height: 25%;
+  border-radius: 4px 4px 0 0;
+  background: #D9A99B;
+}
+
+.visit-decoration span:nth-child(3n) { height: 80%; }
+.visit-decoration span:nth-child(3n + 1) { height: 48%; }
+.visit-decoration span:nth-child(4n) { height: 65%; }
+.visit-decoration span:nth-child(5n) { height: 95%; }
+
+/* POPÜLER ÜRÜNLER */
+
+.popular-panel {
+  flex: 1;
+}
+
+#topViewedProducts {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.top-product-row {
+  display: grid;
+  grid-template-columns: 29px minmax(0,1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #EEE6DF;
+}
+
+.top-product-rank {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+  background: #F5E7E0;
+  color: #A94736;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.top-product-name {
+  color: #57483F;
+  font-size: 10px;
+}
+
+.top-product-row strong {
+  color: #A94736;
+  font-size: 11px;
+}
+
+/* HIZLI İŞLEMLER */
+
+.dashboard-shortcuts {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.dashboard-shortcuts button {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #EEE5DD;
+  border-radius: 9px;
+  background: #FAF6F2;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dashboard-shortcuts button > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 9px;
+  background: #F2E2DA;
+  color: #A94736;
+  font-size: 17px;
+}
+
+.dashboard-shortcuts button div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dashboard-shortcuts button strong {
+  color: #493A33;
+  font-size: 10px;
+}
+
+.dashboard-shortcuts button small {
+  color: #93877D;
+  font-size: 9px;
+}
+
+.dashboard-shortcuts button b {
+  color: #B94F3B;
+}
+
+.dashboard-shortcuts button:hover {
+  border-color: #D7B2A5;
+  background: #F7EDE7;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+  .dashboard-layout {
+    grid-template-columns: minmax(0,1.5fr) minmax(220px,.8fr);
+  }
+}
+
+@media(max-width:850px) {
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-bottom-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:600px) {
+  .dashboard-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dashboard-heading h1 {
+    font-size: 25px;
+  }
+
+  .dashboard-welcome {
+    padding: 22px;
+  }
+
+  .dashboard-welcome h2 {
+    font-size: 22px;
+  }
+
+  .welcome-symbol {
+    right: 8px;
+    font-size: 150px;
+  }
+
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-panel {
+    padding: 16px;
+  }
+
+  .chart-container {
+    height: 210px;
+  }
+}
+
+/* KATEGORİ DAĞILIMI */
+
+.category-distribution-panel {
+  min-height: 360px;
+}
+
+.category-chart-container {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  max-width: 230px;
+  margin: 0 auto 15px;
+}
+
+#categoryDistributionLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.category-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 0;
+  border-bottom: 1px solid #EEE6DF;
+}
+
+.category-legend-dot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.category-legend-name {
+  flex: 1;
+  color: #74675D;
+  font-size: 10px;
+}
+
+.category-legend-item strong {
+  color: #332923;
+  font-size: 11px;
+}
+
+@media(max-width: 600px) {
+  .category-distribution-panel {
+    min-height: auto;
+  }
+
+  .category-chart-container {
+    height: 210px;
+  }
+}
+
+/* =====================================
+   MENÜ ZİYARETLERİ - FİLTRE VE GRAFİK
+===================================== */
+
+.visits-panel {
+  min-height: 360px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.visit-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.visit-filter label {
+  color: #93877D;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.visit-filter select {
+  min-width: 115px;
+  padding: 9px 30px 9px 12px;
+  border: 1px solid #E9DED5;
+  border-radius: 9px;
+  outline: none;
+  background: #FBF8F5;
+  color: #57483F;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.visit-filter select:focus {
+  border-color: #B94F3B;
+  box-shadow: 0 0 0 3px rgba(185, 79, 59, 0.10);
+}
+
+.visit-total {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.visit-total strong {
+  color: #A94736;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.visit-total span {
+  color: #93877D;
+  font-size: 10px;
+}
+
+.visit-chart-container {
+  position: relative;
+  width: 100%;
+  height: 145px;
+  margin-top: 18px;
+}
+
+
+/* =====================================
+   ÜRÜN DURUMU ANALİZİ
+===================================== */
+
+.product-status-panel {
+  min-height: 315px;
+  padding: 20px;
+}
+
+.product-status-panel .dash-panel-heading p {
+  margin: 6px 0 0;
+  color: #93877D;
+  font-size: 10px;
+}
+
+.product-status-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.product-status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #EEE5DE;
+  border-radius: 12px;
+  background: #FBF8F5;
+}
+
+.status-card-top {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #82756C;
+  font-size: 10px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.active-dot {
+  background: #6D9B78;
+}
+
+.inactive-dot {
+  background: #C58B78;
+}
+
+.product-status-card > strong {
+  color: #3D302A;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.product-status-card > small {
+  color: #9A8D83;
+  font-size: 10px;
+}
+
+.product-status-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 13px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #F5EAE3;
+}
+
+.product-status-total span {
+  color: #75645A;
+  font-size: 11px;
+}
+
+.product-status-total strong {
+  color: #A94736;
+  font-size: 17px;
+}
+
+.product-status-chart-container {
+  position: relative;
+  width: 100%;
+  height: 12px;
+  margin-top: 15px;
+}
+
+
+/* =====================================
+   MOBİL UYUMLULUK
+===================================== */
+
+@media (max-width: 600px) {
+  .visits-panel,
+  .product-status-panel {
+    padding: 16px;
+  }
+
+  .product-status-summary {
+    gap: 8px;
+  }
+
+  .product-status-card {
+    padding: 11px;
+  }
+
+  .visit-filter select {
+    min-width: 105px;
+  }
+}
+.product-status-chart-container {
+  height: 150px;
+  margin-top: 18px;
+}
   </style>
 </head>
 
@@ -1803,85 +2996,219 @@
 
     <main class="content">
 
-      <!-- GENEL BAKIŞ -->
+      
+<section class="view-panel active" id="overviewView">
 
-      <section class="view-panel active" id="overviewView">
-
-        <div class="page-heading">
-          <div class="eyebrow" id="businessNameOverview">Luna</div>
-          <h1>Genel Bakış</h1>
-          <p>Dijital menü yönetim panelinize hoş geldiniz.</p>
-        </div>
-
-        <div class="welcome-card">
-          <div class="eyebrow">DİJİTAL MENÜ YÖNETİMİ</div>
-          <h2>Güzel bir gün, güzel bir yönetimle başlar.</h2>
-          <p>
-            Menünüzdeki ürünleri, kategorileri ve diğer içerikleri
-            bu panel üzerinden kolayca yönetebilirsiniz.
-          </p>
-        </div>
-
-        <div class="overview-grid">
-
-  <div class="overview-card">
-    <div class="card-icon">♧</div>
-    <h3>Toplam Ürün</h3>
-    <p><strong id="totalProducts">Yükleniyor...</strong></p>
+  <div class="dashboard-heading">
+    <div>
+      <span class="dashboard-eyebrow">AHENK RESTAURANT</span>
+      <h1>Yönetim Paneli</h1>
+      <p>Restoranınızın dijital menü performansına genel bakış.</p>
+    </div>
+    <div class="dashboard-live">
+      <span></span> Sistem aktif
+    </div>
   </div>
 
-  <div class="overview-card">
-    <div class="card-icon">▦</div>
-    <h3>Kategori Sayısı</h3>
-    <p><strong id="totalCategories">Yükleniyor...</strong></p>
+  <div class="dashboard-welcome">
+    <div>
+      <span>HOŞ GELDİNİZ</span>
+      <h2>Gününüz güzel, işletmeniz bereketli olsun.</h2>
+      <p>Menünüzü ve restoranınızın dijital performansını buradan takip edebilirsiniz.</p>
+    </div>
+    <div class="welcome-symbol">A</div>
   </div>
 
-  <div class="overview-card">
-    <div class="card-icon">♙</div>
-    <h3>Aktif Çalışan</h3>
-    <p><strong id="totalStaff">Yükleniyor...</strong></p>
-  </div>
-        </div>
-<!-- MENÜ İSTATİSTİKLERİ -->
-<div class="analytics-grid">
+  <!-- İSTATİSTİKLER -->
+  <div class="dashboard-stats">
 
-  <div class="analytics-card">
-    <div class="analytics-icon">↗</div>
-    <h3>Menü Ziyaretleri</h3>
-    <strong id="totalMenuVisits">Yükleniyor...</strong>
-    <p>Toplam menü açılma sayısı</p>
-  </div>
-
-  <div class="analytics-card">
-    <div class="analytics-heading">
-      <div>
-        <h3>En Çok Görüntülenen Ürünler</h3>
-        <p>Görüntülenme sayılarına göre ilk 5 ürün</p>
+    <div class="dash-stat">
+      <div class="dash-stat-top">
+        <span>TOPLAM ÜRÜN</span>
+        <div class="dash-stat-icon">♧</div>
       </div>
-      <span>★</span>
+      <strong id="totalProducts">—</strong>
+      <small>Aktif menü ürünleri</small>
     </div>
 
-    <div id="topViewedProducts">
-      Ürün istatistikleri yükleniyor...
+    <div class="dash-stat">
+      <div class="dash-stat-top">
+        <span>KATEGORİLER</span>
+        <div class="dash-stat-icon">▦</div>
+      </div>
+      <strong id="totalCategories">—</strong>
+      <small>Menü kategorileri</small>
+    </div>
+
+    <div class="dash-stat">
+      <div class="dash-stat-top">
+        <span>AKTİF ÇALIŞAN</span>
+        <div class="dash-stat-icon">♙</div>
+      </div>
+      <strong id="totalStaff">—</strong>
+      <small>Yetkili personel</small>
+    </div>
+
+  </div>
+
+  <!-- ANA DASHBOARD YERLEŞİMİ -->
+  <div class="dashboard-layout">
+
+    <!-- SOL GENİŞ ALAN -->
+    <div class="dashboard-main-column">
+
+      <div class="dash-panel main-chart-panel">
+        <div class="dash-panel-heading">
+          <div>
+            <span class="panel-eyebrow">MENÜ ANALİZİ</span>
+            <h3>En Çok Görüntülenen Ürünler</h3>
+            <p>Ürünlerin görüntülenme performansı</p>
+          </div>
+          <span class="panel-icon">↗</span>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="productViewsChart"></canvas>
+        </div>
+      </div>
+
+      <div class="dashboard-bottom-grid">
+
+      <div class="dash-panel product-status-panel">
+  <div class="dash-panel-heading">
+    <div>
+      <span class="panel-eyebrow">ÜRÜN YÖNETİMİ</span>
+      <h3>Ürün Durumu</h3>
+      <p>Menüdeki ürünlerin genel durumu</p>
+    </div>
+    <span class="panel-icon">▦</span>
+  </div>
+
+  <div class="product-status-summary">
+    <div class="product-status-card">
+      <div class="status-card-top">
+        <span class="status-dot active-dot"></span>
+        <span>Yayında</span>
+      </div>
+      <strong id="activeProductCount">—</strong>
+      <small>Aktif ürün</small>
+    </div>
+
+    <div class="product-status-card">
+      <div class="status-card-top">
+        <span class="status-dot inactive-dot"></span>
+        <span>Yayında değil</span>
+      </div>
+      <strong id="inactiveProductCount">—</strong>
+      <small>Pasif ürün</small>
     </div>
   </div>
 
-</div>
-        <div class="quick-actions">
-          <h3>Hızlı İşlemler</h3>
+  <div class="product-status-total">
+    <span>Toplam ürün sayısı</span>
+    <strong id="allProductCount">—</strong>
+  </div>
 
-          <div class="quick-buttons">
-            <button class="primary-btn" data-open-view="products">
-              + Ürün Yönetimine Git
+  <div class="product-status-chart-container">
+    <canvas id="productStatusChart"></canvas>
+  </div>
+</div>
+
+        <div class="dash-panel">
+          <div class="dash-panel-heading">
+            <div>
+              <span class="panel-eyebrow">HIZLI ERİŞİM</span>
+              <h3>Yönetim İşlemleri</h3>
+            </div>
+          </div>
+
+          <div class="dashboard-shortcuts">
+            <button data-open-view="products">
+              <span>♧</span>
+              <div>
+                <strong>Ürün Yönetimi</strong>
+                <small>Ürün ekle ve düzenle</small>
+              </div>
+              <b>→</b>
             </button>
 
-            <button class="primary-btn" data-open-view="categories">
-              Kategorileri Yönet
+            <button data-open-view="categories">
+              <span>▦</span>
+              <div>
+                <strong>Kategori Yönetimi</strong>
+                <small>Kategorileri düzenle</small>
+              </div>
+              <b>→</b>
+            </button>
+
+            <button data-open-view="allergens">
+              <span>◇</span>
+              <div>
+                <strong>Alerjen Yönetimi</strong>
+                <small>Alerjen bilgilerini düzenle</small>
+              </div>
+              <b>→</b>
             </button>
           </div>
         </div>
 
-      </section>
+      </div>
+    </div>
+
+    <!-- SAĞ DAR ALAN -->
+    <div class="dashboard-side-column">
+<div class="dash-panel visits-panel">
+  <div class="dash-panel-heading">
+    <div>
+      <span class="panel-eyebrow">ZİYARETÇİ ANALİZİ</span>
+      <h3>Menü Ziyaretleri</h3>
+    </div>
+    <span class="panel-icon">◎</span>
+  </div>
+
+  <div class="visit-filter">
+    <label for="visitPeriodSelect">Zaman aralığı</label>
+    <select id="visitPeriodSelect">
+      <option value="daily">Günlük</option>
+      <option value="weekly">Haftalık</option>
+      <option value="monthly">Aylık</option>
+    </select>
+  </div>
+
+  <div class="visit-total">
+    <strong id="totalMenuVisits">—</strong>
+    <span id="visitPeriodDescription">Bugünkü toplam menü ziyareti</span>
+  </div>
+
+  <div class="visit-chart-container">
+    <canvas id="menuVisitsChart"></canvas>
+  </div>
+</div>
+ 
+<div class="dash-panel category-distribution-panel">
+  <div class="dash-panel-heading">
+    <div>
+      <span class="panel-eyebrow">MENÜ YAPISI</span>
+      <h3>Kategori Dağılımı</h3>
+      <p>Kategorilere göre aktif ürün sayıları</p>
+    </div>
+    <span class="panel-icon">▦</span>
+  </div>
+
+  <div class="category-chart-container">
+    <canvas id="categoryDistributionChart"></canvas>
+  </div>
+
+  <div id="categoryDistributionLegend"></div>
+</div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
       
 <!-- PERSONEL MENÜ EKRANI -->
 
@@ -2442,22 +3769,35 @@
     staffEl.textContent = "—";
   }
 }
-  async function loadMenuAnalytics() {
-  const visitsEl = document.getElementById("totalMenuVisits");
+  
+
+let productViewsChart = null;
+let categoryDistributionChart = null;
+let menuVisitsChart = null;
+let productStatusChart = null;
+
+// =========================================
+// EN ÇOK GÖRÜNTÜLENEN ÜRÜNLER
+// =========================================
+
+async function loadMenuAnalytics() {
   const productsEl = document.getElementById("topViewedProducts");
+
+  if (!productsEl) return;
 
   try {
     const { data, error } = await supabaseClient.rpc("get_menu_analytics");
 
     if (error) throw error;
 
-    visitsEl.textContent = data?.[0]?.total_visits ?? 0;
-
     const viewedProducts = (data || [])
-      .filter(item => item.product_id);
+      .filter(item => item.product_id)
+      .sort((a, b) => Number(b.view_count) - Number(a.view_count))
+      .slice(0, 5);
 
     if (viewedProducts.length === 0) {
       productsEl.textContent = "Henüz ürün görüntülenmesi bulunmuyor.";
+      drawProductCharts([], []);
       return;
     }
 
@@ -2473,12 +3813,531 @@
       element.textContent = viewedProducts[index].product_name;
     });
 
+    const labels = viewedProducts.map(item => item.product_name);
+    const values = viewedProducts.map(item => Number(item.view_count) || 0);
+
+    drawProductCharts(labels, values);
+
   } catch (error) {
-    console.error("Menü istatistikleri yüklenemedi:", error);
-    visitsEl.textContent = "—";
+    console.error("Ürün istatistikleri yüklenemedi:", error);
     productsEl.textContent = "İstatistikler yüklenemedi.";
   }
 }
+
+
+// =========================================
+// MENÜ ZİYARET İSTATİSTİKLERİ
+// =========================================
+
+function getVisitPeriodDates(period) {
+  const now = new Date();
+
+  let start;
+  let end;
+
+  if (period === "daily") {
+    start = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+    end = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1
+    );
+
+  } else if (period === "weekly") {
+    start = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() - 6
+    );
+
+    end = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1
+    );
+
+  } else {
+    start = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
+
+    end = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      1
+    );
+  }
+
+  return { start, end };
+}
+
+
+function getVisitChartBuckets(period, start, end) {
+  const labels = [];
+  const keys = [];
+
+  if (period === "daily") {
+    for (let hour = 0; hour < 24; hour++) {
+      labels.push(`${String(hour).padStart(2, "0")}:00`);
+      keys.push(String(hour));
+    }
+
+  } else {
+    const current = new Date(start);
+
+    while (current < end) {
+      labels.push(
+        `${String(current.getDate()).padStart(2, "0")}.${String(
+          current.getMonth() + 1
+        ).padStart(2, "0")}`
+      );
+
+      keys.push(
+        `${current.getFullYear()}-${current.getMonth()}-${current.getDate()}`
+      );
+
+      current.setDate(current.getDate() + 1);
+    }
+  }
+
+  return { labels, keys };
+}
+
+
+async function loadMenuVisitAnalytics(period = "daily") {
+  const visitsEl = document.getElementById("totalMenuVisits");
+  const descriptionEl = document.getElementById("visitPeriodDescription");
+  const selectEl = document.getElementById("visitPeriodSelect");
+  const canvas = document.getElementById("menuVisitsChart");
+
+  if (!visitsEl || !canvas) return;
+
+  if (selectEl) selectEl.value = period;
+
+  const descriptions = {
+    daily: "Bugünkü toplam menü ziyareti",
+    weekly: "Son 7 günün toplam menü ziyareti",
+    monthly: "Bu ayki toplam menü ziyareti"
+  };
+
+  if (descriptionEl) {
+    descriptionEl.textContent = descriptions[period];
+  }
+
+  const { start, end } = getVisitPeriodDates(period);
+
+  try {
+    let allVisits = [];
+    let offset = 0;
+    const pageSize = 1000;
+
+    // Kayıtları 1000'erli gruplar halinde getir.
+    while (true) {
+      const { data, error } = await supabaseClient
+        .from("menu_analytics")
+        .select("created_at")
+        .eq("event_type", "menu_visit")
+        .gte("created_at", start.toISOString())
+        .lt("created_at", end.toISOString())
+        .order("created_at", { ascending: true })
+        .range(offset, offset + pageSize - 1);
+
+      if (error) throw error;
+
+      allVisits = allVisits.concat(data || []);
+
+      if (!data || data.length < pageSize) break;
+
+      offset += pageSize;
+    }
+
+    visitsEl.textContent = allVisits.length;
+
+    const { labels, keys } = getVisitChartBuckets(period, start, end);
+    const values = new Array(labels.length).fill(0);
+
+    allVisits.forEach(visit => {
+      const date = new Date(visit.created_at);
+      let key;
+
+      if (period === "daily") {
+        key = String(date.getHours());
+      } else {
+        key = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+      }
+
+      const index = keys.indexOf(key);
+
+      if (index !== -1) {
+        values[index]++;
+      }
+    });
+
+    if (menuVisitsChart) {
+      menuVisitsChart.destroy();
+    }
+
+    menuVisitsChart = new Chart(canvas, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [{
+          label: "Menü ziyareti",
+          data: values,
+          borderColor: "#B94F3B",
+          backgroundColor: "rgba(185, 79, 59, 0.12)",
+          fill: true,
+          tension: 0.35,
+          pointRadius: period === "daily" ? 2 : 3,
+          pointHoverRadius: 5,
+          pointBackgroundColor: "#B94F3B",
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: context => `${context.raw} ziyaret`
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false
+            },
+            ticks: {
+              color: "#897D73",
+              maxTicksLimit: period === "daily" ? 8 : 10,
+              font: {
+                size: 10
+              }
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0,
+              color: "#897D73"
+            },
+            grid: {
+              color: "#EEE7E0"
+            }
+          }
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error("Menü ziyaretleri yüklenemedi:", error);
+    visitsEl.textContent = "—";
+
+    if (descriptionEl) {
+      descriptionEl.textContent = "Ziyaret verileri yüklenemedi.";
+    }
+  }
+}
+
+
+// =========================================
+// GÜNLÜK / HAFTALIK / AYLIK SEÇİMİ
+// =========================================
+
+const visitPeriodSelect = document.getElementById("visitPeriodSelect");
+
+if (visitPeriodSelect) {
+  visitPeriodSelect.addEventListener("change", function () {
+    loadMenuVisitAnalytics(this.value);
+  });
+}
+
+
+// =========================================
+// AKTİF - PASİF ÜRÜN ANALİZİ
+// =========================================
+
+async function loadProductStatusAnalysis() {
+  const activeEl = document.getElementById("activeProductCount");
+  const inactiveEl = document.getElementById("inactiveProductCount");
+  const totalEl = document.getElementById("allProductCount");
+  const canvas = document.getElementById("productStatusChart");
+
+  if (!activeEl || !inactiveEl || !totalEl || !canvas) return;
+
+  try {
+    const [activeResult, inactiveResult, totalResult] = await Promise.all([
+      supabaseClient
+        .from("products")
+        .select("id", { count: "exact", head: true })
+        .eq("is_active", true),
+
+      supabaseClient
+        .from("products")
+        .select("id", { count: "exact", head: true })
+        .eq("is_active", false),
+
+      supabaseClient
+        .from("products")
+        .select("id", { count: "exact", head: true })
+    ]);
+
+    if (activeResult.error) throw activeResult.error;
+    if (inactiveResult.error) throw inactiveResult.error;
+    if (totalResult.error) throw totalResult.error;
+
+    const activeCount = activeResult.count || 0;
+    const inactiveCount = inactiveResult.count || 0;
+    const totalCount = totalResult.count || 0;
+
+    activeEl.textContent = activeCount;
+    inactiveEl.textContent = inactiveCount;
+    totalEl.textContent = totalCount;
+
+    if (productStatusChart) {
+      productStatusChart.destroy();
+    }
+
+    productStatusChart = new Chart(canvas, {
+      type: "doughnut",
+      data: {
+        labels: ["Aktif ürün", "Pasif ürün"],
+        datasets: [{
+          data: [activeCount, inactiveCount],
+          backgroundColor: ["#6D9B78", "#C58B78"],
+          borderColor: "#FFFCF8",
+          borderWidth: 3,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "72%",
+        plugins: {
+          legend: {
+            display: true,
+            position: "bottom",
+            labels: {
+              color: "#74675D",
+              boxWidth: 9,
+              padding: 12,
+              font: {
+                size: 10
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: context => `${context.label}: ${context.raw}`
+            }
+          }
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error("Ürün durum analizi yüklenemedi:", error);
+
+    activeEl.textContent = "—";
+    inactiveEl.textContent = "—";
+    totalEl.textContent = "—";
+  }
+}
+
+
+// =========================================
+// KATEGORİ DAĞILIMI
+// =========================================
+
+async function loadCategoryDistribution() {
+  const canvas = document.getElementById("categoryDistributionChart");
+  const legend = document.getElementById("categoryDistributionLegend");
+
+  if (!canvas || !legend || typeof Chart === "undefined") return;
+
+  try {
+    const { data, error } = await supabaseClient
+      .from("categories")
+      .select(`
+        id,
+        name,
+        subcategories (
+          id,
+          products (
+            id,
+            is_active
+          )
+        )
+      `)
+      .eq("is_active", true)
+      .order("sort_order");
+
+    if (error) throw error;
+
+    const categoryData = (data || []).map(category => {
+      let count = 0;
+
+      (category.subcategories || []).forEach(subcategory => {
+        count += (subcategory.products || []).filter(
+          product => product.is_active === true
+        ).length;
+      });
+
+      return {
+        name: category.name,
+        count
+      };
+    });
+
+    const labels = categoryData.map(item => item.name);
+    const values = categoryData.map(item => item.count);
+
+    if (categoryDistributionChart) {
+      categoryDistributionChart.destroy();
+    }
+
+    categoryDistributionChart = new Chart(canvas, {
+      type: "doughnut",
+      data: {
+        labels,
+        datasets: [{
+          data: values,
+          backgroundColor: [
+            "#B94F3B",
+            "#D18A72",
+            "#E2B9A7",
+            "#8B6658",
+            "#C9B19F",
+            "#A94D3A",
+            "#D9A99B",
+            "#6F5145"
+          ],
+          borderColor: "#FFFCF8",
+          borderWidth: 3,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: "67%",
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: context => `${context.label}: ${context.raw} ürün`
+            }
+          }
+        }
+      }
+    });
+
+    legend.innerHTML = "";
+
+    categoryData.forEach((item, index) => {
+      const row = document.createElement("div");
+      row.className = "category-legend-item";
+
+      const color = categoryDistributionChart.data.datasets[0]
+        .backgroundColor[index];
+
+      row.innerHTML = `
+        <span class="category-legend-dot"
+          style="background:${color}"></span>
+        <span class="category-legend-name"></span>
+        <strong>${item.count}</strong>
+      `;
+
+      row.querySelector(".category-legend-name").textContent = item.name;
+      legend.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Kategori dağılımı yüklenemedi:", error);
+    legend.textContent = "Kategori verileri yüklenemedi.";
+  }
+}
+
+
+// =========================================
+// EN ÇOK GÖRÜNTÜLENEN ÜRÜNLER GRAFİĞİ
+// =========================================
+
+function drawProductCharts(labels, values) {
+  const barCanvas = document.getElementById("productViewsChart");
+
+  if (!barCanvas || typeof Chart === "undefined") return;
+
+  if (productViewsChart) {
+    productViewsChart.destroy();
+  }
+
+  const chartLabels = labels.length ? labels : ["Henüz veri yok"];
+  const chartValues = values.length ? values : [0];
+
+  productViewsChart = new Chart(barCanvas, {
+    type: "bar",
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: "Görüntülenme",
+        data: chartValues,
+        backgroundColor: "#B94F3B",
+        borderRadius: 6,
+        maxBarThickness: 35
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: "y",
+      plugins: {
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            color: "#EEE7E0"
+          },
+          ticks: {
+            color: "#897D73",
+            precision: 0
+          }
+        },
+        y: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            color: "#57483F",
+            font: {
+              size: 10
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
 // =========================================
 // YÖNETİCİ / PERSONEL KONTROLÜ
 // =========================================
@@ -2503,9 +4362,14 @@ async function checkAdmin() {
   }
 
   currentUserRole = profile.role;
-  await loadPanelBusinessName();
-  loadOverviewStats();
-  loadMenuAnalytics();
+
+await loadPanelBusinessName();
+
+loadOverviewStats();
+loadMenuAnalytics();
+loadMenuVisitAnalytics("daily");
+loadProductStatusAnalysis();
+loadCategoryDistribution();
 
   const allowedRoles = ["owner", "manager", "waiter", "kitchen"];
 
