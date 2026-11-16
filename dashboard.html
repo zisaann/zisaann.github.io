@@ -3061,11 +3061,6 @@ input, select, textarea {
 <div id="topViewedProducts" class="top-viewed-products">
   <p class="analytics-empty">İstatistikler yükleniyor...</p>
 </div>
-
-<div class="chart-container">
-  <canvas id="productViewsChart"></canvas>
-</div>
-
       </div>
 
       <div class="dashboard-bottom-grid">
@@ -3803,8 +3798,6 @@ async function loadMenuAnalytics() {
           Henüz ürün görüntülenmesi bulunmuyor.
         </p>
       `;
-
-      drawProductCharts([], []);
       return;
     }
 
@@ -3822,7 +3815,6 @@ async function loadMenuAnalytics() {
     const values = viewedProducts.map(item => Number(item.view_count) || 0);
 
     try {
-      drawProductCharts(labels, values);
     } catch (chartError) {
       console.error("Ürün grafiği çizilemedi:", chartError);
     }
