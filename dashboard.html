@@ -3770,23 +3770,34 @@ let productStatusChart = null;
 // EN ÇOK GÖRÜNTÜLENEN ÜRÜNLER
 // =========================================
 
+
 async function loadMenuAnalytics() {
   const productsEl = document.getElementById("topViewedProducts");
 
-  if (!productsEl) return;
+  if (!productsEl) {
+    console.error("topViewedProducts elementi bulunamadı.");
+    return;
+  }
 
   try {
     const { data, error } = await supabaseClient.rpc("get_menu_analytics");
+
     if (error) throw error;
+
     console.log("Dashboard ürün istatistikleri:", data);
 
     const viewedProducts = (data || [])
-      .filter(item => item.product_id)
+      .filter(item => item.product_id && item.product_name)
       .sort((a, b) => Number(b.view_count) - Number(a.view_count))
       .slice(0, 5);
 
     if (viewedProducts.length === 0) {
-      productsEl.textContent = "Henüz ürün görüntülenmesi bulunmuyor.";
+      productsEl.innerHTML = `
+        <p class="analytics-empty">
+          Henüz ürün görüntülenmesi bulunmuyor.
+        </p>
+      `;
+
       drawProductCharts([], []);
       return;
     }
@@ -3794,26 +3805,32 @@ async function loadMenuAnalytics() {
     productsEl.innerHTML = viewedProducts.map((product, index) => `
       <div class="top-product-row">
         <span class="top-product-rank">${index + 1}</span>
-        <span class="top-product-name"></span>
+        <span class="top-product-name">
+          ${escapeHTML(product.product_name)}
+        </span>
         <strong>${Number(product.view_count) || 0}</strong>
       </div>
     `).join("");
 
-    productsEl.querySelectorAll(".top-product-name").forEach((element, index) => {
-      element.textContent = viewedProducts[index].product_name;
-    });
-
     const labels = viewedProducts.map(item => item.product_name);
     const values = viewedProducts.map(item => Number(item.view_count) || 0);
 
-    drawProductCharts(labels, values);
+    try {
+      drawProductCharts(labels, values);
+    } catch (chartError) {
+      console.error("Ürün grafiği çizilemedi:", chartError);
+    }
 
   } catch (error) {
     console.error("Ürün istatistikleri yüklenemedi:", error);
-    productsEl.textContent = "İstatistikler yüklenemedi.";
+
+    productsEl.innerHTML = `
+      <p class="analytics-empty">
+        İstatistikler yüklenemedi.
+      </p>
+    `;
   }
 }
-
 
 // =========================================
 // MENÜ ZİYARET İSTATİSTİKLERİ
