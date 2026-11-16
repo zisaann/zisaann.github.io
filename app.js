@@ -79,22 +79,31 @@ function getSubcategories(category) {
 // MENÜ İSTATİSTİKLERİNİ KAYDET
 // ==========================================
 
+
 async function trackMenuAnalytics(eventType, productId = null) {
+  console.log("İstatistik gönderiliyor:", eventType, productId);
+
   try {
-    const { error } = await supabaseClient
+    const { data, error } = await supabaseClient
       .from("menu_analytics")
       .insert({
         event_type: eventType,
         product_id: productId
-      });
+      })
+      .select();
 
     if (error) {
       console.error("İstatistik kaydedilemedi:", error);
+      return;
     }
+
+    console.log("İstatistik başarıyla kaydedildi:", data);
+
   } catch (error) {
     console.error("İstatistik kayıt hatası:", error);
   }
 }
+
 // ==========================================
 // SUPABASE'DEN MENÜ VERİLERİNİ YÜKLE
 // ==========================================
