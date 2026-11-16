@@ -3777,8 +3777,8 @@ async function loadMenuAnalytics() {
 
   try {
     const { data, error } = await supabaseClient.rpc("get_menu_analytics");
-
     if (error) throw error;
+    console.log("Dashboard ürün istatistikleri:", data);
 
     const viewedProducts = (data || [])
       .filter(item => item.product_id)
