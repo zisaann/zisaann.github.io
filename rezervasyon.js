@@ -6,31 +6,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const message = document.getElementById("reservationFormMessage");
 
   if (!dateInput || !timeSelect || !reservationForm) {
+    console.error("Rezervasyon formu elemanları bulunamadı.");
     return;
   }
 
-  // Bugünün tarihini yerel saatle YYYY-MM-DD biçiminde al
   function getLocalDate() {
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
 
-    return `${year}-${month}-${day}`;
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
   }
 
-  // Geçmiş tarihlerde rezervasyon yapılmasını engelle
   dateInput.min = getLocalDate();
 
-  // 09.00–22.00 çalışma saatleri
-  // 30 dakikalık aralıklar, son başlangıç saati 20.30
   function populateTimeOptions() {
-    timeSelect.innerHTML = '<option value="">Saat seçin</option>';
+    timeSelect.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Saat seçin";
+    timeSelect.appendChild(placeholder);
 
     for (let hour = 9; hour <= 20; hour++) {
       for (const minute of [0, 30]) {
-        if (hour === 20 && minute > 30) continue;
-
         const value =
           String(hour).padStart(2, "0") +
           ":" +
@@ -43,17 +44,28 @@ document.addEventListener("DOMContentLoaded", () => {
         timeSelect.appendChild(option);
       }
     }
+
+    timeSelect.disabled = false;
   }
 
-  dateInput.addEventListener("change", () => {
+  function handleDateChange() {
+    if (!dateInput.value) {
+      timeSelect.innerHTML =
+        '<option value="">Önce tarih seçin</option>';
+      return;
+    }
+
     populateTimeOptions();
     message.textContent = "";
-  });
+  }
+
+  dateInput.addEventListener("change", handleDateChange);
+  dateInput.addEventListener("input", handleDateChange);
 
   reservationForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     message.textContent =
-      "Rezervasyon sistemi henüz etkinleştirilmedi. Lütfen daha sonra tekrar deneyin.";
+      "Rezervasyon sistemi henüz etkinleştirilmedi.";
   });
 });
