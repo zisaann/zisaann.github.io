@@ -2,13 +2,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const dateInput = document.getElementById("reservationDateInput");
   const timeSelect = document.getElementById("reservationTime");
+  const guestsSelect = document.getElementById("reservationGuests");
   const reservationForm = document.getElementById("reservationForm");
   const message = document.getElementById("reservationFormMessage");
 
-  if (!dateInput || !timeSelect || !reservationForm) {
+  if (!dateInput || !timeSelect || !guestsSelect || !reservationForm) {
     console.error("Rezervasyon formu elemanları bulunamadı.");
     return;
   }
+
+  let requestNumber = 0;
 
   function getLocalDate() {
     const now = new Date();
@@ -22,50 +25,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
   dateInput.min = getLocalDate();
 
-  function populateTimeOptions() {
+  function resetTimeSelect(text) {
     timeSelect.innerHTML = "";
 
-    const placeholder = document.createElement("option");
-    placeholder.value = "";
-    placeholder.textContent = "Saat seçin";
-    timeSelect.appendChild(placeholder);
+    const option = document.createElement("option");
+    option.value = "";
+    option.textContent = text;
 
-    for (let hour = 9; hour <= 20; hour++) {
-      for (const minute of [0, 30]) {
-        const value =
-          String(hour).padStart(2, "0") +
-          ":" +
-          String(minute).padStart(2, "0");
-
-        const option = document.createElement("option");
-        option.value = value;
-        option.textContent = value;
-
-        timeSelect.appendChild(option);
-      }
-    }
-
-    timeSelect.disabled = false;
+    timeSelect.appendChild(option);
+    timeSelect.disabled = true;
   }
 
-  function handleDateChange() {
-    if (!dateInput.value) {
-      timeSelect.innerHTML =
-        '<option value="">Önce tarih seçin</option>';
+  async function loadAvailableTimes() {
+    const currentRequest = ++requestNumber;
+    const date = dateInput.value;
+    const guestCount = Number(guestsSelect.value);
+
+    if (!date || !guestCount) {
+      resetTimeSelect("Önce tarih ve kişi sayısı seçin");
       return;
     }
 
-    populateTimeOptions();
+    resetTimeSelect("Müsait saatler kontrol ediliyor...");
     message.textContent = "";
+
+    try {
+      const { data, error } = await supabaseClient.functions.invoke(
+        "reservation-availability",
+        {
+          body: {
+            date: date,
+            guest_count: guestCount
+          }
+        }
+      );
+
+      if (currentRequest !== requestNumber) return;
+
+      if (error) {
+        throw error;
+      }
+
+      if (!data || !Array.isArray(data.slots)) {
+        throw new Error("Müsait saat bilgisi alınamadı.");
+      }
+
+      timeSelect.innerHTML = "";
+
+      if (data.slots.length === 0) {
+        resetTimeSelect("Bu tarihte uygun saat bulunamadı.");
+        return;
+      }
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Saat seçin";
+      timeSelect.appendChild(placeholder);
+
+      data.slots.forEach((time) => {
+        const option = document.createElement("option");
+        option.value = time;
+        option.textContent = time;
+        timeSelect.appendChild(option);
+      });
+
+      timeSelect.disabled = false;
+
+    } catch (error) {
+      console.error("Müsaitlik kontrolü hatası:", error);
+
+      if (currentRequest !== requestNumber) return;
+
+      resetTimeSelect("Saatler yüklenemedi.");
+      message.textContent =
+        "Müsait saatler alınırken bir hata oluştu. Lütfen tekrar deneyin.";
+    }
   }
 
-  dateInput.addEventListener("change", handleDateChange);
-  dateInput.addEventListener("input", handleDateChange);
+  dateInput.addEventListener("change", loadAvailableTimes);
+  guestsSelect.addEventListener("change", loadAvailableTimes);
 
   reservationForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     message.textContent =
-      "Rezervasyon sistemi henüz etkinleştirilmedi.";
+      "Rezervasyon kaydı henüz etkinleştirilmedi.";
   });
+
+  resetTimeSelect("Önce tarih ve kişi sayısı seçin");
 });
