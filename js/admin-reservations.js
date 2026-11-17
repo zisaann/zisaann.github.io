@@ -340,8 +340,16 @@ function openReservationDetail(reservationId) {
   }
 function openReservationDetail(reservationId) {
 
+  alert("Detay fonksiyonuna girildi!");
+
   const reservation = allReservations.find(
     r => String(r.id) === String(reservationId)
+  );
+
+  alert(
+    reservation
+      ? "Rezervasyon bulundu: " + reservation.customer_name
+      : "Rezervasyon bulunamadı!"
   );
 
   if (!reservation) return;
