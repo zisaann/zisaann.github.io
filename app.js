@@ -355,25 +355,13 @@ function renderCategories() {
 function renderCategories() {
   if (!categoryList) return;
 
-  categoryList.innerHTML = CATEGORIES.map(category => {
-    const image = CATEGORY_IMAGES[category] || CATEGORY_IMAGES["Tümü"];
-
-    return `
-      <button
-        type="button"
-        class="category-btn ${category === activeCategory ? "active" : ""}"
-        data-category="${escapeHTML(category)}"
-      >
-        <img
-          class="category-image"
-          src="${image}"
-          alt="${escapeHTML(category)}"
-          loading="lazy"
-        >
-        <span class="category-name">${escapeHTML(category)}</span>
-      </button>
-    `;
-  }).join("");
+  categoryList.innerHTML = CATEGORIES.map(category => `
+    <button
+      type="button"
+      class="category-btn ${category === activeCategory ? "active" : ""}"
+      data-category="${escapeHTML(category)}"
+    >${escapeHTML(category)}</button>
+  `).join("");
 
   categoryList.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", () => {
