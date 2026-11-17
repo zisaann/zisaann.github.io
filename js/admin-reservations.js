@@ -24,10 +24,7 @@ window.loadReservations = async function () {
     "reservationsTableBody"
   );
 
-  if (!tableBody) {
-    console.error("Rezervasyon tablosu bulunamadı.");
-    return;
-  }
+  if (!tableBody) return;
 
   tableBody.innerHTML = `
     <tr>
@@ -63,10 +60,7 @@ window.loadReservations = async function () {
 
   } catch (error) {
 
-    console.error(
-      "Rezervasyonlar yüklenemedi:",
-      error
-    );
+    console.error("Rezervasyonlar yüklenemedi:", error);
 
     tableBody.innerHTML = `
       <tr>
@@ -106,21 +100,19 @@ function updateReservationStats() {
     r => r.status === "confirmed"
   ).length;
 
-  document.getElementById("todayReservations").textContent =
-    todayCount;
+  const setText = (id, value) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  };
 
-  document.getElementById("pendingReservations").textContent =
-    pendingCount;
-
-  document.getElementById("confirmedReservations").textContent =
-    confirmedCount;
-
-  document.getElementById("totalReservations").textContent =
-    allReservations.length;
+  setText("todayReservations", todayCount);
+  setText("pendingReservations", pendingCount);
+  setText("confirmedReservations", confirmedCount);
+  setText("totalReservations", allReservations.length);
 }
 
 // =========================================
-// REZERVASYONLARI FİLTRELE VE GÖSTER
+// REZERVASYONLARI GÖSTER
 // =========================================
 
 function renderReservations() {
@@ -152,27 +144,18 @@ function renderReservations() {
         reservation.reservation_code || ""
       ).toLocaleLowerCase("tr-TR");
 
-      const matchesSearch =
-        customerName.includes(search) ||
-        reservationCode.includes(search);
-
-      const matchesDate =
-        !selectedDate ||
-        reservation.reservation_date === selectedDate;
-
-      const matchesStatus =
-        !selectedStatus ||
-        reservation.status === selectedStatus;
-
       return (
-        matchesSearch &&
-        matchesDate &&
-        matchesStatus
+        (customerName.includes(search) ||
+          reservationCode.includes(search)) &&
+        (!selectedDate ||
+          reservation.reservation_date === selectedDate) &&
+        (!selectedStatus ||
+          reservation.status === selectedStatus)
       );
     }
   );
 
-  if (filteredReservations.length === 0) {
+  if (!filteredReservations.length) {
 
     tableBody.innerHTML = `
       <tr>
@@ -206,31 +189,15 @@ function renderReservations() {
 
       return `
         <tr>
-
           <td>
-            <strong>
-              ${escapeHTML(reservation.customer_name)}
-            </strong>
-            <small>
-              ${escapeHTML(reservation.reservation_code || "-")}
-            </small>
+            <strong>${escapeHTML(reservation.customer_name)}</strong>
+            <small>${escapeHTML(reservation.reservation_code || "-")}</small>
           </td>
 
-          <td>
-            ${escapeHTML(reservation.phone)}
-          </td>
-
-          <td>
-            ${formattedDate}
-          </td>
-
-          <td>
-            ${time}
-          </td>
-
-          <td>
-            ${Number(reservation.guest_count) || 0} kişi
-          </td>
+          <td>${escapeHTML(reservation.phone || "-")}</td>
+          <td>${formattedDate}</td>
+          <td>${time}</td>
+          <td>${Number(reservation.guest_count) || 0} kişi</td>
 
           <td>
             <span class="status-badge status-${escapeHTML(reservation.status)}">
@@ -246,63 +213,35 @@ function renderReservations() {
               Detay
             </button>
           </td>
-
         </tr>
       `;
-
     }
   ).join("");
 }
 
 // =========================================
-// FİLTRELERİ BAĞLA
+// FİLTRELER
 // =========================================
 
 function setupReservationFilters() {
 
-  const search = document.getElementById(
-    "reservationSearch"
-  );
-
-  const date = document.getElementById(
-    "reservationDateFilter"
-  );
-
-  const status = document.getElementById(
-    "reservationStatusFilter"
-  );
-
-  const clear = document.getElementById(
-    "clearReservationFilters"
-  );
+  const search = document.getElementById("reservationSearch");
+  const date = document.getElementById("reservationDateFilter");
+  const status = document.getElementById("reservationStatusFilter");
+  const clear = document.getElementById("clearReservationFilters");
 
   if (search && !search.dataset.bound) {
-
-    search.addEventListener(
-      "input",
-      renderReservations
-    );
-
+    search.addEventListener("input", renderReservations);
     search.dataset.bound = "true";
   }
 
   if (date && !date.dataset.bound) {
-
-    date.addEventListener(
-      "change",
-      renderReservations
-    );
-
+    date.addEventListener("change", renderReservations);
     date.dataset.bound = "true";
   }
 
   if (status && !status.dataset.bound) {
-
-    status.addEventListener(
-      "change",
-      renderReservations
-    );
-
+    status.addEventListener("change", renderReservations);
     status.dataset.bound = "true";
   }
 
@@ -324,35 +263,19 @@ function setupReservationFilters() {
 // =========================================
 // REZERVASYON DETAY PENCERESİ
 // =========================================
+
 function openReservationDetail(reservationId) {
 
-  console.log("Modal fonksiyonuna girildi.");
+  console.log("Detay fonksiyonuna girildi:", reservationId);
 
   const reservation = allReservations.find(
     r => String(r.id) === String(reservationId)
   );
-
-  console.log("Bulunan rezervasyon:", reservation);
 
   if (!reservation) {
-    console.error("Rezervasyon bulunamadı!");
+    console.error("Rezervasyon bulunamadı:", reservationId);
     return;
   }
-function openReservationDetail(reservationId) {
-
-  alert("Detay fonksiyonuna girildi!");
-
-  const reservation = allReservations.find(
-    r => String(r.id) === String(reservationId)
-  );
-
-  alert(
-    reservation
-      ? "Rezervasyon bulundu: " + reservation.customer_name
-      : "Rezervasyon bulunamadı!"
-  );
-
-  if (!reservation) return;
 
   let modal = document.getElementById(
     "reservationDetailModal"
@@ -389,9 +312,7 @@ function openReservationDetail(reservationId) {
             REZERVASYON DETAYI
           </span>
 
-          <h2>
-            ${escapeHTML(reservation.customer_name)}
-          </h2>
+          <h2>${escapeHTML(reservation.customer_name)}</h2>
 
           <p>
             Rezervasyon No:
@@ -413,62 +334,47 @@ function openReservationDetail(reservationId) {
 
         <div class="reservation-modal-item">
           <span>Telefon</span>
-          <strong>
-            ${escapeHTML(reservation.phone || "-")}
-          </strong>
+          <strong>${escapeHTML(reservation.phone || "-")}</strong>
         </div>
 
         <div class="reservation-modal-item">
           <span>Rezervasyon Durumu</span>
-          <strong>
-            ${escapeHTML(statusLabel)}
-          </strong>
+          <strong>${escapeHTML(statusLabel)}</strong>
         </div>
 
         <div class="reservation-modal-item">
           <span>Tarih</span>
-          <strong>
-            ${escapeHTML(formattedDate)}
-          </strong>
+          <strong>${formattedDate}</strong>
         </div>
 
         <div class="reservation-modal-item">
           <span>Saat</span>
           <strong>
-            ${escapeHTML(
-              String(reservation.reservation_time || "-").slice(0, 5)
-            )}
+            ${escapeHTML(String(reservation.reservation_time || "-").slice(0, 5))}
           </strong>
         </div>
 
         <div class="reservation-modal-item">
           <span>Kişi Sayısı</span>
-          <strong>
-            ${Number(reservation.guest_count) || 0} kişi
-          </strong>
+          <strong>${Number(reservation.guest_count) || 0} kişi</strong>
         </div>
 
       </div>
 
       <div class="reservation-modal-note">
         <span>Müşteri Notu</span>
-
         <p>
-          ${escapeHTML(
-            reservation.note || "Müşteri not bırakmamış."
-          )}
+          ${escapeHTML(reservation.note || "Müşteri not bırakmamış.")}
         </p>
       </div>
 
       <div class="reservation-modal-footer">
-
         <button
           type="button"
           class="btn-secondary"
           data-close-reservation>
           Kapat
         </button>
-
       </div>
 
     </div>
@@ -478,7 +384,7 @@ function openReservationDetail(reservationId) {
 }
 
 // =========================================
-// DETAY PENCERESİ TIKLAMA İŞLEMLERİ
+// TIKLAMA İŞLEMLERİ
 // =========================================
 
 if (!window.reservationDetailEventsBound) {
@@ -491,15 +397,9 @@ if (!window.reservationDetailEventsBound) {
 
     if (detailButton) {
 
-  console.log("Detay butonuna tıklandı.");
-  console.log("Rezervasyon ID:", detailButton.dataset.id);
-
-  openReservationDetail(detailButton.dataset.id);
-
-  console.log("Detay fonksiyonu çağrıldı.");
-
-  return;
-}
+      openReservationDetail(detailButton.dataset.id);
+      return;
+    }
 
     if (
       event.target.closest("[data-close-reservation]") ||
@@ -517,7 +417,7 @@ if (!window.reservationDetailEventsBound) {
 }
 
 // =========================================
-// ESC TUŞUYLA PENCEREYİ KAPAT
+// ESC İLE KAPAT
 // =========================================
 
 if (!window.reservationEscapeBound) {
@@ -537,7 +437,7 @@ if (!window.reservationEscapeBound) {
 }
 
 // =========================================
-// GÜVENLİ HTML METNİ
+// GÜVENLİ HTML
 // =========================================
 
 function escapeHTML(value) {
@@ -553,9 +453,5 @@ function escapeHTML(value) {
     })[character]
   );
 }
-console.log("ADMIN RESERVATIONS DOSYASI GÜNCEL SÜRÜMLE YÜKLENDİ.");
 
-console.log(
-  "Detay fonksiyonu:",
-  openReservationDetail.toString()
-);
+console.log("Ahenk rezervasyon yönetimi başarıyla yüklendi.");
