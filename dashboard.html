@@ -3208,9 +3208,11 @@ input, select, textarea {
 
       
 <!-- PERSONEL MENÜ EKRANI -->
+
 <!-- =========================================
      REZERVASYON YÖNETİMİ
 ========================================= -->
+
 <section class="view-panel" id="reservationsView">
 
   <div class="dashboard-heading">
@@ -3221,7 +3223,10 @@ input, select, textarea {
     </div>
   </div>
 
+  <!-- İSTATİSTİKLER -->
+
   <div class="stats-grid">
+
     <div class="stat-card">
       <span>Bugünkü Rezervasyonlar</span>
       <h2 id="todayReservations">0</h2>
@@ -3241,18 +3246,69 @@ input, select, textarea {
       <span>Toplam Rezervasyon</span>
       <h2 id="totalReservations">0</h2>
     </div>
+
   </div>
 
-  <div class="dashboard-card">
+  <!-- REZERVASYON LİSTESİ -->
+
+  <div class="dashboard-card reservation-management-card">
+
     <div class="card-header">
       <div>
         <h2>Rezervasyon Listesi</h2>
-        <p>Gelen rezervasyonları ve durumlarını görüntüleyin.</p>
+        <p>Gelen rezervasyonları arayın ve durumlarına göre filtreleyin.</p>
       </div>
     </div>
 
+    <!-- FİLTRELER -->
+
+    <div class="reservation-filters">
+
+      <div class="reservation-filter-search">
+        <label for="reservationSearch">Rezervasyon ara</label>
+        <input
+          type="text"
+          id="reservationSearch"
+          placeholder="Müşteri adı veya rezervasyon kodu..."
+        >
+      </div>
+
+      <div>
+        <label for="reservationDateFilter">Rezervasyon tarihi</label>
+        <input
+          type="date"
+          id="reservationDateFilter"
+        >
+      </div>
+
+      <div>
+        <label for="reservationStatusFilter">Rezervasyon durumu</label>
+        <select id="reservationStatusFilter">
+          <option value="">Tüm Durumlar</option>
+          <option value="pending">Onay Bekleyenler</option>
+          <option value="confirmed">Onaylananlar</option>
+          <option value="cancelled">İptal Edilenler</option>
+          <option value="completed">Tamamlananlar</option>
+          <option value="no_show">Gelmedi</option>
+        </select>
+      </div>
+
+      <button
+        type="button"
+        id="clearReservationFilters"
+        class="reservation-clear-btn"
+      >
+        Filtreleri Temizle
+      </button>
+
+    </div>
+
+    <!-- TABLO -->
+
     <div class="table-responsive">
+
       <table class="data-table">
+
         <thead>
           <tr>
             <th>Müşteri</th>
@@ -3264,16 +3320,21 @@ input, select, textarea {
             <th>İşlemler</th>
           </tr>
         </thead>
+
         <tbody id="reservationsTableBody">
           <tr>
             <td colspan="7">Rezervasyonlar yükleniyor...</td>
           </tr>
         </tbody>
+
       </table>
+
     </div>
+
   </div>
 
 </section>
+
 <section class="view-panel" id="staffMenuView" hidden>
 
   <div class="page-heading">
