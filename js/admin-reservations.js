@@ -470,12 +470,15 @@ if (!window.reservationDetailEventsBound) {
 
     if (detailButton) {
 
-      openReservationDetail(
-        detailButton.dataset.id
-      );
+  console.log("Detay butonuna tıklandı.");
+  console.log("Rezervasyon ID:", detailButton.dataset.id);
 
-      return;
-    }
+  openReservationDetail(detailButton.dataset.id);
+
+  console.log("Detay fonksiyonu çağrıldı.");
+
+  return;
+}
 
     if (
       event.target.closest("[data-close-reservation]") ||
