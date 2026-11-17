@@ -1996,3 +1996,397 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
   }
 
 }
+
+/* ==========================================
+   AHENK RESTAURANT - PREMIUM REZERVASYON PANELİ
+========================================== */
+
+#reservationsView {
+  --reservation-ink: #302923;
+  --reservation-muted: #887b70;
+  --reservation-accent: #a65b45;
+  --reservation-line: #e9dfd4;
+  --reservation-surface: #fffdf9;
+
+  padding: 12px 0 45px;
+  color: var(--reservation-ink);
+}
+
+/* ÜST BAŞLIK */
+
+#reservationsView .dashboard-heading {
+  margin-bottom: 30px;
+}
+
+#reservationsView .dashboard-eyebrow {
+  color: #a65b45;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+#reservationsView .dashboard-heading h1 {
+  margin: 9px 0;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: 600;
+}
+
+#reservationsView .dashboard-heading p {
+  color: #887b70;
+  font-size: 12px;
+}
+
+/* İSTATİSTİK KARTLARI */
+
+#reservationsView .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 27px;
+}
+
+#reservationsView .stat-card {
+  position: relative;
+  min-width: 0;
+  min-height: 125px;
+  padding: 22px 20px;
+  overflow: hidden;
+  border: 1px solid #e9dfd4;
+  border-radius: 13px;
+  background: #fffdf9;
+  box-shadow: 0 4px 18px rgba(48, 41, 35, 0.035);
+  transition: transform .2s, box-shadow .2s;
+}
+
+#reservationsView .stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 9px 24px rgba(48, 41, 35, 0.07);
+}
+
+#reservationsView .stat-card span {
+  display: block;
+  color: #887b70;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+#reservationsView .stat-card h2 {
+  margin-top: 13px;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* REZERVASYON LİSTE PANELİ */
+
+#reservationsView .reservation-management-card {
+  margin-top: 0;
+  padding: 27px;
+  overflow: hidden;
+  border: 1px solid #e9dfd4;
+  border-radius: 15px;
+  background: #fffdf9;
+  box-shadow: 0 5px 22px rgba(48, 41, 35, 0.035);
+}
+
+#reservationsView .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+#reservationsView .card-header h2 {
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: 23px;
+  font-weight: 600;
+}
+
+#reservationsView .card-header p {
+  margin-top: 5px;
+  color: #887b70;
+  font-size: 11px;
+}
+
+/* FİLTRE ALANI */
+
+#reservationsView .reservation-filters {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.7fr) minmax(150px, 1fr) minmax(160px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  margin: 0 0 23px;
+  padding: 18px;
+  border: 1px solid #eee5da;
+  border-radius: 11px;
+  background: #f8f3ec;
+}
+
+#reservationsView .reservation-filters > div {
+  min-width: 0;
+}
+
+#reservationsView .reservation-filters label {
+  display: block;
+  margin-bottom: 7px;
+  color: #695b4e;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+#reservationsView .reservation-filters input,
+#reservationsView .reservation-filters select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid #e5dacf;
+  border-radius: 8px;
+  outline: none;
+  background: #fffdf9;
+  color: #49382e;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+#reservationsView .reservation-filters input:focus,
+#reservationsView .reservation-filters select:focus {
+  border-color: #a65b45;
+  box-shadow: 0 0 0 3px rgba(166, 91, 69, .09);
+}
+
+#reservationsView .reservation-clear-btn {
+  height: 42px;
+  padding: 0 15px;
+  border: 1px solid #dfcfc0;
+  border-radius: 8px;
+  background: #eee4d9;
+  color: #76513f;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background .2s;
+}
+
+#reservationsView .reservation-clear-btn:hover {
+  background: #e4d3c4;
+}
+
+/* TABLO */
+
+#reservationsView .table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #eee5da;
+  border-radius: 10px;
+}
+
+#reservationsView .data-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fffdf9;
+}
+
+#reservationsView .data-table thead {
+  background: #f6f0e8;
+}
+
+#reservationsView .data-table th {
+  padding: 15px 13px;
+  border-bottom: 1px solid #e9dfd4;
+  color: #806f60;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+#reservationsView .data-table td {
+  padding: 16px 13px;
+  border-bottom: 1px solid #f0e9e1;
+  color: #66594e;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+#reservationsView .data-table tbody tr {
+  transition: background .2s;
+}
+
+#reservationsView .data-table tbody tr:hover {
+  background: #fbf6ef;
+}
+
+#reservationsView .data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#reservationsView #reservationsTableBody td strong {
+  display: block;
+  color: #40352d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+#reservationsView #reservationsTableBody td small {
+  display: block;
+  margin-top: 5px;
+  color: #a18e7e;
+  font-size: 9px;
+  letter-spacing: .5px;
+}
+
+/* REZERVASYON DURUM ETİKETLERİ */
+
+#reservationsView .status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#reservationsView .status-pending {
+  background: #f8edda;
+  color: #a47530;
+}
+
+#reservationsView .status-confirmed {
+  background: #e6eee2;
+  color: #57734c;
+}
+
+#reservationsView .status-cancelled {
+  background: #f5e5e1;
+  color: #a65343;
+}
+
+#reservationsView .status-completed {
+  background: #e9e5f0;
+  color: #75628e;
+}
+
+#reservationsView .status-no_show {
+  background: #eee9e3;
+  color: #78695b;
+}
+
+/* DETAY BUTONU */
+
+#reservationsView .reservation-detail-btn {
+  padding: 8px 14px;
+  border: 1px solid #ddc7b7;
+  border-radius: 7px;
+  background: transparent;
+  color: #a65b45;
+  font-family: "DM Sans", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  transition: all .2s;
+}
+
+#reservationsView .reservation-detail-btn:hover {
+  border-color: #a65b45;
+  background: #a65b45;
+  color: white;
+}
+
+/* BOŞ LİSTE */
+
+#reservationsView #reservationsTableBody td[colspan] {
+  padding: 35px 15px;
+  color: #968779;
+  text-align: center;
+}
+
+/* TABLET */
+
+@media (max-width: 1050px) {
+  #reservationsView .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #reservationsView .reservation-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* MOBİL */
+
+@media (max-width: 600px) {
+  #reservationsView {
+    padding-top: 5px;
+  }
+
+  #reservationsView .dashboard-heading {
+    margin-bottom: 20px;
+  }
+
+  #reservationsView .dashboard-heading h1 {
+    font-size: 27px;
+  }
+
+  #reservationsView .stats-grid {
+    gap: 9px;
+    margin-bottom: 18px;
+  }
+
+  #reservationsView .stat-card {
+    min-height: 100px;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  #reservationsView .stat-card span {
+    font-size: 9px;
+  }
+
+  #reservationsView .stat-card h2 {
+    margin-top: 10px;
+    font-size: 27px;
+  }
+
+  #reservationsView .reservation-management-card {
+    padding: 16px 12px;
+    border-radius: 11px;
+  }
+
+  #reservationsView .card-header h2 {
+    font-size: 20px;
+  }
+
+  #reservationsView .reservation-filters {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 13px;
+  }
+
+  #reservationsView .reservation-clear-btn {
+    width: 100%;
+  }
+
+  #reservationsView .data-table {
+    min-width: 720px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #reservationsView * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
