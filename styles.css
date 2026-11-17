@@ -785,23 +785,58 @@ a {
 
 /* Sol taraftaki kategori görseli */
 
+/* =========================================
+   KATEGORİLERE ÖZEL SOL BÜYÜK GÖRSELLER
+========================================= */
+
 .product-group::before {
   content: "";
   grid-area: visual;
-
   display: block;
-
   width: 100%;
   min-height: 330px;
   height: 100%;
   max-height: 380px;
-
   border-radius: 10px;
+  background-color: #e9d9c8;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 
-  background:
-    #e9d9c8
-    url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80")
-    center/cover no-repeat;
+/* Kahvaltı */
+.product-group.category-kahvalti::before {
+  background-image: url("https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=900&q=85");
+}
+
+/* Başlangıçlar */
+.product-group.category-baslangiclar::before {
+  background-image: url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85");
+}
+
+/* Atıştırmalıklar */
+.product-group.category-atistirmaliklar::before {
+  background-image: url("https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85");
+}
+
+/* Ana yemekler */
+.product-group.category-ana-yemekler::before {
+  background-image: url("https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=85");
+}
+
+/* Salatalar */
+.product-group.category-salatalar::before {
+  background-image: url("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=85");
+}
+
+/* Tatlılar */
+.product-group.category-tatlilar::before {
+  background-image: url("https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=900&q=85");
+}
+
+/* İçecekler */
+.product-group.category-icecekler::before {
+  background-image: url("https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&w=900&q=85");
 }
 
 
