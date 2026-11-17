@@ -434,3 +434,127 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* =====================================
+   REZERVASYON DETAY PENCERESİ
+===================================== */
+
+.reservation-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(35, 29, 24, 0.65);
+  backdrop-filter: blur(4px);
+}
+
+.reservation-modal.active {
+  display: flex !important;
+}
+
+.reservation-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  border-radius: 16px;
+  background: #fffdf9;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.reservation-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #e8ded1;
+}
+
+.reservation-modal-eyebrow {
+  color: #a65b45;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.reservation-modal-header h2 {
+  margin: 10px 0;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+}
+
+.reservation-modal-header p {
+  color: #887b70;
+  font-size: 12px;
+}
+
+.reservation-modal-close {
+  border: none;
+  background: transparent;
+  color: #766b60;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.reservation-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  padding: 25px 0;
+}
+
+.reservation-modal-item {
+  padding: 15px;
+  border-radius: 9px;
+  background: #f7f3ed;
+}
+
+.reservation-modal-item span,
+.reservation-modal-note span {
+  display: block;
+  margin-bottom: 8px;
+  color: #a65b45;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.reservation-modal-item strong {
+  color: #302923;
+  font-size: 13px;
+}
+
+.reservation-modal-note {
+  padding: 18px;
+  border-radius: 9px;
+  background: #f7f3ed;
+}
+
+.reservation-modal-note p {
+  margin: 0;
+  color: #51473f;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.reservation-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 22px;
+}
+
+@media (max-width: 500px) {
+  .reservation-modal-content {
+    padding: 22px;
+  }
+
+  .reservation-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
