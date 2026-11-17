@@ -189,14 +189,15 @@ function renderReservations() {
     reservation => {
 
       const dateParts = String(
-        reservation.reservation_date
+        reservation.reservation_date || ""
       ).split("-");
 
-      const formattedDate =
-        `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`;
+      const formattedDate = dateParts.length === 3
+        ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`
+        : "-";
 
       const time = String(
-        reservation.reservation_time
+        reservation.reservation_time || "-"
       ).slice(0, 5);
 
       const statusLabel =
@@ -228,7 +229,7 @@ function renderReservations() {
           </td>
 
           <td>
-            ${Number(reservation.guest_count)} kişi
+            ${Number(reservation.guest_count) || 0} kişi
           </td>
 
           <td>
@@ -318,6 +319,197 @@ function setupReservationFilters() {
 
     clear.dataset.bound = "true";
   }
+}
+
+// =========================================
+// REZERVASYON DETAY PENCERESİ
+// =========================================
+
+function openReservationDetail(reservationId) {
+
+  const reservation = allReservations.find(
+    r => String(r.id) === String(reservationId)
+  );
+
+  if (!reservation) return;
+
+  let modal = document.getElementById(
+    "reservationDetailModal"
+  );
+
+  if (!modal) {
+
+    modal = document.createElement("div");
+    modal.id = "reservationDetailModal";
+    modal.className = "reservation-modal";
+
+    document.body.appendChild(modal);
+  }
+
+  const dateParts = String(
+    reservation.reservation_date || ""
+  ).split("-");
+
+  const formattedDate = dateParts.length === 3
+    ? `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`
+    : "-";
+
+  const statusLabel =
+    reservationStatusLabels[reservation.status] ||
+    "Bilinmiyor";
+
+  modal.innerHTML = `
+    <div class="reservation-modal-content">
+
+      <div class="reservation-modal-header">
+
+        <div>
+          <span class="reservation-modal-eyebrow">
+            REZERVASYON DETAYI
+          </span>
+
+          <h2>
+            ${escapeHTML(reservation.customer_name)}
+          </h2>
+
+          <p>
+            Rezervasyon No:
+            ${escapeHTML(reservation.reservation_code || "-")}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="reservation-modal-close"
+          data-close-reservation
+          aria-label="Pencereyi kapat">
+          &times;
+        </button>
+
+      </div>
+
+      <div class="reservation-modal-grid">
+
+        <div class="reservation-modal-item">
+          <span>Telefon</span>
+          <strong>
+            ${escapeHTML(reservation.phone || "-")}
+          </strong>
+        </div>
+
+        <div class="reservation-modal-item">
+          <span>Rezervasyon Durumu</span>
+          <strong>
+            ${escapeHTML(statusLabel)}
+          </strong>
+        </div>
+
+        <div class="reservation-modal-item">
+          <span>Tarih</span>
+          <strong>
+            ${escapeHTML(formattedDate)}
+          </strong>
+        </div>
+
+        <div class="reservation-modal-item">
+          <span>Saat</span>
+          <strong>
+            ${escapeHTML(
+              String(reservation.reservation_time || "-").slice(0, 5)
+            )}
+          </strong>
+        </div>
+
+        <div class="reservation-modal-item">
+          <span>Kişi Sayısı</span>
+          <strong>
+            ${Number(reservation.guest_count) || 0} kişi
+          </strong>
+        </div>
+
+      </div>
+
+      <div class="reservation-modal-note">
+        <span>Müşteri Notu</span>
+
+        <p>
+          ${escapeHTML(
+            reservation.note || "Müşteri not bırakmamış."
+          )}
+        </p>
+      </div>
+
+      <div class="reservation-modal-footer">
+
+        <button
+          type="button"
+          class="btn-secondary"
+          data-close-reservation>
+          Kapat
+        </button>
+
+      </div>
+
+    </div>
+  `;
+
+  modal.classList.add("active");
+}
+
+// =========================================
+// DETAY PENCERESİ TIKLAMA İŞLEMLERİ
+// =========================================
+
+if (!window.reservationDetailEventsBound) {
+
+  document.addEventListener("click", function(event) {
+
+    const detailButton = event.target.closest(
+      ".reservation-detail-btn"
+    );
+
+    if (detailButton) {
+
+      openReservationDetail(
+        detailButton.dataset.id
+      );
+
+      return;
+    }
+
+    if (
+      event.target.closest("[data-close-reservation]") ||
+      event.target.id === "reservationDetailModal"
+    ) {
+
+      document.getElementById(
+        "reservationDetailModal"
+      )?.classList.remove("active");
+    }
+
+  });
+
+  window.reservationDetailEventsBound = true;
+}
+
+// =========================================
+// ESC TUŞUYLA PENCEREYİ KAPAT
+// =========================================
+
+if (!window.reservationEscapeBound) {
+
+  document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+      document.getElementById(
+        "reservationDetailModal"
+      )?.classList.remove("active");
+    }
+
+  });
+
+  window.reservationEscapeBound = true;
 }
 
 // =========================================
