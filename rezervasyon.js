@@ -1,4 +1,25 @@
 
+async function ensureAnonymousSession() {
+  const { data: { session }, error: sessionError } =
+    await supabaseClient.auth.getSession();
+
+  if (sessionError) {
+    throw new Error("Oturum kontrol edilemedi.");
+  }
+
+  if (session) return session;
+
+  const { data, error } =
+    await supabaseClient.auth.signInAnonymously();
+
+  if (error) {
+    console.error("Anonim oturum hatası:", error);
+    throw new Error("Rezervasyon bağlantısı kurulamadı.");
+  }
+
+  return data.session;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const dateInput = document.getElementById("reservationDateInput");
   const timeSelect = document.getElementById("reservationTime");
@@ -138,6 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
     message.textContent = "";
 
     try {
+      await ensureAnonymousSession();
+      
       const reservationData = {
         customer_name: nameInput.value.trim(),
         phone: phoneInput.value.trim(),
