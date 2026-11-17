@@ -83,56 +83,76 @@ async function loadCategoryData() {
 // ANA KATEGORİLERİ GÖSTER
 // ==========================================
 
+
 function renderCategoryList() {
   if (adminCategories.length === 0) {
     categoryList.textContent = "Henüz kategori eklenmemiş.";
     return;
   }
 
-  
-<div style="display:flex;gap:7px;flex-wrap:wrap;">
-  <button type="button"
-    data-action="edit-category"
-    data-id="${category.id}"
-    style="
-      padding:9px 14px;
-      border-radius:8px;
-      border:1px solid #d8d1ca;
-      background:#f5f1ed;
-      color:#765c4d;
-      font-size:13px;
-      font-weight:600;
-      cursor:pointer;
-      display:inline-block;
-      visibility:visible;
-      opacity:1;
+  categoryList.innerHTML = adminCategories.map(category => `
+    <div style="
+      background:white;
+      padding:16px;
+      margin-bottom:12px;
+      border:1px solid #e7ece6;
+      border-radius:10px;
     ">
-    Düzenle
-  </button>
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:12px;
+        flex-wrap:wrap;
+      ">
+        <div>
+          <strong>${escapeCategoryHTML(category.name)}</strong>
 
-  <button type="button"
-    data-action="toggle-category"
-    data-id="${category.id}"
-    style="
-      padding:9px 14px;
-      border-radius:8px;
-      background:${category.is_active ? "#EADFD8" : "#DCE8DF"};
-      color:${category.is_active ? "#896B5D" : "#587460"};
-      border:1px solid ${category.is_active ? "#DDCFC5" : "#CEDDD1"};
-      font-size:13px;
-      font-weight:600;
-      cursor:pointer;
-      display:inline-block;
-      visibility:visible;
-      opacity:1;
-    ">
-    ${category.is_active ? "Pasif Yap" : "Aktif Yap"}
-  </button>
-</div>
+          <p style="margin:5px 0;color:#78857b;font-size:13px;">
+            Sıra: ${Number(category.sort_order) || 0}
+            · ${category.is_active ? "Aktif" : "Pasif"}
+          </p>
+        </div>
 
+        <div style="display:flex;gap:7px;flex-wrap:wrap;">
+          <button
+            type="button"
+            data-action="edit-category"
+            data-id="${category.id}"
+            style="
+              padding:9px 14px;
+              border-radius:8px;
+              border:1px solid #d8d1ca;
+              background:#f5f1ed;
+              color:#765c4d;
+              font-size:13px;
+              font-weight:600;
+              cursor:pointer;
+            ">
+            Düzenle
+          </button>
 
-       
-
+          <button
+            type="button"
+            data-action="toggle-category"
+            data-id="${category.id}"
+            style="
+              padding:9px 14px;
+              border-radius:8px;
+              background:${category.is_active ? "#EADFD8" : "#DCE8DF"};
+              color:${category.is_active ? "#896B5D" : "#587460"};
+              border:1px solid ${category.is_active ? "#DDCFC5" : "#CEDDD1"};
+              font-size:13px;
+              font-weight:600;
+              cursor:pointer;
+            ">
+            ${category.is_active ? "Pasif Yap" : "Aktif Yap"}
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
 
 // ==========================================
 // ALT KATEGORİ ANA KATEGORİ SEÇİMİ
