@@ -324,7 +324,20 @@ function setupReservationFilters() {
 // =========================================
 // REZERVASYON DETAY PENCERESİ
 // =========================================
+function openReservationDetail(reservationId) {
 
+  console.log("Modal fonksiyonuna girildi.");
+
+  const reservation = allReservations.find(
+    r => String(r.id) === String(reservationId)
+  );
+
+  console.log("Bulunan rezervasyon:", reservation);
+
+  if (!reservation) {
+    console.error("Rezervasyon bulunamadı!");
+    return;
+  }
 function openReservationDetail(reservationId) {
 
   const reservation = allReservations.find(
