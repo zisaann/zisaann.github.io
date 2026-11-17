@@ -347,35 +347,6 @@ function renderCategories() {
     });
   });
 }
-
-// ==========================================
-// KATEGORİLERİ GÖSTER
-// ==========================================
-
-function renderCategories() {
-  if (!categoryList) return;
-
-  categoryList.innerHTML = CATEGORIES.map(category => `
-    <button
-      type="button"
-      class="category-btn ${category === activeCategory ? "active" : ""}"
-      data-category="${escapeHTML(category)}"
-    >${escapeHTML(category)}</button>
-  `).join("");
-
-  categoryList.querySelectorAll("button").forEach(button => {
-    button.addEventListener("click", () => {
-      activeCategory = button.dataset.category;
-      activeSubcategory = "";
-
-      renderCategories();
-      renderSubcategories();
-      renderProducts();
-    });
-  });
-}
-
-
 // ==========================================
 // ALT KATEGORİLERİ GÖSTER
 // ==========================================
