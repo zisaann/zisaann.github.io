@@ -205,14 +205,42 @@ function renderReservations() {
             </span>
           </td>
 
-          <td>
-            <button
-              type="button"
-              class="btn-secondary reservation-detail-btn"
-              data-id="${escapeHTML(reservation.id)}">
-              Detay
-            </button>
-          </td>
+          
+<td>
+  <div class="reservation-row-actions">
+
+    <button
+      type="button"
+      class="reservation-detail-btn"
+      data-id="${escapeHTML(reservation.id)}">
+      Detay
+    </button>
+
+    ${
+      reservation.status === "pending"
+        ? `
+          <button
+            type="button"
+            class="reservation-approve-btn"
+            data-reservation-action="confirmed"
+            data-id="${escapeHTML(reservation.id)}">
+            Onayla
+          </button>
+
+          <button
+            type="button"
+            class="reservation-reject-btn"
+            data-reservation-action="cancelled"
+            data-id="${escapeHTML(reservation.id)}">
+            Reddet
+          </button>
+        `
+        : ""
+    }
+
+  </div>
+</td>
+
         </tr>
       `;
     }
@@ -263,6 +291,48 @@ function setupReservationFilters() {
 // =========================================
 // REZERVASYON DETAY PENCERESİ
 // =========================================
+
+// =========================================
+// REZERVASYON ONAYLAMA / REDDETME
+// =========================================
+
+async function updateReservationStatus(reservationId, newStatus) {
+
+  const statusMessages = {
+    confirmed: "Bu rezervasyonu onaylamak istiyor musunuz?",
+    cancelled: "Bu rezervasyonu reddetmek istiyor musunuz?"
+  };
+
+  if (!statusMessages[newStatus]) return;
+
+  if (!confirm(statusMessages[newStatus])) return;
+
+  try {
+
+    const { error } = await supabaseClient
+      .from("reservations")
+      .update({ status: newStatus })
+      .eq("id", reservationId);
+
+    if (error) throw error;
+
+    alert(
+      newStatus === "confirmed"
+        ? "Rezervasyon başarıyla onaylandı."
+        : "Rezervasyon reddedildi."
+    );
+
+    await window.loadReservations();
+
+  } catch (error) {
+
+    console.error("Rezervasyon durumu güncellenemedi:", error);
+
+    alert(
+      "İşlem gerçekleştirilemedi. Supabase yetkilerini kontrol edin."
+    );
+  }
+}
 
 function openReservationDetail(reservationId) {
 
@@ -389,8 +459,23 @@ function openReservationDetail(reservationId) {
 
 if (!window.reservationDetailEventsBound) {
 
-  document.addEventListener("click", function(event) {
+  document.addEventListener("click", async function(event) {
 
+    // ONAYLAMA / REDDETME
+    const actionButton = event.target.closest(
+      "[data-reservation-action]"
+    );
+
+    if (actionButton) {
+
+      const reservationId = actionButton.dataset.id;
+      const newStatus = actionButton.dataset.reservationAction;
+
+      await updateReservationStatus(reservationId, newStatus);
+      return;
+    }
+
+    // DETAY
     const detailButton = event.target.closest(
       ".reservation-detail-btn"
     );
@@ -401,6 +486,7 @@ if (!window.reservationDetailEventsBound) {
       return;
     }
 
+    // PENCEREYİ KAPAT
     if (
       event.target.closest("[data-close-reservation]") ||
       event.target.id === "reservationDetailModal"
@@ -415,6 +501,7 @@ if (!window.reservationDetailEventsBound) {
 
   window.reservationDetailEventsBound = true;
 }
+
 
 // =========================================
 // ESC İLE KAPAT
