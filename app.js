@@ -630,7 +630,7 @@ function renderProducts() {
 
     return `
       <section
-        class="product-group"
+        class="product-group category-${slugify(group.category)}"
         id="${getGroupId(group.category, group.subcategory)}"
       >
         <div class="product-group-heading">
