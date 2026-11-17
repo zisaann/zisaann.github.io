@@ -3547,6 +3547,143 @@ input, select, textarea {
 #overview td {
   font-size: 14px;
 }
+    
+/* =========================================
+   AHENK - İŞLEM GEÇMİŞİ TABLOSU
+========================================= */
+
+.audit-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  background: #E9DED3;
+  border: 1px solid #C8B5A7;
+  border-radius: 13px;
+}
+
+.audit-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.audit-table thead {
+  background: #DFD1C5;
+}
+
+.audit-table th {
+  padding: 17px 18px;
+  color: #715F54;
+  font-family: 'Lato', sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .8px;
+  white-space: nowrap;
+  border-bottom: 1px solid #C8B5A7;
+}
+
+.audit-table td {
+  padding: 17px 18px;
+  color: #493A33;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(200,181,167,.65);
+  vertical-align: middle;
+}
+
+.audit-table tbody tr {
+  transition: background .2s ease;
+}
+
+.audit-table tbody tr:hover {
+  background: #E2D2C7;
+}
+
+.audit-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.audit-user {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.audit-record {
+  font-weight: 600;
+}
+
+.audit-date {
+  white-space: nowrap;
+}
+
+.audit-date span {
+  display: block;
+  font-weight: 700;
+}
+
+.audit-date small {
+  display: block;
+  margin-top: 4px;
+  color: #896B60;
+  font-size: 12px;
+}
+
+/* İŞLEM ETİKETLERİ */
+
+.audit-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.audit-create {
+  background: #E1E9DC;
+  color: #526B4A;
+}
+
+.audit-update {
+  background: #E8E0CF;
+  color: #80663D;
+}
+
+.audit-delete {
+  background: #F0DCD7;
+  color: #A34F42;
+}
+
+.audit-status {
+  background: #E3DFEA;
+  color: #6B5C85;
+}
+
+.audit-role {
+  background: #DCE6E8;
+  color: #4E6970;
+}
+
+.audit-password {
+  background: #E8DFD8;
+  color: #765C4C;
+}
+
+.audit-default {
+  background: #DFD1C5;
+  color: #715F54;
+}
+
+/* MOBİL UYUMLULUK */
+
+@media (max-width: 650px) {
+  .audit-table th,
+  .audit-table td {
+    padding: 13px 12px;
+  }
+}
+
   </style>
 </head>
 
