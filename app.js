@@ -322,19 +322,31 @@ function renderAllergens() {
 
 
 // ==========================================
-// KATEGORİ GÖRSELLERİ
+// KATEGORİLERİ GÖSTER
 // ==========================================
 
-const CATEGORY_IMAGES = {
-  "Tümü": "https://images.unsplash.com/photo-1547592180-85f173990554?w=900",
-  "Kahvaltı": "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=900",
-  "Başlangıçlar": "https://images.unsplash.com/photo-1547592180-85f173990554?w=900",
-  "Atıştırmalıklar": "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=900",
-  "Ana yemekler": "https://images.unsplash.com/photo-1547592180-85f173990554?w=900",
-  "Salatalar": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900",
-  "Tatlılar": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=900",
-  "İçecekler": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=900"
-};
+function renderCategories() {
+  if (!categoryList) return;
+
+  categoryList.innerHTML = CATEGORIES.map(category => `
+    <button
+      type="button"
+      class="category-btn ${category === activeCategory ? "active" : ""}"
+      data-category="${escapeHTML(category)}"
+    >${escapeHTML(category)}</button>
+  `).join("");
+
+  categoryList.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
+      activeSubcategory = "";
+
+      renderCategories();
+      renderSubcategories();
+      renderProducts();
+    });
+  });
+}
 
 // ==========================================
 // KATEGORİLERİ GÖSTER
