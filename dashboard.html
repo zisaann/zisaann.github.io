@@ -3428,6 +3428,58 @@ input, select, textarea {
   }
 }
 
+/* REZERVASYON İŞLEM BUTONLARI */
+
+.reservation-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.reservation-row-actions button {
+  padding: 8px 11px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.reservation-approve-btn {
+  border: 1px solid #b9ceb9;
+  background: #edf4ec;
+  color: #527b55;
+}
+
+.reservation-approve-btn:hover {
+  background: #527b55;
+  color: white;
+}
+
+.reservation-reject-btn {
+  border: 1px solid #e3c5bd;
+  background: #f9eeeb;
+  color: #a45448;
+}
+
+.reservation-reject-btn:hover {
+  background: #a45448;
+  color: white;
+}
+
+.reservation-row-actions .reservation-detail-btn {
+  border: 1px solid #d9c5b5;
+  background: transparent;
+  color: #a65b45;
+}
+
+.reservation-row-actions .reservation-detail-btn:hover {
+  background: #a65b45;
+  color: white;
+}
+
   </style>
 </head>
 
