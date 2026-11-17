@@ -1892,3 +1892,107 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
     font-size: 23px;
   }
 }
+
+/* =========================================
+   REZERVASYON YÖNETİMİ
+========================================= */
+
+.reservation-management-card {
+  margin-top: 24px;
+}
+
+.reservation-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) minmax(150px, 1fr) minmax(170px, 1fr) auto;
+  gap: 14px;
+  align-items: end;
+  margin: 22px 0;
+}
+
+.reservation-filters > div {
+  min-width: 0;
+}
+
+.reservation-filters label {
+  display: block;
+  margin-bottom: 8px;
+  color: #78685b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reservation-filters input,
+.reservation-filters select {
+  box-sizing: border-box;
+  width: 100%;
+  height: 44px;
+  padding: 0 13px;
+  border: 1px solid #e5ddd2;
+  border-radius: 10px;
+  outline: none;
+  background: #fffdf9;
+  color: #49382e;
+  font-family: inherit;
+  font-size: 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.reservation-filters input:focus,
+.reservation-filters select:focus {
+  border-color: #a87957;
+  box-shadow: 0 0 0 3px rgba(168, 121, 87, 0.12);
+}
+
+.reservation-clear-btn {
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid #d9c8b7;
+  border-radius: 10px;
+  background: #f5ede4;
+  color: #694a38;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reservation-clear-btn:hover {
+  background: #eadbcb;
+}
+
+#reservationsTableBody td {
+  vertical-align: middle;
+}
+
+#reservationsTableBody td strong {
+  display: block;
+  color: #49382e;
+}
+
+#reservationsTableBody td small {
+  display: block;
+  margin-top: 4px;
+  color: #9a897a;
+  font-size: 11px;
+}
+
+@media (max-width: 1000px) {
+
+  .reservation-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+@media (max-width: 560px) {
+
+  .reservation-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-clear-btn {
+    width: 100%;
+  }
+
+}
