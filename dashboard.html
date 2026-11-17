@@ -11,9 +11,10 @@
   <script src="js/supabase.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
   :root {
@@ -131,11 +132,11 @@
 }
 
 .nav-icon {
-  width: 22px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   color: inherit;
-  font-size: 19px;
-  text-align: center;
+  stroke-width: 1.7;
 }
 
 .sidebar-bottom {
@@ -1733,7 +1734,25 @@
   --border: #E7DCD2;
   --soft: #F7F2ED;
 }
+:root {
+  --font-body: 'Lato', sans-serif;
+  --font-heading: 'Cormorant Garamond', serif;
+}
 
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4,
+.brand-name,
+.section-title,
+.page-title {
+  font-family: var(--font-heading);
+}
 /* GENEL */
 
 * {
@@ -1763,8 +1782,10 @@ body {
 }
 
 .brand-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 29px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  font-weight: 600;
+  letter-spacing: 1px;
   color: #FFF9F3;
 }
 
@@ -3486,72 +3507,84 @@ input, select, textarea {
 <body>
 
   <!-- SOL MENÜ -->
+  
+<aside class="sidebar" id="sidebar">
 
-  <aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-name" id="businessNameSidebar">Luna</div>
+    <div class="brand-subtitle">YÖNETİM PANELİ</div>
+  </div>
 
-    <div class="brand">
-      <div class="brand-name" id="businessNameSidebar">Luna</div>
-      <div class="brand-subtitle">YÖNETİM PANELİ</div>
-    </div>
+  <div class="menu-label">YÖNETİM</div>
 
-    <div class="menu-label">YÖNETİM</div>
+  <nav class="sidebar-nav">
 
-    <nav class="sidebar-nav">
+    <button class="nav-item active" data-view="overview">
+      <i class="nav-icon" data-lucide="layout-dashboard"></i>
+      Genel Bakış
+    </button>
 
-      <button class="nav-item active" data-view="overview">
-        <span class="nav-icon">⌂</span>
-        Genel Bakış
-      </button>
-      <button class="nav-item"
-        data-view="staffMenu"
-        data-roles="owner,manager,waiter,kitchen">
-  <span>🍽️</span>
-  <span>Menüyü Görüntüle</span>
-</button>
-      <button class="nav-item"
-        data-view="reservations"
-        data-roles="owner,manager,waiter">
-  <span class="nav-icon">📅</span>
-  <span>Rezervasyonlar</span>
-</button>
+    <button class="nav-item"
+      data-view="staffMenu"
+      data-roles="owner,manager,waiter,kitchen">
+      <i class="nav-icon" data-lucide="utensils"></i>
+      <span>Menüyü Görüntüle</span>
+    </button>
 
-      <button class="nav-item" data-view="products" data-roles="owner,manager,kitchen">
-        <span class="nav-icon">♧</span>
-        Ürün Yönetimi
-      </button>
+    <button class="nav-item"
+      data-view="reservations"
+      data-roles="owner,manager,waiter">
+      <i class="nav-icon" data-lucide="calendar-days"></i>
+      <span>Rezervasyonlar</span>
+    </button>
 
-      <button class="nav-item" data-view="categories" data-roles="owner,manager,kitchen">
-        <span class="nav-icon">▦</span>
-        Kategori Yönetimi
-      </button>
+    <button class="nav-item"
+      data-view="products"
+      data-roles="owner,manager,kitchen">
+      <i class="nav-icon" data-lucide="utensils-crossed"></i>
+      Ürün Yönetimi
+    </button>
 
-      <button class="nav-item" data-view="allergens" data-roles="owner,manager">
-        <span class="nav-icon">◇</span>
-        Alerjen Yönetimi
-      </button>
-      <button class="nav-item" data-view="staff" data-roles="owner">
-  <span class="nav-icon">♙</span>
-  Çalışan Yönetimi
-</button>
+    <button class="nav-item"
+      data-view="categories"
+      data-roles="owner,manager,kitchen">
+      <i class="nav-icon" data-lucide="layers"></i>
+      Kategori Yönetimi
+    </button>
 
-      <button class="nav-item" data-view="settings" data-roles="owner">
-        <span class="nav-icon">⚙</span>
-        Ayarlar
-        
-      </button>
+    <button class="nav-item"
+      data-view="allergens"
+      data-roles="owner,manager">
+      <i class="nav-icon" data-lucide="shield-check"></i>
+      Alerjen Yönetimi
+    </button>
 
-    </nav>
+    <button class="nav-item"
+      data-view="staff"
+      data-roles="owner">
+      <i class="nav-icon" data-lucide="users"></i>
+      Çalışan Yönetimi
+    </button>
 
-    <div class="sidebar-bottom">
-      <button class="nav-item" id="sidebarLogout">
-        <span class="nav-icon">↪</span>
-        Çıkış Yap
-      </button>
-    </div>
+    <button class="nav-item"
+      data-view="settings"
+      data-roles="owner">
+      <i class="nav-icon" data-lucide="settings-2"></i>
+      Ayarlar
+    </button>
 
-  </aside>
+  </nav>
 
-  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="sidebar-bottom">
+    <button class="nav-item" id="sidebarLogout">
+      <i class="nav-icon" data-lucide="log-out"></i>
+      Çıkış Yap
+    </button>
+  </div>
+
+</aside>
+
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <!-- ANA ALAN -->
 
@@ -5409,5 +5442,9 @@ document.querySelectorAll("[data-settings-back]").forEach(button => {
   <script src="js/admin-audit.js"></script>
   <script src="js/admin-reservations.js?v=2"></script>
   <script src="js/admin-business-settings.js"></script>
+  
+  <script>
+  lucide.createIcons();
+</script>
 </body>
 </html>
