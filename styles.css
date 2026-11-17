@@ -2405,3 +2405,156 @@ button{cursor:pointer} a{color:inherit;text-decoration:none}
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* =========================================
+   AHENK - REZERVASYON DETAY PENCERESİ
+========================================= */
+
+.reservation-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(35, 29, 24, .58);
+  backdrop-filter: blur(4px);
+}
+
+.reservation-modal.active {
+  display: flex;
+}
+
+.reservation-modal-content {
+  width: min(540px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 32px;
+  border: 1px solid #e8ded1;
+  border-radius: 16px;
+  background: #fffdf9;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .18);
+  animation: reservationModalIn .2s ease;
+}
+
+@keyframes reservationModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reservation-modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 23px;
+  border-bottom: 1px solid #eee5db;
+}
+
+.reservation-modal-eyebrow {
+  color: #a65b45;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.reservation-modal-header h2 {
+  margin: 10px 0 5px;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.reservation-modal-header p {
+  margin: 0;
+  color: #887b70;
+  font-size: 11px;
+}
+
+.reservation-modal-close {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #f3ece4;
+  color: #51473f;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.reservation-modal-close:hover {
+  background: #e8ded1;
+}
+
+.reservation-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.reservation-modal-item {
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #eee5db;
+  border-radius: 9px;
+  background: #fcf8f3;
+}
+
+.reservation-modal-item span,
+.reservation-modal-note > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #948579;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.reservation-modal-item strong {
+  color: #40372f;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.reservation-modal-note {
+  padding: 17px;
+  border-radius: 9px;
+  background: #f7f1e9;
+}
+
+.reservation-modal-note p {
+  margin: 0;
+  color: #51473f;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.reservation-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 23px;
+}
+
+@media (max-width: 500px) {
+  .reservation-modal-content {
+    padding: 23px 18px;
+  }
+
+  .reservation-modal-grid {
+    gap: 8px;
+  }
+
+  .reservation-modal-item {
+    padding: 12px;
+  }
+}
