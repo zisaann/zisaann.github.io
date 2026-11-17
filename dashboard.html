@@ -4703,12 +4703,15 @@ function openView(viewName) {
     } else {
       console.error("loadStaff fonksiyonu bulunamadı.");
     }
-      // Rezervasyon ekranına geçildiğinde rezervasyonları yükle
+  }
+
+  // Rezervasyon ekranına geçildiğinde rezervasyonları yükle
   if (viewName === "reservations") {
     if (typeof window.loadReservations === "function") {
       window.loadReservations();
+    } else {
+      console.error("loadReservations fonksiyonu bulunamadı.");
     }
-  }
   }
 
   // Menü görüntüleme ekranına geçildiğinde menüyü yükle
@@ -4720,6 +4723,21 @@ function openView(viewName) {
     }
   }
 }
+
+// Sol menü butonlarına tıklama
+navItems.forEach(item => {
+  item.addEventListener("click", () => {
+    openView(item.dataset.view);
+  });
+});
+
+// Genel bakıştaki hızlı işlem butonları
+document.querySelectorAll("[data-open-view]").forEach(button => {
+  button.addEventListener("click", () => {
+    openView(button.dataset.openView);
+  });
+});
+
 
 // Sol menü butonlarına tıklama
 navItems.forEach(item => {
