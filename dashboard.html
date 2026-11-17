@@ -1388,53 +1388,60 @@
   margin-top: 24px;
 }
 
+
+/* =====================================
+   İŞLEM GEÇMİŞİ - AHENK TASARIMI
+===================================== */
+
 #auditLogManagement {
-  padding: 26px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  box-shadow: var(--shadow);
+  padding: 32px;
+  background: #E9DED3;
+  border: 1px solid #C8B5A7;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(65,45,30,.06);
 }
 
 #auditLogManagement h2 {
-  margin: 0 0 8px;
-  color: var(--brown);
-  font-family: "Playfair Display", serif;
-  font-size: 25px;
+  margin: 0 0 10px;
+  color: #493A33;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 600;
 }
 
 #auditLogManagement .section-description {
-  margin-bottom: 22px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
+  margin: 0 0 28px;
+  color: #715F54;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
 }
 
 #auditLogStatus {
-  padding: 14px 16px;
-  margin-bottom: 18px;
-  background: var(--soft);
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  color: var(--muted);
-  font-size: 13px;
+  padding: 15px 19px;
+  margin-bottom: 22px;
+  background: #DFD1C5;
+  border: 1px solid #C8B5A7;
+  border-radius: 10px;
+  color: #715F54;
+  font-size: 14px;
 }
 
 #auditLogList {
   display: grid;
-  gap: 12px;
+  gap: 14px;
 }
 
 @media (max-width: 650px) {
   #auditLogManagement {
-    padding: 17px;
+    padding: 20px;
   }
 
   #auditLogManagement h2 {
-    font-size: 21px;
+    font-size: 29px;
   }
 }
-    
+
 /* =====================================
    İŞLETME BİLGİLERİ TASARIMI
 ===================================== */
@@ -3500,48 +3507,45 @@ input, select, textarea {
   background: #a65b45;
   color: white;
 }
-/* GENEL YAZI BOYUTLARI */
+    /* GENEL BAKIŞ - YAZI BOYUTLARI */
 
-body {
+#overview h1,
+#overview h2,
+#overview h3 {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Bölüm başlıkları */
+#overview h2 {
+  font-size: 25px;
+}
+
+/* Kart başlıkları */
+#overview .stat-card h3,
+#overview .stat-card-title {
   font-size: 15px;
 }
 
-/* SOL MENÜ */
-.menu-label {
-  font-size: 11px;
+/* İstatistik değerleri */
+#overview .stat-card .stat-value,
+#overview .stat-number {
+  font-size: 27px;
 }
 
-.nav-item {
-  font-size: 15px;
-  font-weight: 600;
-  min-height: 50px;
+/* Açıklama ve yardımcı metinler */
+#overview p,
+#overview .stat-card span {
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.nav-icon {
-  width: 21px;
-  height: 21px;
-}
-
-/* ÜST MENÜ */
-.topbar-title {
-  font-size: 15px;
-}
-
-.admin-label {
+/* Grafik ve tablo başlıkları */
+#overview th {
   font-size: 14px;
 }
 
-#logout {
+#overview td {
   font-size: 14px;
-}
-
-/* MARKA */
-.brand-name {
-  font-size: 38px;
-}
-
-.brand-subtitle {
-  font-size: 10px;
 }
   </style>
 </head>
