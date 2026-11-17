@@ -553,3 +553,9 @@ function escapeHTML(value) {
     })[character]
   );
 }
+console.log("ADMIN RESERVATIONS DOSYASI GÜNCEL SÜRÜMLE YÜKLENDİ.");
+
+console.log(
+  "Detay fonksiyonu:",
+  openReservationDetail.toString()
+);
