@@ -6,12 +6,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const reservationForm = document.getElementById("reservationForm");
   const message = document.getElementById("reservationFormMessage");
 
-  if (!dateInput || !timeSelect || !guestsSelect || !reservationForm) {
+  const nameInput = document.getElementById("reservationName");
+  const phoneInput = document.getElementById("reservationPhone");
+  const noteInput = document.getElementById("reservationNote");
+  const submitButton = reservationForm.querySelector(
+    'button[type="submit"]'
+  );
+
+  if (
+    !dateInput ||
+    !timeSelect ||
+    !guestsSelect ||
+    !reservationForm ||
+    !message ||
+    !nameInput ||
+    !phoneInput ||
+    !noteInput
+  ) {
     console.error("Rezervasyon formu elemanları bulunamadı.");
     return;
   }
 
   let requestNumber = 0;
+  let isSubmitting = false;
 
   function getLocalDate() {
     const now = new Date();
@@ -62,9 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (currentRequest !== requestNumber) return;
 
-      if (error) {
-        throw error;
-      }
+      if (error) throw error;
 
       if (!data || !Array.isArray(data.slots)) {
         throw new Error("Müsait saat bilgisi alınamadı.");
@@ -105,11 +120,85 @@ document.addEventListener("DOMContentLoaded", () => {
   dateInput.addEventListener("change", loadAvailableTimes);
   guestsSelect.addEventListener("change", loadAvailableTimes);
 
-  reservationForm.addEventListener("submit", (event) => {
+  reservationForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    message.textContent =
-      "Rezervasyon kaydı henüz etkinleştirilmedi.";
+    if (isSubmitting) return;
+
+    if (!reservationForm.reportValidity()) return;
+
+    if (!timeSelect.value) {
+      message.textContent = "Lütfen müsait bir saat seçin.";
+      return;
+    }
+
+    isSubmitting = true;
+    submitButton.disabled = true;
+    submitButton.textContent = "Rezervasyon oluşturuluyor...";
+    message.textContent = "";
+
+    try {
+      const reservationData = {
+        customer_name: nameInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        guest_count: Number(guestsSelect.value),
+        reservation_date: dateInput.value,
+        reservation_time: timeSelect.value,
+        note: noteInput.value.trim() || null
+      };
+
+      const { data, error } = await supabaseClient.functions.invoke(
+        "create-reservation",
+        {
+          body: reservationData
+        }
+      );
+
+      if (error) {
+        let errorMessage = error.message;
+
+        if (error.context) {
+          try {
+            const response = await error.context.json();
+            errorMessage = response.error || errorMessage;
+          } catch (_) {}
+        }
+
+        throw new Error(errorMessage);
+      }
+
+      if (!data || data.success !== true || !data.reservation_code) {
+        throw new Error(
+          data?.error || "Rezervasyon sonucu alınamadı."
+        );
+      }
+
+      reservationForm.reset();
+      dateInput.min = getLocalDate();
+      resetTimeSelect("Önce tarih ve kişi sayısı seçin");
+
+      message.textContent =
+        "Rezervasyonunuz oluşturuldu! Rezervasyon kodunuz: " +
+        data.reservation_code;
+
+      message.style.color = "#38734b";
+
+    } catch (error) {
+      console.error("Rezervasyon oluşturma hatası:", error);
+
+      message.textContent =
+        error.message || "Rezervasyon oluşturulurken bir hata oluştu.";
+
+      message.style.color = "#a13d32";
+
+      loadAvailableTimes();
+
+    } finally {
+      isSubmitting = false;
+      submitButton.disabled = false;
+      submitButton.innerHTML =
+        'Rezervasyon oluştur <span>↗</span>';
+    }
   });
 
   resetTimeSelect("Önce tarih ve kişi sayısı seçin");
