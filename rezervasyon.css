@@ -1,0 +1,417 @@
+
+/* =====================================
+   AHENK RESTAURANT - REZERVASYON SAYFASI
+===================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f7f3ed;
+  color: #302923;
+  font-family: "DM Sans", sans-serif;
+}
+
+/* HEADER */
+
+.reservation-header {
+  width: 100%;
+  min-height: 85px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #302923;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fffaf5;
+  text-decoration: none;
+}
+
+.brand-symbol {
+  width: 43px;
+  height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #c49a7b;
+  border-radius: 50%;
+  color: #e8c7a9;
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+  letter-spacing: 2px;
+}
+
+.brand strong {
+  font-size: 15px;
+}
+
+.brand small {
+  margin-top: 4px;
+  color: #c9b9a8;
+  font-size: 9px;
+}
+
+.back-link {
+  color: #f3e9dd;
+  font-size: 12px;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.back-link:hover {
+  color: #d7a98c;
+}
+
+/* ANA ALAN */
+
+.reservation-page {
+  width: min(1100px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 65px 0 80px;
+}
+
+/* BAŞLIK */
+
+.reservation-intro {
+  max-width: 680px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.eyebrow {
+  color: #a65b45;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.reservation-intro h1 {
+  margin: 15px 0;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(34px, 5vw, 51px);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.reservation-intro h1 em {
+  color: #a65b45;
+  font-weight: 500;
+}
+
+.reservation-intro p {
+  max-width: 510px;
+  margin: 0 auto;
+  color: #766b60;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* İKİ SÜTUNLU ALAN */
+
+.reservation-layout {
+  display: grid;
+  grid-template-columns: .85fr 1.15fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* SOL BİLGİ KARTI */
+
+.reservation-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 42px 35px;
+  border-radius: 15px;
+  background: #e8ded1;
+}
+
+.reservation-symbol {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  border-radius: 50%;
+  background: #faf5ef;
+  color: #a65b45;
+  font-size: 25px;
+}
+
+.reservation-info h2 {
+  margin: 16px 0;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(24px, 2.5vw, 31px);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.reservation-info > p {
+  margin: 0 0 30px;
+  color: #766b60;
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.reservation-detail {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 17px 0;
+  border-top: 1px solid rgba(75, 61, 48, .15);
+}
+
+.reservation-detail > span {
+  color: #a65b45;
+  font-size: 21px;
+}
+
+.reservation-detail strong,
+.reservation-detail small {
+  display: block;
+}
+
+.reservation-detail strong {
+  margin-bottom: 5px;
+  color: #40372f;
+  font-size: 12px;
+}
+
+.reservation-detail small {
+  color: #766b60;
+  font-size: 11px;
+}
+
+/* FORM KARTI */
+
+.reservation-form-card {
+  padding: 38px;
+  border: 1px solid #e6ddd2;
+  border-radius: 15px;
+  background: #fffdf9;
+  box-shadow: 0 12px 35px rgba(48, 41, 35, .045);
+}
+
+.reservation-form-heading {
+  margin-bottom: 27px;
+}
+
+.reservation-form-heading h2 {
+  margin: 10px 0 6px;
+  color: #302923;
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.reservation-form-heading p {
+  margin: 0;
+  color: #887b70;
+  font-size: 11px;
+}
+
+/* FORM ALANLARI */
+
+#reservationForm {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.reservation-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.reservation-field label {
+  color: #51473f;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.reservation-field label span {
+  color: #948579;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.reservation-field input,
+.reservation-field select,
+.reservation-field textarea {
+  width: 100%;
+  min-height: 47px;
+  padding: 12px 14px;
+  border: 1px solid #ded7ca;
+  border-radius: 7px;
+  outline: none;
+  background: #fcfaf6;
+  color: #403a34;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.reservation-field textarea {
+  min-height: 95px;
+  resize: vertical;
+}
+
+.reservation-field input:focus,
+.reservation-field select:focus,
+.reservation-field textarea:focus {
+  border-color: #a65b45;
+  box-shadow: 0 0 0 3px rgba(166, 91, 69, .09);
+}
+
+.reservation-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* GÖNDER BUTONU */
+
+.reservation-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 50px;
+  margin-top: 4px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 7px;
+  background: #a65b45;
+  color: #fffaf5;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+
+.reservation-submit:hover {
+  background: #884632;
+  transform: translateY(-1px);
+}
+
+.reservation-submit span {
+  font-size: 17px;
+}
+
+.reservation-form-note {
+  margin: 0;
+  color: #887b70;
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+#reservationFormMessage {
+  color: #766b60;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+#reservationFormMessage:empty {
+  display: none;
+}
+
+/* FOOTER */
+
+.reservation-footer {
+  padding: 23px 20px;
+  border-top: 1px solid #e8ded1;
+  background: #302923;
+  text-align: center;
+}
+
+.reservation-footer p {
+  margin: 0;
+  color: #d9cabe;
+  font-size: 10px;
+  letter-spacing: .3px;
+}
+
+/* TABLET */
+
+@media (max-width: 800px) {
+  .reservation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-info {
+    padding: 30px;
+  }
+
+  .reservation-info h2 {
+    max-width: 500px;
+  }
+}
+
+/* MOBİL */
+
+@media (max-width: 500px) {
+  .reservation-header {
+    min-height: 72px;
+    padding: 0 20px;
+  }
+
+  .brand-symbol {
+    width: 38px;
+    height: 38px;
+  }
+
+  .back-link {
+    font-size: 10px;
+  }
+
+  .reservation-page {
+    width: calc(100% - 28px);
+    padding: 43px 0 50px;
+  }
+
+  .reservation-intro {
+    margin-bottom: 30px;
+  }
+
+  .reservation-intro p {
+    font-size: 12px;
+  }
+
+  .reservation-info {
+    padding: 27px 23px;
+  }
+
+  .reservation-form-card {
+    padding: 25px 19px;
+  }
+
+  .reservation-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-form-heading h2 {
+    font-size: 24px;
+  }
+}
